@@ -144,6 +144,16 @@ class S {
       args: [],
     );
   }
+
+  /// `favorite`
+  String get favorite {
+    return Intl.message(
+      'favorite',
+      name: 'favorite',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "app_name" : MessageLookupByLibrary.simpleMessage("بوکی شاپ"),
     "book_introduction" : MessageLookupByLibrary.simpleMessage("معرفی کتاب"),
     "details" : MessageLookupByLibrary.simpleMessage("مشخصات"),
+    "favorite" : MessageLookupByLibrary.simpleMessage("علاقه مندی ها"),
     "more" : MessageLookupByLibrary.simpleMessage("بیشتر"),
     "the_best" : MessageLookupByLibrary.simpleMessage("بهترین ترین ها"),
     "the_most_famous_books" : MessageLookupByLibrary.simpleMessage("معروف ترین کتاب ها")
