@@ -16,6 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: 'Dana',
+         iconTheme: IconThemeData(
+        color: Colors.black, //change your color here
+      ),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the

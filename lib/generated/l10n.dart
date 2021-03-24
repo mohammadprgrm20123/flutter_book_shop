@@ -104,6 +104,46 @@ class S {
       args: [],
     );
   }
+
+  /// `details`
+  String get details {
+    return Intl.message(
+      'details',
+      name: 'details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `     add to favorite list      `
+  String get add_to_favorite {
+    return Intl.message(
+      '     add to favorite list      ',
+      name: 'add_to_favorite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `book introduction `
+  String get book_introduction {
+    return Intl.message(
+      'book introduction ',
+      name: 'book_introduction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ابلهی رادیدم سمین و خلعتی ثمین در بر. (گلستان ).\n|| مقابل غث در سخن به معنی کلام استوار و متعین. (اقرب الموارد) : و میفرستاد سوی بلخ و غث و سمین بازمی نمود. (تاریخ بیهقی چ ادیب ص 250). چون صدق با کذب و غث با سمین و صواب با خطا امتزاج و اختلاط پذیرد تمیز عسر شود. (تاریخ بیهقی ص 16).\nگرچه در تألیف این ابیات نیست\nبی سمین غثی و بی غثی کروت.`
+  String get sd {
+    return Intl.message(
+      'ابلهی رادیدم سمین و خلعتی ثمین در بر. (گلستان ).\n|| مقابل غث در سخن به معنی کلام استوار و متعین. (اقرب الموارد) : و میفرستاد سوی بلخ و غث و سمین بازمی نمود. (تاریخ بیهقی چ ادیب ص 250). چون صدق با کذب و غث با سمین و صواب با خطا امتزاج و اختلاط پذیرد تمیز عسر شود. (تاریخ بیهقی ص 16).\nگرچه در تألیف این ابیات نیست\nبی سمین غثی و بی غثی کروت.',
+      name: 'sd',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

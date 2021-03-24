@@ -21,7 +21,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "add_to_favorite" : MessageLookupByLibrary.simpleMessage("    اضافه کردن به علاقه مندی ها     "),
     "app_name" : MessageLookupByLibrary.simpleMessage("بوکی شاپ"),
+    "book_introduction" : MessageLookupByLibrary.simpleMessage("معرفی کتاب"),
+    "details" : MessageLookupByLibrary.simpleMessage("مشخصات"),
     "more" : MessageLookupByLibrary.simpleMessage("بیشتر"),
     "the_best" : MessageLookupByLibrary.simpleMessage("بهترین ترین ها"),
     "the_most_famous_books" : MessageLookupByLibrary.simpleMessage("معروف ترین کتاب ها")

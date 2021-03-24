@@ -2,5 +2,8 @@
   "app_name": "بوکی شاپ",
   "the_most_famous_books": "معروف ترین کتاب ها",
   "more": "بیشتر",
-  "the_best": "بهترین ترین ها"
+  "the_best": "بهترین ترین ها",
+  "details": "مشخصات",
+  "add_to_favorite": "    اضافه کردن به علاقه مندی ها     ",
+  "book_introduction": "معرفی کتاب"
 }

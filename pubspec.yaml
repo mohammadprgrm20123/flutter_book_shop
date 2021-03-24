@@ -35,6 +35,7 @@ dependencies:
   get: ^3.26.0
 #  horizontal_card_pager: ^1.0.2
   animated_bottom_navigation_bar: ^0.3.2
+  flutter_rating_bar: ^4.0.0
 
   flutter_localizations:
     sdk: flutter
