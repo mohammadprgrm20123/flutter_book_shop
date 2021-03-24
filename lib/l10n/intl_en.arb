@@ -2,5 +2,8 @@
   "app_name": "booki shop",
   "assetsimages1jpg": "assets/images/1.jpg",
   "assetsimages2jpg": "assets/images/2.jpg",
-  "assetsimages3jpg": "assets/images/3.jpg"
+  "assetsimages3jpg": "assets/images/3.jpg",
+  "the_most_famous_books": "The most famous books",
+  "more": "more",
+  "the_best": "the best"
 }

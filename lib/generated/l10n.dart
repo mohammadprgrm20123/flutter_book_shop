@@ -74,6 +74,36 @@ class S {
       args: [],
     );
   }
+
+  /// `The most famous books`
+  String get the_most_famous_books {
+    return Intl.message(
+      'The most famous books',
+      name: 'the_most_famous_books',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `more`
+  String get more {
+    return Intl.message(
+      'more',
+      name: 'more',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the best`
+  String get the_best {
+    return Intl.message(
+      'the best',
+      name: 'the_best',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

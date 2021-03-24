@@ -24,6 +24,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "app_name" : MessageLookupByLibrary.simpleMessage("booki shop"),
     "assetsimages1jpg" : MessageLookupByLibrary.simpleMessage("assets/images/1.jpg"),
     "assetsimages2jpg" : MessageLookupByLibrary.simpleMessage("assets/images/2.jpg"),
-    "assetsimages3jpg" : MessageLookupByLibrary.simpleMessage("assets/images/3.jpg")
+    "assetsimages3jpg" : MessageLookupByLibrary.simpleMessage("assets/images/3.jpg"),
+    "more" : MessageLookupByLibrary.simpleMessage("more"),
+    "the_best" : MessageLookupByLibrary.simpleMessage("the best"),
+    "the_most_famous_books" : MessageLookupByLibrary.simpleMessage("The most famous books")
   };
 }

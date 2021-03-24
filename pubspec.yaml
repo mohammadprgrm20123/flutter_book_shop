@@ -33,6 +33,9 @@ dependencies:
   carousel_slider: ^3.0.0
   dots_indicator: ^2.0.0
   get: ^3.26.0
+#  horizontal_card_pager: ^1.0.2
+  animated_bottom_navigation_bar: ^0.3.2
+
   flutter_localizations:
     sdk: flutter
 
