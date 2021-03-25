@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "details" : MessageLookupByLibrary.simpleMessage("details"),
     "favorite" : MessageLookupByLibrary.simpleMessage("favorite"),
     "more" : MessageLookupByLibrary.simpleMessage("more"),
+    "profile" : MessageLookupByLibrary.simpleMessage("profile"),
     "sd" : MessageLookupByLibrary.simpleMessage("ابلهی رادیدم سمین و خلعتی ثمین در بر. (گلستان ).\n|| مقابل غث در سخن به معنی کلام استوار و متعین. (اقرب الموارد) : و میفرستاد سوی بلخ و غث و سمین بازمی نمود. (تاریخ بیهقی چ ادیب ص 250). چون صدق با کذب و غث با سمین و صواب با خطا امتزاج و اختلاط پذیرد تمیز عسر شود. (تاریخ بیهقی ص 16).\nگرچه در تألیف این ابیات نیست\nبی سمین غثی و بی غثی کروت."),
     "search" : MessageLookupByLibrary.simpleMessage("search"),
     "the_best" : MessageLookupByLibrary.simpleMessage("the best"),

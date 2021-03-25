@@ -3,6 +3,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
+import 'package:flutter_booki_shop/views/proflie/profile.dart';
 import 'package:flutter_booki_shop/views/search.dart';
 import 'package:get/get.dart';
 
@@ -43,7 +44,7 @@ class CustomBtnNavigation {
             }break;
 
             case 3:{
-
+              Get.to(Profile());
             }break;
 
           }
