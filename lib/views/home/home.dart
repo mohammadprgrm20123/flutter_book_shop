@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/home_controller.dart';
 import 'package:flutter_booki_shop/customwidgets/card_item.dart';
-import 'package:flutter_booki_shop/customwidgets/custom_widget.dart';
+import 'package:flutter_booki_shop/customwidgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/customwidgets/horisental_card_pager.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/views/details_book.dart';
@@ -55,9 +55,9 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: _appBar(context),
       body: _scrollView(context),
-      floatingActionButton: CustomWidget().floatingActionButton(),
+      floatingActionButton: CustomBtnNavigation().floatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: CustomWidget().bottomNavigationBar(),
+      bottomNavigationBar: CustomBtnNavigation().bottomNavigationBar(),
     );
   }
 

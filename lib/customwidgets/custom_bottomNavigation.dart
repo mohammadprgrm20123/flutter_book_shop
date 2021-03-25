@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
 import 'package:get/get.dart';
 
-class CustomWidget {
+class CustomBtnNavigation {
 
 
   FloatingActionButton floatingActionButton() {
