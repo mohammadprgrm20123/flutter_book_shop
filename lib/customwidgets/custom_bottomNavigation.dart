@@ -3,6 +3,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
+import 'package:flutter_booki_shop/views/search.dart';
 import 'package:get/get.dart';
 
 class CustomBtnNavigation {
@@ -38,7 +39,7 @@ class CustomBtnNavigation {
             }break;
 
             case 2:{
-
+              Get.to(Search());
             }break;
 
             case 3:{

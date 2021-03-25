@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "details" : MessageLookupByLibrary.simpleMessage("مشخصات"),
     "favorite" : MessageLookupByLibrary.simpleMessage("علاقه مندی ها"),
     "more" : MessageLookupByLibrary.simpleMessage("بیشتر"),
+    "search" : MessageLookupByLibrary.simpleMessage("جستوجو"),
     "the_best" : MessageLookupByLibrary.simpleMessage("بهترین ترین ها"),
     "the_most_famous_books" : MessageLookupByLibrary.simpleMessage("معروف ترین کتاب ها")
   };
