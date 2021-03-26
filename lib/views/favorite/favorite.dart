@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_booki_shop/customwidgets/card_item.dart';
-import 'package:flutter_booki_shop/customwidgets/custom_bottomNavigation.dart';
+import 'package:flutter_booki_shop/custom_widgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/details/details_book.dart';
 import 'package:get/get.dart';
