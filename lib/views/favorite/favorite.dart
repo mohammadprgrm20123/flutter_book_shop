@@ -15,61 +15,73 @@ class Favorite extends StatelessWidget{
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: CustomBtnNavigation().floatingActionButton(),
       bottomNavigationBar: CustomBtnNavigation().bottomNavigationBar(),
-      body: Container(
-        child: GridView.builder(
-          itemCount: 10,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3),
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: (){
-                Get.to(DetailsBook());
-              },
-              child: Card(
-                elevation: 7.0,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-
-                        child: ClipRRect(
-                          borderRadius: new BorderRadius.circular(4.0),
-                          child: Image.network(
-                            "https://imgcdn.taaghche.com/frontCover/90938.jpg?w=700",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Text(
-                          "کوه نور ",
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      )
+      body: _listBooks()
     );
 
     throw UnimplementedError();
   }
 
+  Container _listBooks() {
+    return Container(
+      child: GridView.builder(
+        itemCount: 10,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3),
+        itemBuilder: (BuildContext context, int index) {
+          return _itemList();
+        },
+      ),
+    );
+  }
+
+  GestureDetector _itemList() {
+    return GestureDetector(
+            onTap: (){
+              Get.to(DetailsBook());
+            },
+            child: Card(
+              elevation: 7.0,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+
+                      child: ClipRRect(
+                        borderRadius: new BorderRadius.circular(4.0),
+                        child: Image.network(
+                          "https://imgcdn.taaghche.com/frontCover/90938.jpg?w=700",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text(
+                        "کوه نور ",
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+          );
+  }
+
   AppBar _appBar(BuildContext context) {
     return AppBar(
-      title: Text(
-        S.of(context).favorite,
-        style:
-        TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0),
-      ),
+      title: _title(context),
       backgroundColor: Colors.white,
       centerTitle: true,
+    );
+  }
+
+  Text _title(BuildContext context) {
+    return Text(
+      S.of(context).favorite,
+      style:
+      TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0),
     );
   }
 
