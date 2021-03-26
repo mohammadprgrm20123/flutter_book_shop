@@ -174,6 +174,26 @@ class S {
       args: [],
     );
   }
+
+  /// `معروف ترین ها`
+  String get popular {
+    return Intl.message(
+      'معروف ترین ها',
+      name: 'popular',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `کتاب های صوتی`
+  String get audio_books {
+    return Intl.message(
+      'کتاب های صوتی',
+      name: 'audio_books',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

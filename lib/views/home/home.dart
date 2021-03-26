@@ -80,183 +80,151 @@ class Home extends StatelessWidget {
 
   Container _audioBooksList(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.white,
-            Colors.white38,
-            Colors.black12,
-          ],
-        ),
-      ),
+      decoration: _backgroundBoxDecoration(),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(S.of(context).the_best),
-              )),
-              Text(S.of(context).more),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
-                ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15.0),
-            child: HorizontalCardPager(
-              initialPage: 2,
-              // default value is 2
-              onPageChanged: (page) => print("page : $page"),
-              onSelectedItem: (page) => print("selected : $page"),
-              items: items,
-              // set ImageCardItem or IconTitleCardItem class
-            ),
-          ),
+          _titleOfList(context,S.of(context).audio_books),
+          _listBooksBest(),
         ],
       ),
     );
+  }
+
+  BoxDecoration _backgroundBoxDecoration() {
+    return BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Colors.white,
+          Colors.white38,
+          Colors.black12,
+        ],
+      ),
+    );
+  }
+
+  Text _textMore(BuildContext context) => Text(S.of(context).more);
+
+  Expanded _textTitleList(BuildContext context, String popular) {
+    return Expanded(
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(popular),
+            ));
+  }
+
+  Padding _listBooksBest() {
+    return Padding(
+          padding: const EdgeInsets.only(bottom: 15.0),
+          child: HorizontalCardPager(
+            initialPage: 2,
+            // default value is 2
+            onPageChanged: (page) => print("page : $page"),
+            onSelectedItem: (page) => print("selected : $page"),
+            items: items,
+            // set ImageCardItem or IconTitleCardItem class
+          ),
+        );
+  }
+
+  Padding _iconArrow() {
+    return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                icon: Icon(Icons.arrow_forward_ios),
+              ),
+            );
   }
 
   Container _theBestBooksList(BuildContext context) => _bestBooks(context);
 
   Container _theMostPopularBooksList(BuildContext context) {
-    HomeController _homeController = Get.find();
-
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.white,
-            Colors.white38,
-            Colors.black12,
-          ],
-        ),
-      ),
+      decoration: _backgroundBoxDecoration(),
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                  child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(S.of(context).the_best),
-              )),
-              Text(S.of(context).more),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
-                ),
-              )
-            ],
-          ),
-
-          Container(
-            height: 200.0,
-            child: ListView.builder(
-
-              itemBuilder: (BuildContext _, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: GestureDetector(
-                      onTap: (){
-                        print('aldadsadlskdjakls');
-                        Get.to(DetailsBook());
-                      },
-                      child: FadeInImage.assetNetwork(
-                      fadeInCurve: Curves.bounceIn,
-                      image:
-                          'https://imgcdn.taaghche.com/frontCover/90938.jpg?w=200',
-                      placeholder: 'assets/images/1.jpg',
-                      ),
-                    ),
-
-
-                  ),
-                );
-              },
-              itemCount: 20,
-              scrollDirection: Axis.horizontal,
-            ),
-          )
-          // ignore: missing_return
-          /*
-*/
+          _titleOfList(context,S.of(context).popular),
+          _listPopularBooks()
         ],
       ),
     );
   }
 
-  Container _bestBooks(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.white,
-            Colors.white38,
-            Colors.black12,
+  Row _titleOfList(BuildContext context, String text) {
+    return Row(
+          children: [
+            _textTitleList(context,text),
+            _textMore(context),
+            _iconArrow()
           ],
-        ),
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                  child: Padding(
+        );
+  }
+
+  Container _listPopularBooks() {
+    return Container(
+          height: 200.0,
+          child: ListView.builder(
+            itemBuilder: (BuildContext _, int index) {
+              return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(S.of(context).the_most_famous_books),
-              )),
-              Text(S.of(context).more),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
-                ),
-              )
-            ],
-          ),
-          Container(
-            height: 200.0,
-            child: ListView.builder(
-              itemBuilder: (BuildContext _, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: GestureDetector(
+                    onTap: (){
+                      print('aldadsadlskdjakls');
+                      Get.to(DetailsBook());
+                    },
                     child: FadeInImage.assetNetwork(
-                      fadeInCurve: Curves.bounceIn,
-                      image:
-                          'https://imgcdn.taaghche.com/frontCover/90938.jpg?w=200',
-                      placeholder: 'assets/images/1.jpg',
+                    fadeInCurve: Curves.bounceIn,
+                    image:
+                        'https://imgcdn.taaghche.com/frontCover/90938.jpg?w=200',
+                    placeholder: 'assets/images/1.jpg',
                     ),
                   ),
-                );
-              },
-              itemCount: 20,
-              scrollDirection: Axis.horizontal,
-            ),
-          )
-          // ignore: missing_return
-          /*
-*/
+                ),
+              );
+            },
+            itemCount: 20,
+            scrollDirection: Axis.horizontal,
+          ),
+        );
+  }
+
+  Container _bestBooks(BuildContext context) {
+    return Container(
+      decoration: _backgroundBoxDecoration(),
+      child: Column(
+        children: [
+         _titleOfList(context, S.of(context).the_best),
+          _listBestBooks()
         ],
       ),
     );
+  }
+
+  Container _listBestBooks() {
+    return Container(
+          height: 200.0,
+          child: ListView.builder(
+            itemBuilder: (BuildContext _, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: FadeInImage.assetNetwork(
+                    fadeInCurve: Curves.bounceIn,
+                    image:
+                        'https://imgcdn.taaghche.com/frontCover/90938.jpg?w=200',
+                    placeholder: 'assets/images/1.jpg',
+                  ),
+                ),
+              );
+            },
+            itemCount: 20,
+            scrollDirection: Axis.horizontal,
+          ),
+        );
   }
 
   ObxValue<RxBool> _circleIndicator() {
@@ -323,60 +291,80 @@ class Home extends StatelessWidget {
           ),
         ),
       ],
-      options: CarouselOptions(
-        pageSnapping: true,
-        height: 200,
-        initialPage: 0,
-        enableInfiniteScroll: true,
-        reverse: false,
-        autoPlay: true,
-        onPageChanged: (int index, CarouselPageChangedReason reason) {
-          print(index.toString());
-          _homeController.indexIndicator(index.toDouble());
-        },
-        autoPlayInterval: Duration(seconds: 3),
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
-        autoPlayCurve: Curves.decelerate,
-        enlargeCenterPage: true,
-        scrollDirection: Axis.horizontal,
-      ),
+      options: _bannerListOptions(),
+    );
+  }
+
+  CarouselOptions _bannerListOptions() {
+    return CarouselOptions(
+      pageSnapping: true,
+      height: 200,
+      initialPage: 0,
+      enableInfiniteScroll: true,
+      reverse: false,
+      autoPlay: true,
+      onPageChanged: (int index, CarouselPageChangedReason reason) {
+        print(index.toString());
+        _homeController.indexIndicator(index.toDouble());
+      },
+      autoPlayInterval: Duration(seconds: 3),
+      autoPlayAnimationDuration: Duration(milliseconds: 800),
+      autoPlayCurve: Curves.decelerate,
+      enlargeCenterPage: true,
+      scrollDirection: Axis.horizontal,
     );
   }
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-      title: Text(
-        S.of(context).app_name,
-        style:
-            TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0),
-      ),
+      title: _title(context),
       backgroundColor: Colors.white,
       centerTitle: true,
       actions: [
         //badge shop
-        Padding(
-          padding: const EdgeInsets.only(left: 25.0, top: 12.0),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Icon(
-                Icons.shopping_cart_outlined,
-                color: Colors.black,
-                size: 30.0,
-              ),
-              Positioned(
-                  left: 20.0,
-                  bottom: 27.0,
-                  child: Container(
-                      height: 20.0,
-                      width: 20.0,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.red),
-                      child: Center(child: Text('1')))),
-            ],
-          ),
-        )
+        _badgeShop()
       ],
+    );
+  }
+
+  Padding _badgeShop() {
+    return Padding(
+        padding: const EdgeInsets.only(left: 25.0, top: 12.0),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            _iconShop(),
+            _circleBadge(),
+          ],
+        ),
+      );
+  }
+
+  Positioned _circleBadge() {
+    return Positioned(
+              left: 20.0,
+              bottom: 27.0,
+              child: Container(
+                  height: 20.0,
+                  width: 20.0,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.red),
+                  child: Center(child: Text('1'))));
+  }
+
+  Icon _iconShop() {
+    return Icon(
+            Icons.shopping_cart_outlined,
+            color: Colors.black,
+            size: 30.0,
+          );
+  }
+
+  Text _title(BuildContext context) {
+    return Text(
+      S.of(context).app_name,
+      style:
+          TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0),
     );
   }
 
