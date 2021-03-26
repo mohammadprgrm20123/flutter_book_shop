@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/controllers/login_controller.dart';
 import 'package:get/get.dart';
 
 class Login extends StatelessWidget {
+  TextEditingController _usernameCtr = new TextEditingController();
+  TextEditingController _passwordCtr = new TextEditingController();
+
+  LoginController _loginController =Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+
 
     return SafeArea(
       top: true,
@@ -17,10 +24,6 @@ class Login extends StatelessWidget {
           ),
       ),),
     );
-    throw
-    UnimplementedError
-    (
-    );
   }
 
   Container _loginBody() {
@@ -30,18 +33,40 @@ class Login extends StatelessWidget {
                 children: [
                 _iconLogin(),
                 _userName(),
-            _password()
+                _password(),
+                loginBtn()
             ],
       ),
           );
   }
 
+  Padding loginBtn() {
+    return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                    height: 50.0,
+                    width: MediaQuery.of(Get.context).size.width,
+                    child: ElevatedButton(onPressed: (){
+
+                      if(!checkEmpty()){
+
+                      }
+
+
+
+                    }, child: Text("ورود"))),
+              );
+  }
+
   Padding _password() {
     return Padding(padding: const EdgeInsets.all(20.0),
             child: ObxValue((data) {
-                RxBool data =true.obs;
+                bool data =_loginController.validatePasswrod.value;
+                bool obscureText = _loginController.obscureText.value;
+                print(data.toString()+"password---------------------------------------------");
              return TextFormField (
-                  obscureText: data.value,
+               controller: _passwordCtr,
+                  obscureText: obscureText,
                   decoration: _passwordDecoration(data),
                   maxLength: 10,
                   buildCounter: _biuldCounterPassword,
@@ -65,10 +90,11 @@ class Login extends StatelessWidget {
              : null;
        }
 
-  InputDecoration _passwordDecoration(RxBool data) {
+  InputDecoration _passwordDecoration(bool data) {
     return InputDecoration(
+                  errorText: data? 'لطفا مقادیر را پر کنید':null,
                   prefixIcon: Icon(Icons.lock),
-                  suffixIcon: _onTapSuffixIcon(data),
+                  suffixIcon: _onTapSuffixIcon(),
                   border: OutlineInputBorder(),
                   labelText: 'رمز عبور ',
                   hintText: 'رمز عبور',
@@ -76,34 +102,44 @@ class Login extends StatelessWidget {
                 );
   }
 
-  GestureDetector _onTapSuffixIcon(RxBool data) {
+  GestureDetector _onTapSuffixIcon() {
     return GestureDetector(
                     onTap: (){
-                      print(data.value);
-                      if(data.value==true){
-                        data(false);
-                      }
-                      else{
-                        data(true);
-                      }
-                      print(data.value);
-
+                    if(_loginController.obscureText.value==true){
+                      _loginController.obscureText(false);
+                    }
+                    else{
+                      _loginController.obscureText(true);
+                    }
                     },
                     child: Icon(Icons.remove_red_eye_rounded));
   }
 
-  Padding _userName() {
-    return Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextField(
-                 decoration: InputDecoration(
-                     prefixIcon: Icon(Icons.account_circle),
-                     border: OutlineInputBorder(),
-                     labelText: 'نام کاربری',
-                  hintText: 'نام کاربری'
-            ),
-          ),
-              );
+  ObxValue<RxBool> _userName() {
+   return  ObxValue((data) {
+      bool data =_loginController.validateUsername.value;
+      print(data.toString()+"username-----------------------------------------------");
+
+      return  Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: TextField(
+          controller: _usernameCtr,
+          decoration: _usernameDecoration(data),
+        ),
+      );
+    },
+      false.obs,
+    );
+  }
+
+  InputDecoration _usernameDecoration(bool data) {
+    return InputDecoration(
+            errorText: data? 'لطفا مقادیر را پر کنید':null,
+            prefixIcon: Icon(Icons.account_circle),
+            border: OutlineInputBorder(),
+            labelText: 'نام کاربری',
+            hintText: 'نام کاربری'
+        );
   }
 
   Container _iconLogin() {
@@ -117,6 +153,24 @@ class Login extends StatelessWidget {
                   child: Icon(Icons.login,size: 40.0,color: Colors.white,),
                 ),
               );
+  }
+
+  bool checkEmpty() {
+    print(_passwordCtr.text+"passssssss");
+    print(_usernameCtr.text+"userrrrrrrr");
+    if(_passwordCtr.text.isEmpty || _usernameCtr.text.isEmpty){
+      if(_passwordCtr.text.isEmpty) _loginController.validatePasswrod(true);
+      else _loginController.validatePasswrod(false);
+
+
+      if(_usernameCtr.text.isEmpty) _loginController.validateUsername(true);
+      else _loginController.validateUsername(false);
+
+    return true;
+    }
+    _loginController.validatePasswrod(false);
+    _loginController.validateUsername(false);
+    return false;
   }
 
 }

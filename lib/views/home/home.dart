@@ -230,6 +230,7 @@ class Home extends StatelessWidget {
   ObxValue<RxBool> _circleIndicator() {
     return ObxValue(
       (data) {
+
         double data = _homeController.indexIndicator.value;
         return Padding(
           padding: const EdgeInsets.all(10.0),

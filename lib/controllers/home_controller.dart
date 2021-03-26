@@ -11,5 +11,5 @@ class HomeController extends GetxController{
     _appRepository = AppRepository().getInstance();
   }
 
-
+  
 }
