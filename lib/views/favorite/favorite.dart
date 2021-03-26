@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/customwidgets/card_item.dart';
 import 'package:flutter_booki_shop/customwidgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'package:flutter_booki_shop/views/details_book.dart';
+import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/details/details_book.dart';
 import 'package:get/get.dart';
 
 class Favorite extends StatelessWidget{

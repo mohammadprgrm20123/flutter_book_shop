@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
+import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:get/get.dart';
 import 'views/home/home.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
 
         
       ),
-      home: Home(),
+      home: Login(),
       localizationsDelegates: [
         // ... app-specific localization delegate[s] here
         S.delegate,

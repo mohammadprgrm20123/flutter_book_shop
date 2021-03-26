@@ -4,7 +4,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';
-import 'package:flutter_booki_shop/views/search.dart';
+import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/search/search.dart';
 import 'package:get/get.dart';
 
 class CustomBtnNavigation {
