@@ -21,11 +21,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "Error" : MessageLookupByLibrary.simpleMessage("خطا"),
     "add_to_favorite" : MessageLookupByLibrary.simpleMessage("    اضافه کردن به علاقه مندی ها     "),
     "app_name" : MessageLookupByLibrary.simpleMessage("بوکی شاپ"),
     "audio_books" : MessageLookupByLibrary.simpleMessage("کتاب های صوتی"),
     "book_introduction" : MessageLookupByLibrary.simpleMessage("معرفی کتاب"),
     "details" : MessageLookupByLibrary.simpleMessage("مشخصات"),
+    "details_error" : MessageLookupByLibrary.simpleMessage("کاربری با این مشخصات وجود ندارد"),
     "favorite" : MessageLookupByLibrary.simpleMessage("علاقه مندی ها"),
     "more" : MessageLookupByLibrary.simpleMessage("بیشتر"),
     "popular" : MessageLookupByLibrary.simpleMessage("معروف ترین ها"),

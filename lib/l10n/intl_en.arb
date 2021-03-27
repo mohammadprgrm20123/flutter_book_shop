@@ -14,5 +14,8 @@
   "search": "search",
   "profile": "profile",
   "popular": "معروف ترین ها",
-  "audio_books": "کتاب های صوتی"
+  "audio_books": "کتاب های صوتی",
+  "Error": "خطا",
+  "details_error": "کاربری با این مشخصات وجود ندارد",
+  "bookishopuser": "bookishop_user"
 }

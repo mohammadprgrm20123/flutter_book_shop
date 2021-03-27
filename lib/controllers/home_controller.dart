@@ -8,8 +8,8 @@ class HomeController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    _appRepository = AppRepository().getInstance();
+    _appRepository = AppRepository();
   }
 
-  
+
 }

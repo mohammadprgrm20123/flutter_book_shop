@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/login_controller.dart';
+import 'package:flutter_booki_shop/generated/l10n.dart';
+import 'package:flutter_booki_shop/models/User.dart';
+import 'package:flutter_booki_shop/shareprefrence.dart';
+import 'package:flutter_booki_shop/views/admin/admin_home.dart';
+import 'package:flutter_booki_shop/views/home/user_home.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatelessWidget {
   TextEditingController _usernameCtr = new TextEditingController();
@@ -19,43 +25,43 @@ class Login extends StatelessWidget {
       child: Scaffold(
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top:30.0),
+            padding: const EdgeInsets.only(top: 30.0),
             child: _loginBody(),
           ),
-      ),),
+        ),
+      ),
     );
   }
 
-  Container _loginBody() {
-    return Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                _iconLogin(),
-                _userName(),
-                _password(),
-                loginBtn()
-            ],
-      ),
-          );
+  Widget _loginBody() {
+        return Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [_iconLogin(), _userName(), _password(), loginBtn()],
+          ),
+        );
   }
 
   Padding loginBtn() {
     return Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                    height: 50.0,
-                    width: MediaQuery.of(Get.context).size.width,
-                    child: ElevatedButton(onPressed: (){
-
-                      if(!checkEmpty()){
-
-                      }
-
-
-
-                    }, child: Text("ورود"))),
-              );
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+          height: 50.0,
+          width: MediaQuery.of(Get.context).size.width,
+          child: ElevatedButton(
+              onPressed: () async {
+                if (!checkEmpty()) {
+                  _loginController
+                      .requestValidateUser(_usernameCtr.text, _passwordCtr.text)
+                      .then((value) {
+                        saveValues(value);
+                        goTo(value.role);
+                  });
+                }
+              },
+              child: Obx(()=>_loginController.loading.value? CircularProgressIndicator(backgroundColor: Colors.white,):Text("ورود")),
+              )
+    ));
   }
 
   Padding _password() {
@@ -66,13 +72,13 @@ class Login extends StatelessWidget {
                 print(data.toString()+"password---------------------------------------------");
              return TextFormField (
                controller: _passwordCtr,
-                  obscureText: obscureText,
-                  decoration: _passwordDecoration(data),
-                  maxLength: 10,
-                  buildCounter: _biuldCounterPassword,
-                );
+               obscureText: obscureText,
+               decoration: _passwordDecoration(data),
+               maxLength: 12,
+              buildCounter: _biuldCounterPassword,
+            );
               },
-              false.obs,
+              true.obs,
             )
           );
   }
@@ -162,7 +168,6 @@ class Login extends StatelessWidget {
       if(_passwordCtr.text.isEmpty) _loginController.validatePasswrod(true);
       else _loginController.validatePasswrod(false);
 
-
       if(_usernameCtr.text.isEmpty) _loginController.validateUsername(true);
       else _loginController.validateUsername(false);
 
@@ -171,6 +176,21 @@ class Login extends StatelessWidget {
     _loginController.validatePasswrod(false);
     _loginController.validateUsername(false);
     return false;
+  }
+
+  void saveValues(User user) async {
+  MySharePrefrence().setId(user.id);
+  MySharePrefrence().setRole(user.role);
+  }
+
+  void goTo(String role) {
+    if(role=='user'){
+      Get.offAll(UserHome());
+    }
+    else{
+      Get.offAll(AdminHome());
+      // goto admin page
+    }
   }
 
 }

@@ -194,6 +194,36 @@ class S {
       args: [],
     );
   }
+
+  /// `خطا`
+  String get Error {
+    return Intl.message(
+      'خطا',
+      name: 'Error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `کاربری با این مشخصات وجود ندارد`
+  String get details_error {
+    return Intl.message(
+      'کاربری با این مشخصات وجود ندارد',
+      name: 'details_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `bookishop_user`
+  String get bookishopuser {
+    return Intl.message(
+      'bookishop_user',
+      name: 'bookishopuser',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

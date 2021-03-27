@@ -12,7 +12,7 @@ import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/details/detai
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
 import 'package:get/get.dart';
 
-class Home extends StatelessWidget {
+class UserHome extends StatelessWidget {
   HomeController _homeController = Get.put(HomeController());
   List<ImageCarditem> items = [
     ImageCarditem(
