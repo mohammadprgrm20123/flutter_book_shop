@@ -215,8 +215,17 @@ class DetailsBook extends StatelessWidget {
                 height: 50.0,
                 width: MediaQuery.of(context).size.width,
                 child: OutlineButton(
-                    child: new Text(S.of(context).add_to_favorite),
-                    onPressed: null,
+                    child:Obx((){
+                      if(_detailController.loadingBtnClick.value==true){
+                        return CircularProgressIndicator();
+                      }
+                      else{
+                        return new Text(S.of(context).add_to_favorite);
+                      }
+                    }),
+                    onPressed: (){
+                      _detailController.addBookToFavoriteList(_detailController.book);
+                    },
                     shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(4.0))
                 ),
               ),
@@ -230,7 +239,7 @@ class DetailsBook extends StatelessWidget {
                   height: 50.0,
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(onPressed: (){
-                    addTocart();
+                    _detailController.addBookToCartShop(_detailController.book);
                   },
                       child: Obx((){
                         if(_detailController.loadingBtnClick.value==true){
@@ -336,7 +345,6 @@ class DetailsBook extends StatelessWidget {
   }
 
   void addTocart() {
-    _detailController.addBookToCartShop(_detailController.book);
   }
 
 }

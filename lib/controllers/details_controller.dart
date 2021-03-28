@@ -44,5 +44,15 @@ class DetailController extends GetxController{
     });
   }
 
+  addBookToFavoriteList(Book book){
+    _loadingBtnClick(true);
+    _appRepository.addToFavoriteList(book).then((value) {
+      _loadingBtnClick(false);
+    }).onError((error, stackTrace) {
+      _loadingBtnClick(false);
+      Get.snackbar("خطا", "مشکلی پیش آمده است");
+    });
+  }
+
   RxBool get loadingBtnClick => _loadingBtnClick;
 }

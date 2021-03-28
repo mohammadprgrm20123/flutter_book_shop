@@ -1,9 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/models/CartShop.dart';
+import 'package:flutter_booki_shop/models/FavoriteItem.dart';
 import 'package:flutter_booki_shop/models/User.dart';
 import 'package:flutter_booki_shop/server/api_client.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
+import 'package:get/get.dart';
 
 class AppRepository {
   ApiClient _apiClient;
@@ -51,7 +52,15 @@ class AppRepository {
   Future<Response<dynamic>> addBookToCartShop(Book book) async {
     CartShop cartShop = await setValuesOFCartShop(book);
     await _apiClient.dio.post("cardShop", data: cartShop.toJson()).then((value) {
+      Get.snackbar("ثبت شد", "کتاب مورد نظر به سبد خرید اضافه شد");
+      return value;
+    });
+  }
 
+  Future<Response<dynamic>> addToFavoriteList(Book book) async{
+    FavoriteItem favoriteItem = await setValuesFavorite(book);
+    await _apiClient.dio.post("favorite", data: favoriteItem.toJson()).then((value) {
+      Get.snackbar("ثبت شد", "کتاب مورد نظر به لیست علاقه مندی ها اضافه شد");
       return value;
     });
   }
@@ -64,5 +73,15 @@ class AppRepository {
     });
     cartShop.count = 1;
     return cartShop;
+  }
+
+  setValuesFavorite(Book book) async {
+    FavoriteItem favoriteItem=new FavoriteItem();
+    favoriteItem.book=book;
+    await MySharePrefrence().getId().then((value) {
+      favoriteItem.userId =value;
+    });
+
+    return favoriteItem;
   }
 }
