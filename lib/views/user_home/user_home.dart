@@ -87,15 +87,11 @@ class UserHome extends StatelessWidget {
       return   Padding(
         padding: const EdgeInsets.only(bottom: 15.0),
         child: HorizontalCardPager(
-          initialPage: _homeController.listAudioBook.length/2 as int,
+          initialPage: _homeController.itemsAudioBook.length~/2,
           // default value is 2
           onPageChanged: (page) => print("page : $page"),
           onSelectedItem: (page) => print("selected : $page"),
-          items: {
-            return _homeController.listAudioBook.map((e){
-              ImageCarditem(image: Image.network(e.url));
-            })
-          },
+          items: _homeController.itemsAudioBook,
           // set ImageCardItem or IconTitleCardItem class
         ),
       );

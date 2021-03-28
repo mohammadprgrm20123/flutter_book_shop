@@ -1,4 +1,7 @@
- import 'package:flutter_booki_shop/models/Book.dart';
+ import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/custom_widgets/card_item.dart';
+import 'package:flutter_booki_shop/custom_widgets/card_item.dart';
+import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/repository/AppRepository.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +12,8 @@ class HomeController extends GetxController{
   List<Book> listBestBook=[];
   List<Book> listPopularBook=[];
   List<Book> listAudioBook=[];
-  RxDouble indexIndicator = 0.0.obs;
+  List<ImageCarditem> itemsAudioBook = [
+  ];  RxDouble indexIndicator = 0.0.obs;
   AppRepository _appRepository;
   @override
   void onInit() {
@@ -61,11 +65,15 @@ class HomeController extends GetxController{
 
     allBook.forEach((book) {
       if(book.category=="صوتی"){
-        listAudio.add(book);
+        listAudioBook.add(book);
+        itemsAudioBook.add(ImageCarditem(
+          image: Image.network(
+              book.url)));
       }
     });
-    listAudioBook = listAudio;
 
   }
+
+
 
 }
