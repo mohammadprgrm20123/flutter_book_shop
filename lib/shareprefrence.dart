@@ -34,8 +34,25 @@ class MySharePrefrence {
   }
 
 
-  //void setRole
+  void setCartShopList(List<String> list)async{
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'CartShopList';
+    prefs.setStringList(key,list);
+  }
 
+  void addToCartShopList(String bookId) {
+   getCartShopList().then((value) {
+     value.add(bookId);
+     setCartShopList(value);
+   });
+
+  }
+  Future<List<String>> getCartShopList() async{
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'CartShopList';
+    final value = prefs.getStringList(key) ?? [];
+    return value;
+  }
 
 
 }

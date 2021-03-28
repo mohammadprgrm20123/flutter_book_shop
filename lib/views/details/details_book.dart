@@ -13,11 +13,14 @@ class DetailsBook extends StatelessWidget {
 
   DetailController _detailController = Get.put(DetailController());
 
-  DetailsBook(this._bookId);
+  DetailsBook(this._bookId) {
+    _detailController.getDeatilsBook(_bookId);
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
-    _detailController.getDeatilsBook(_bookId);
     return Scaffold(
       appBar: _appBar(context),
       body: _scrollView(context),
@@ -31,33 +34,38 @@ class DetailsBook extends StatelessWidget {
   }
 
   Widget _detailsOfBooks(BuildContext context) {
-    return Obx((){
-      if(_detailController.loading.value==true){
-        return Center(child: CircularProgressIndicator());
+      return Obx((){
+        if(_detailController.loading.value==true){
+          return CircularProgressIndicator();
+        }
+        else{
+         return Column(
+            children: [
+              _image(_detailController.book.url),
+              _bookName(_detailController.book.bookName),
+              _autherName(_detailController.book.autherName,_detailController.book.translator),
+              _score(_detailController.book.score),
+              _btnAddToShop(context,_detailController.book.price),
+              _btnAddFavorite(context),
+              _divider(),
+              _introduction(context),
+              _description(context,_detailController.book.desc),
+              _dividerThikness10(),
+              _otherPropertiesOfBook(_detailController.book),
+              _dividerThikness10(),
+              _listTags(_detailController.book.tags)
+            ],
+          );
+        }
+      });
+
+
       }
-      else{
-      return  Column(
-          children: [
-            _image(_detailController.book.url),
-            _bookName(_detailController.book.bookName),
-            _autherName(_detailController.book.autherName,_detailController.book.translator),
-            _score(_detailController.book.score),
-            _btnAddToShop(context,_detailController.book.price),
-            _btnAddFavorite(context),
-            _divider(),
-            _introduction(context),
-            _description(context,_detailController.book.desc),
-            _dividerThikness10(),
-            _otherPropertiesOfBook(_detailController.book),
-            _dividerThikness10(),
-            _listTags(_detailController.book.tags)
-          ],
-        );
-      }
-    });
-  }
+
+
 
   Wrap _listTags(Tags tags) {
+
     return Wrap(
               direction: Axis.horizontal,
               children:[
@@ -221,8 +229,17 @@ class DetailsBook extends StatelessWidget {
               child: SizedBox(
                   height: 50.0,
                   width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(onPressed: (){},
-                      child: Text('اضافه کردن به سبد خرید    $price تومان '),
+                  child: ElevatedButton(onPressed: (){
+                    addTocart();
+                  },
+                      child: Obx((){
+                        if(_detailController.loadingBtnClick.value==true){
+                          return CircularProgressIndicator();
+                        }
+                        else{
+                         return Text('اضافه کردن به سبد خرید    $price تومان ');
+                        }
+                      }) ,
                   )),
             );
   }
@@ -317,4 +334,10 @@ class DetailsBook extends StatelessWidget {
         style: TextStyle(
             fontFamily: 'Dana', color: Colors.black, fontSize: 17.0));
   }
+
+  void addTocart() {
+    _detailController.addBookToCartShop(_detailController.book);
+  }
+
 }
+

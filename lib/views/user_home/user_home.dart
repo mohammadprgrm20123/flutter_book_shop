@@ -199,7 +199,7 @@ class UserHome extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap: (){
-                    Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
+                    Get.to(DetailsBook(_homeController.listBestBook[index].id));
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),

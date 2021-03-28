@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     _mainController.checkUserLogin();
     return GetMaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: 'Dana',
          iconTheme: IconThemeData(

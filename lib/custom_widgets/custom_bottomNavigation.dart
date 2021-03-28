@@ -2,8 +2,11 @@
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
+import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';
+import 'package:flutter_booki_shop/views/user_home/user_home.dart';
 import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/search/search.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +15,11 @@ class CustomBtnNavigation {
 
   FloatingActionButton floatingActionButton() {
     return FloatingActionButton(
+      onPressed: (){
+      print(Get.currentRoute.toString());
+      if(Get.currentRoute!="/UserHome")
+          Get.offAll(UserHome());
+      },
       child: Icon(Icons.home_outlined),
     );
   }
@@ -36,15 +44,15 @@ class CustomBtnNavigation {
             }break;
 
             case 1:{
-              Get.to(Favorite());
+              Get.offAll(()=>Favorite());
             }break;
 
             case 2:{
-              Get.to(Search());
+              Get.offAll(()=>Search());
             }break;
 
             case 3:{
-              Get.to(Profile());
+              Get.offAll(()=>Profile());
             }break;
 
           }
