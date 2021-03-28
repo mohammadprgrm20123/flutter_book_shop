@@ -14,44 +14,12 @@ import 'package:get/get.dart';
 
 class UserHome extends StatelessWidget {
   HomeController _homeController = Get.put(HomeController());
-  List<ImageCarditem> items = [
-    ImageCarditem(
-        image: Image.network(
-            'https://img.taaghche.com/audioCover/88738.jpg?w=150',fit: BoxFit.cover,),
 
-    ),
-    ImageCarditem(
-      image: Image.network(
-        'https://img.taaghche.com/audioCover/88738.jpg?w=150'),
-
-    ),
-    ImageCarditem(
-      image: Image.network(
-        'https://img.taaghche.com/audioCover/88738.jpg?w=150'),
-
-    ),
-    ImageCarditem(
-      image: Image.network(
-        'https://img.taaghche.com/audioCover/88738.jpg?w=150'),
-
-    ),
-    ImageCarditem(
-      image: Image.network(
-        'https://img.taaghche.com/audioCover/88738.jpg?w=150'),
-
-    ),
-
-  ];
-  final iconList = <IconData>[
-    Icons.brightness_5,
-    Icons.brightness_4,
-    Icons.brightness_6,
-    Icons.brightness_7,
-  ];
 
 
   @override
   Widget build(BuildContext context) {
+    _homeController.getAllBooks();
     return Scaffold(
       appBar: _appBar(context),
       body: _scrollView(context),
@@ -84,7 +52,7 @@ class UserHome extends StatelessWidget {
       child: Column(
         children: [
           _titleOfList(context,S.of(context).audio_books),
-          _listBooksBest(),
+          _listAudioBooks(),
         ],
       ),
     );
@@ -114,18 +82,27 @@ class UserHome extends StatelessWidget {
             ));
   }
 
-  Padding _listBooksBest() {
-    return Padding(
-          padding: const EdgeInsets.only(bottom: 15.0),
-          child: HorizontalCardPager(
-            initialPage: 2,
-            // default value is 2
-            onPageChanged: (page) => print("page : $page"),
-            onSelectedItem: (page) => print("selected : $page"),
-            items: items,
-            // set ImageCardItem or IconTitleCardItem class
-          ),
-        );
+  Widget _listAudioBooks() {
+    return ObxValue((data){
+      return   Padding(
+        padding: const EdgeInsets.only(bottom: 15.0),
+        child: HorizontalCardPager(
+          initialPage: _homeController.listAudioBook.length/2 as int,
+          // default value is 2
+          onPageChanged: (page) => print("page : $page"),
+          onSelectedItem: (page) => print("selected : $page"),
+          items: {
+            return _homeController.listAudioBook.map((e){
+              ImageCarditem(image: Image.network(e.url));
+            })
+          },
+          // set ImageCardItem or IconTitleCardItem class
+        ),
+      );
+
+    },false.obs);
+
+
   }
 
   Padding _iconArrow() {
@@ -161,34 +138,36 @@ class UserHome extends StatelessWidget {
         );
   }
 
-  Container _listPopularBooks() {
-    return Container(
-          height: 200.0,
-          child: ListView.builder(
-            itemBuilder: (BuildContext _, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: GestureDetector(
-                    onTap: (){
-                      print('aldadsadlskdjakls');
-                      Get.to(DetailsBook());
-                    },
-                    child: FadeInImage.assetNetwork(
+  Widget _listPopularBooks() {
+    return ObxValue((data){
+     return Container(
+        height: 200.0,
+        child: ListView.builder(
+          itemBuilder: (BuildContext _, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: GestureDetector(
+                  onTap: (){
+                    Get.to(DetailsBook());
+                  },
+                  child: FadeInImage.assetNetwork(
                     fadeInCurve: Curves.bounceIn,
                     image:
-                        'https://imgcdn.taaghche.com/frontCover/90938.jpg?w=200',
+                    _homeController.listPopularBook[index].url,
                     placeholder: 'assets/images/1.jpg',
-                    ),
                   ),
                 ),
-              );
-            },
-            itemCount: 20,
-            scrollDirection: Axis.horizontal,
-          ),
-        );
+              ),
+            );
+          },
+          itemCount: _homeController.listPopularBook.length,
+          scrollDirection: Axis.horizontal,
+        ),
+      );
+    },false.obs);
+
   }
 
   Container _bestBooks(BuildContext context) {
@@ -203,8 +182,14 @@ class UserHome extends StatelessWidget {
     );
   }
 
-  Container _listBestBooks() {
-    return Container(
+  Widget _listBestBooks() {
+
+      return ObxValue((date){
+
+        if(_homeController.loading.value==true){
+          return CircularProgressIndicator();
+        }else
+       return Container(
           height: 200.0,
           child: ListView.builder(
             itemBuilder: (BuildContext _, int index) {
@@ -213,18 +198,20 @@ class UserHome extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: FadeInImage.assetNetwork(
-                    fadeInCurve: Curves.bounceIn,
-                    image:
-                        'https://imgcdn.taaghche.com/frontCover/90938.jpg?w=200',
+                    fadeInCurve: Curves.fastLinearToSlowEaseIn,
+                    image: _homeController.listBestBook[index].url,
                     placeholder: 'assets/images/1.jpg',
                   ),
                 ),
               );
             },
-            itemCount: 20,
+            itemCount: _homeController.listBestBook.length,
             scrollDirection: Axis.horizontal,
           ),
         );
+      },
+      false.obs);
+
   }
 
   ObxValue<RxBool> _circleIndicator() {

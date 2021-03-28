@@ -5,7 +5,7 @@ import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/User.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:flutter_booki_shop/views/admin/admin_home.dart';
-import 'package:flutter_booki_shop/views/home/user_home.dart';
+import 'package:flutter_booki_shop/views/user_home/user_home.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -69,7 +69,6 @@ class Login extends StatelessWidget {
             child: ObxValue((data) {
                 bool data =_loginController.validatePasswrod.value;
                 bool obscureText = _loginController.obscureText.value;
-                print(data.toString()+"password---------------------------------------------");
              return TextFormField (
                controller: _passwordCtr,
                obscureText: obscureText,

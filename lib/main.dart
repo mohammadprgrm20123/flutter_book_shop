@@ -7,7 +7,7 @@ import 'package:flutter_booki_shop/views/admin/admin_home.dart';
 import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'views/home/user_home.dart';
+import 'views/user_home/user_home.dart';
 
 void main() async {
   runApp(MyApp());
