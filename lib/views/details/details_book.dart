@@ -5,6 +5,7 @@ import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:share/share.dart';
 
 class DetailsBook extends StatelessWidget {
 
@@ -263,7 +264,10 @@ class DetailsBook extends StatelessWidget {
                     Icons.share_outlined,
                     size: 30.0,
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    print("sddsdsdsdsdsdsd");
+                    Share.share("${_detailController.book.bookName} \n ${_detailController.book.desc} ");
+                  }),
                 ),
                 Expanded(child: Text('$score/5',textAlign: TextAlign.end,style: TextStyle(fontSize: 14.0),)),
                 Padding(
