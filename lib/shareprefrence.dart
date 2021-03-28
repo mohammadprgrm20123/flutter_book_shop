@@ -18,7 +18,6 @@ class MySharePrefrence {
     final prefs = await SharedPreferences.getInstance();
     final key = 'user_id';
     final value = prefs.getInt(key) ?? 0;
-    print('read: $value');
     return value;
   }
 
@@ -33,6 +32,9 @@ class MySharePrefrence {
     final value = prefs.getString(key) ?? 'none';
     return value;
   }
+
+
+  //void setRole
 
 
 

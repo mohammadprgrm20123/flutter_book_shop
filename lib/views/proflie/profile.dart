@@ -17,7 +17,6 @@ class Profile extends StatelessWidget {
       bottomNavigationBar: CustomBtnNavigation().bottomNavigationBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
-    throw UnimplementedError();
   }
 
   SingleChildScrollView _scrollView(BuildContext context) {

@@ -36,8 +36,6 @@ class LoginController extends GetxController{
      user =value;
     }).onError((error, stackTrace) {
       _loading(false);
-      print(error.toString());
-      print(stackTrace.toString());
       Get.snackbar(S.of(Get.context).Error, S.of(Get.context).details_error);
     });
     _loading(false);

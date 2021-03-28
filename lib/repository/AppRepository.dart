@@ -27,13 +27,21 @@ class AppRepository {
     await _apiClient.dio.get("books").then((value) {
       listbook = Book().BookListFromJson(value.data);
     }).onError((error, stackTrace) {
-      print(error.toString() + "----");
       throw "error";
     });
-
-    listbook.forEach((element) {
-      print(element.category);
-    });
     return listbook;
+  }
+
+
+  Future<Book> getDetailsBook(int bookId) async{
+    Book book;
+    await _apiClient.dio.get('books', queryParameters: {
+      "id": bookId,
+    }).then((value) {
+      book = Book.fromJson(value.data[0]);
+    }).onError((error, stackTrace) {
+      throw 'error';
+    });
+    return book;
   }
 }

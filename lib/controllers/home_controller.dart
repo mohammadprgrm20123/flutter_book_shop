@@ -18,7 +18,6 @@ class HomeController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    print("init controller");
     _appRepository = AppRepository();
   }
 
@@ -28,13 +27,13 @@ class HomeController extends GetxController{
   getAllBooks(){
     _loading(true);
     _appRepository.getAllBooks().then((value) {
-
       _loading(false);
        listAllBook = value;
       seprateBestBooks();
       sepratePopularBook();
       seprateAudioBook();
     }).onError((error, stackTrace) {
+      _loading(false);
       Get.snackbar("خطا","لطفا اینترنت خود را چک کنید");
     });
 

@@ -1,24 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/controllers/details_controller.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
+import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 
 class DetailsBook extends StatelessWidget {
 
-  List<String> _tags=[
-    'ketab','ereerererre','ererrecxxc','yyyyy','uyyu','dfdfdd'
-  ];
+  final int _bookId;
+
+
+  DetailController _detailController = Get.put(DetailController());
+
+  DetailsBook(this._bookId);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
-
+    _detailController.getDeatilsBook(_bookId);
     return Scaffold(
       appBar: _appBar(context),
       body: _scrollView(context),
     );
-    throw UnimplementedError();
   }
 
   SingleChildScrollView _scrollView(BuildContext context) {
@@ -27,36 +30,47 @@ class DetailsBook extends StatelessWidget {
     );
   }
 
-  Column _detailsOfBooks(BuildContext context) {
-    return Column(
-      children: [
-        _image(),
-        _bookName(),
-        _autherName(),
-        _score(),
-        _btnAddToShop(context),
-        _btnAddFavorite(context),
-        _divider(),
-        _introduction(context),
-        _description(context),
-        _dividerThikness10(),
-        _otherPropertiesOfBook(),
-        _dividerThikness10(),
-        _listTags()
-      ],
-    );
+  Widget _detailsOfBooks(BuildContext context) {
+    return Obx((){
+      if(_detailController.loading.value==true){
+        return Center(child: CircularProgressIndicator());
+      }
+      else{
+      return  Column(
+          children: [
+            _image(_detailController.book.url),
+            _bookName(_detailController.book.bookName),
+            _autherName(_detailController.book.autherName,_detailController.book.translator),
+            _score(_detailController.book.score),
+            _btnAddToShop(context,_detailController.book.price),
+            _btnAddFavorite(context),
+            _divider(),
+            _introduction(context),
+            _description(context,_detailController.book.desc),
+            _dividerThikness10(),
+            _otherPropertiesOfBook(_detailController.book),
+            _dividerThikness10(),
+            _listTags(_detailController.book.tags)
+          ],
+        );
+      }
+    });
   }
 
-  Wrap _listTags() {
+  Wrap _listTags(Tags tags) {
     return Wrap(
               direction: Axis.horizontal,
               children:[
-                for ( var i in _tags ) _itemTag(i)
+                 _itemTag(tags.tag0),
+                 _itemTag(tags.tag1),
+                 _itemTag(tags.tag2),
+                 _itemTag(tags.tag3),
+                 _itemTag(tags.tag4)
                  ]
             );
   }
 
-  Container _itemTag(String i) {
+  Container _itemTag(String tag) {
     return Container(
                 margin: const EdgeInsets.only(right: 8.0, bottom: 15.0),
                 decoration: BoxDecoration(
@@ -65,21 +79,21 @@ class DetailsBook extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: Text(i.toString(),style: TextStyle(color: Colors.white),),
+                  child: Text(tag,style: TextStyle(color: Colors.white),),
                 ),
               );
   }
 
-  SingleChildScrollView _otherPropertiesOfBook() {
+  SingleChildScrollView _otherPropertiesOfBook(Book book) {
     return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _category(""),
-                  _price(""),
-                  _auther(""),
-                  _coutPages(''),
+                  _category(book.category),
+                  _price(book.price),
+                  _publisher(book.publisherName),
+                  _coutPages(book.pages),
                 ],
               ),
             );
@@ -97,7 +111,7 @@ class DetailsBook extends StatelessWidget {
 
                             children: [
                               Text('تعداد صفحات'),
-                              Text("120",style: TextStyle(fontWeight: FontWeight.bold),),
+                              Text(countPage,style: TextStyle(fontWeight: FontWeight.bold),),
                             ],
                           ),
                         ],
@@ -107,14 +121,14 @@ class DetailsBook extends StatelessWidget {
                 );
   }
 
-  Card _auther(String auther) {
+  Card _publisher(String pulisher) {
     return Card(
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       children: [
                         Text('ناشر'),
-                        Text("محمد کاظمی نژاد",style: TextStyle(fontWeight: FontWeight.bold),),
+                        Text(pulisher,style: TextStyle(fontWeight: FontWeight.bold),),
                       ],
                     ),
                   ),
@@ -128,7 +142,7 @@ class DetailsBook extends StatelessWidget {
                     child: Column(
                       children: [
                         Text('قیمت'),
-                        Text("160000",style: TextStyle(fontWeight: FontWeight.bold),),
+                        Text(price,style: TextStyle(fontWeight: FontWeight.bold),),
                       ],
                     ),
                   ),
@@ -144,7 +158,7 @@ class DetailsBook extends StatelessWidget {
                       child: Column(
                         children: [
                           Text('دسته بندی'),
-                          Text("رمان",style: TextStyle(fontWeight: FontWeight.bold),),
+                          Text(catagory,style: TextStyle(fontWeight: FontWeight.bold),),
                         ],
                       ),
                     ),
@@ -160,10 +174,10 @@ class DetailsBook extends StatelessWidget {
             );
   }
 
-  Padding _description(BuildContext context) {
+  Padding _description(BuildContext context, String desc) {
     return Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Text(S.of(context).sd,style: TextStyle(fontSize: 13.0,color: Colors.black45)),
+              child: Text(desc,style: TextStyle(fontSize: 13.0,color: Colors.black45)),
             );
   }
 
@@ -201,19 +215,19 @@ class DetailsBook extends StatelessWidget {
             );
   }
 
-  Padding _btnAddToShop(BuildContext context) {
+  Padding _btnAddToShop(BuildContext context, String price) {
     return Padding(
               padding: const EdgeInsets.symmetric(horizontal:30.0),
               child: SizedBox(
                   height: 50.0,
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(onPressed: (){},
-                      child: Text('اضافه کردن به سبد خرید    160000 تومان '),
+                      child: Text('اضافه کردن به سبد خرید    $price تومان '),
                   )),
             );
   }
 
-  Row _score() {
+  Row _score(double score) {
     return Row(
               children: [
                 Padding(
@@ -225,11 +239,11 @@ class DetailsBook extends StatelessWidget {
                   ),
                   onPressed: () {}),
                 ),
-                Expanded(child: Text('4.1/5',textAlign: TextAlign.end,style: TextStyle(fontSize: 14.0),)),
+                Expanded(child: Text('$score/5',textAlign: TextAlign.end,style: TextStyle(fontSize: 14.0),)),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: RatingBar.builder(
-                    initialRating: 2.1,
+                    initialRating: score,
                     minRating: 1,
                     wrapAlignment: WrapAlignment.start,
                     direction: Axis.horizontal,
@@ -247,28 +261,28 @@ class DetailsBook extends StatelessWidget {
             );
   }
 
-  Padding _autherName() {
+  Padding _autherName(String autherName, String translator) {
     return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
-                'محمد کاظمی نژاد / اسکات ریچارد سون',
+                '$autherName/$translator',
                 style: TextStyle(color: Colors.black38, fontSize: 14.0),
               ),
             );
   }
 
-  Padding _bookName() {
+  Padding _bookName(String bookName) {
     return Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
-                'کوه نور',
+                bookName,
                 style:
                     TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
               ),
             );
   }
 
-  Center _image() {
+  Center _image(String url) {
     return Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 12.0),
@@ -280,7 +294,7 @@ class DetailsBook extends StatelessWidget {
                       fadeInCurve: Curves.bounceIn,
                       height: 240.0,
                       image:
-                          'https://imgcdn.taaghche.com/frontCover/90938.jpg?w=200',
+                          url,
                       placeholder: 'assets/images/1.jpg',
                     ),
                   ),

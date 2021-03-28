@@ -36,7 +36,7 @@ class Favorite extends StatelessWidget{
   GestureDetector _itemList() {
     return GestureDetector(
             onTap: (){
-              Get.to(DetailsBook());
+              Get.to(DetailsBook(1));
             },
             child: Card(
               elevation: 7.0,

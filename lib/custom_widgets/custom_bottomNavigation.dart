@@ -48,7 +48,6 @@ class CustomBtnNavigation {
             }break;
 
           }
-          print(index.toString());
         });
   }
 

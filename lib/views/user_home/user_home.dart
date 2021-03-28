@@ -1,15 +1,12 @@
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/home_controller.dart';
-import 'package:flutter_booki_shop/custom_widgets/card_item.dart';
 import 'package:flutter_booki_shop/custom_widgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/custom_widgets/horisental_card_pager.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/details/details_book.dart';
-import 'package:flutter_booki_shop/views/favorite/favorite.dart';
 import 'package:get/get.dart';
 
 class UserHome extends StatelessWidget {
@@ -82,20 +79,25 @@ class UserHome extends StatelessWidget {
             ));
   }
 
-  Widget _listAudioBooks() {
+  Widget _listAudioBooks()  {
     return ObxValue((data){
-      return   Padding(
-        padding: const EdgeInsets.only(bottom: 15.0),
-        child: HorizontalCardPager(
-          initialPage: _homeController.itemsAudioBook.length~/2,
-          // default value is 2
-          onPageChanged: (page) => print("page : $page"),
-          onSelectedItem: (page) => print("selected : $page"),
-          items: _homeController.itemsAudioBook,
-          // set ImageCardItem or IconTitleCardItem class
-        ),
-      );
-
+      if(_homeController.loading.value==true){
+        return CircularProgressIndicator();
+      }
+      else{
+        return  Padding(
+          padding: const EdgeInsets.only(bottom: 15.0),
+          child: HorizontalCardPager(
+            initialPage: _homeController.itemsAudioBook.length~/2,
+            onPageChanged: (page) => {},
+            onSelectedItem: (page)  {
+              Get.to(() => DetailsBook(_homeController.listAudioBook[page].id));
+            },
+            items: _homeController.itemsAudioBook,
+            // set ImageCardItem or IconTitleCardItem class
+          ),
+        );
+      }
     },false.obs);
 
 
@@ -136,32 +138,36 @@ class UserHome extends StatelessWidget {
 
   Widget _listPopularBooks() {
     return ObxValue((data){
-     return Container(
-        height: 200.0,
-        child: ListView.builder(
-          itemBuilder: (BuildContext _, int index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: GestureDetector(
-                  onTap: (){
-                    Get.to(DetailsBook());
-                  },
-                  child: FadeInImage.assetNetwork(
-                    fadeInCurve: Curves.bounceIn,
-                    image:
-                    _homeController.listPopularBook[index].url,
-                    placeholder: 'assets/images/1.jpg',
+      if(_homeController.loading.value==true){
+        return CircularProgressIndicator();
+      }
+      else{
+        return Container(
+          height: 200.0,
+          child: ListView.builder(
+            itemBuilder: (BuildContext _, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: GestureDetector(
+                    onTap: (){
+                      Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
+                    },
+                    child: FadeInImage.assetNetwork(
+                      fadeInCurve: Curves.bounceIn,
+                      image: _homeController.listPopularBook[index].url,
+                      placeholder: 'assets/images/1.jpg',
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-          itemCount: _homeController.listPopularBook.length,
-          scrollDirection: Axis.horizontal,
-        ),
-      );
+              );
+            },
+            itemCount: _homeController.listPopularBook.length,
+            scrollDirection: Axis.horizontal,
+          ),
+        );
+      }
     },false.obs);
 
   }
@@ -191,12 +197,17 @@ class UserHome extends StatelessWidget {
             itemBuilder: (BuildContext _, int index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: FadeInImage.assetNetwork(
-                    fadeInCurve: Curves.fastLinearToSlowEaseIn,
-                    image: _homeController.listBestBook[index].url,
-                    placeholder: 'assets/images/1.jpg',
+                child: GestureDetector(
+                  onTap: (){
+                    Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: FadeInImage.assetNetwork(
+                      fadeInCurve: Curves.fastLinearToSlowEaseIn,
+                      image: _homeController.listBestBook[index].url,
+                      placeholder: 'assets/images/1.jpg',
+                    ),
                   ),
                 ),
               );
@@ -288,7 +299,6 @@ class UserHome extends StatelessWidget {
       reverse: false,
       autoPlay: true,
       onPageChanged: (int index, CarouselPageChangedReason reason) {
-        print(index.toString());
         _homeController.indexIndicator(index.toDouble());
       },
       autoPlayInterval: Duration(seconds: 3),

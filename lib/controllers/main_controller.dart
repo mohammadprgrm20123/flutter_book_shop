@@ -16,7 +16,6 @@ class MainController extends GetxController{
 
   void checkUserLogin() async{
     await MySharePrefrence().getRole().then((value){
-      print(value.toString());
       if(value.toString()=='none'){
         _indexStartPage(0);
       }

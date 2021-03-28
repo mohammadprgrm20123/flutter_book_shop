@@ -123,7 +123,6 @@ class Login extends StatelessWidget {
   ObxValue<RxBool> _userName() {
    return  ObxValue((data) {
       bool data =_loginController.validateUsername.value;
-      print(data.toString()+"username-----------------------------------------------");
 
       return  Padding(
         padding: const EdgeInsets.all(20.0),
@@ -161,8 +160,6 @@ class Login extends StatelessWidget {
   }
 
   bool checkEmpty() {
-    print(_passwordCtr.text+"passssssss");
-    print(_usernameCtr.text+"userrrrrrrr");
     if(_passwordCtr.text.isEmpty || _usernameCtr.text.isEmpty){
       if(_passwordCtr.text.isEmpty) _loginController.validatePasswrod(true);
       else _loginController.validatePasswrod(false);
