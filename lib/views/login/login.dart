@@ -177,6 +177,9 @@ class Login extends StatelessWidget {
   void saveValues(User user) async {
   MySharePrefrence().setId(user.id);
   MySharePrefrence().setRole(user.role);
+  MySharePrefrence().setPassword(user.password);
+  MySharePrefrence().setUserName(user.userName);
+  MySharePrefrence().setPhone(user.phone);
   }
 
   void goTo(String role) {

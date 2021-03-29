@@ -32,6 +32,41 @@ class MySharePrefrence {
     final value = prefs.getString(key) ?? 'none';
     return value;
   }
+  void setPhone(String phone) async{
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'phone';
+    prefs.setString(key, phone);
+  }
+  Future<String> getPhone() async{
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'phone';
+    final value = prefs.getString(key) ?? 'none';
+    return value;
+  }
+
+  void setUserName(String userName) async{
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'userName';
+    prefs.setString(key, userName);
+  }
+  Future<String> getUserName() async{
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'userName';
+    final value = prefs.getString(key) ?? 'none';
+    return value;
+  }
+
+  void setPassword(String password) async{
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'password';
+    prefs.setString(key, password);
+  }
+  Future<String> getPassword() async{
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'password';
+    final value = prefs.getString(key) ?? 'none';
+    return value;
+  }
 
 
   void setCartShopList(List<String> list)async{
@@ -54,5 +89,9 @@ class MySharePrefrence {
     return value;
   }
 
+  clearShareprefrence() async{
+    final prefs = await SharedPreferences.getInstance();
+   await prefs.clear();
+  }
 
 }

@@ -99,4 +99,19 @@ class AppRepository {
     return listfavoriteBooks;
   }
 
+
+  Future<User> getUserProfile(int userId) async{
+    User user;
+
+    await _apiClient.dio.get("users",queryParameters: {
+      "id" : userId
+    }).then((value) {
+      user = User.fromJson(value.data[0]);
+    }).onError((error, stackTrace) {
+      throw "error";
+    });
+    return user;
+
+  }
+
 }

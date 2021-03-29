@@ -52,7 +52,7 @@ class CustomBtnNavigation {
             }break;
 
             case 3:{
-              Get.offAll(()=>Profile());
+              Get.to(()=>Profile());
             }break;
 
           }

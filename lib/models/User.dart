@@ -8,20 +8,7 @@ class User {
   String _phone;
   String _email;
 
-  User(
-      {int id,
-      String userName,
-      String password,
-      String role,
-      String phone,
-      String email}) {
-    this._id = id;
-    this._userName = userName;
-    this._password = password;
-    this._role = role;
-    this._phone = phone;
-    this._email = email;
-  }
+  User();
 
 
 
