@@ -155,7 +155,7 @@ class UserHome extends StatelessWidget {
                       Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
                     },
                     child: FadeInImage.assetNetwork(
-                      fadeInCurve: Curves.bounceIn,
+                      fadeInCurve: Curves.linearToEaseOut,
                       image: _homeController.listPopularBook[index].url,
                       placeholder: 'assets/images/1.jpg',
                     ),
@@ -204,7 +204,7 @@ class UserHome extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: FadeInImage.assetNetwork(
-                      fadeInCurve: Curves.fastLinearToSlowEaseIn,
+                      fadeInCurve: Curves.linearToEaseOut,
                       image: _homeController.listBestBook[index].url,
                       placeholder: 'assets/images/1.jpg',
                     ),

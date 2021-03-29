@@ -14,6 +14,7 @@ class HomeController extends GetxController{
   List<Book> listAudioBook=[];
   List<ImageCarditem> itemsAudioBook = [
   ];  RxDouble indexIndicator = 0.0.obs;
+
   AppRepository _appRepository;
   @override
   void onInit() {
@@ -72,6 +73,9 @@ class HomeController extends GetxController{
     });
 
   }
+
+
+
 
 
 

@@ -1,14 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/controllers/favorite_controller.dart';
 import 'package:flutter_booki_shop/custom_widgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
+import 'package:flutter_booki_shop/models/FavoriteItem.dart';
+import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/details/details_book.dart';
 import 'package:get/get.dart';
 
 class Favorite extends StatelessWidget{
+
+  FavoriteController _favoriteController = Get.put(FavoriteController());
+
   @override
   Widget build(BuildContext context) {
-    
+
+    MySharePrefrence().getId().then((value) {
+      _favoriteController.getFavoriteBooks(value);
+    });
+
     return Scaffold(
       appBar: _appBar(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -20,20 +30,34 @@ class Favorite extends StatelessWidget{
     throw UnimplementedError();
   }
 
-  Container _listBooks() {
-    return Container(
-      child: GridView.builder(
-        itemCount: 10,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3),
-        itemBuilder: (BuildContext context, int index) {
-          return _itemList();
-        },
-      ),
-    );
+  Widget _listBooks() {
+    return Obx((){
+      if(_favoriteController.loading.value==true){
+        return Center(child: CircularProgressIndicator());
+      }
+      else{
+        if(_favoriteController.listFavorite.length==0){
+          return Center(child: Text("موردی وجود ندارد "));
+        }
+        else{
+          return Container(
+            child: GridView.builder(
+              itemCount: _favoriteController.listFavorite.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3),
+              itemBuilder: (BuildContext context, int index) {
+                return _itemList(_favoriteController.listFavorite.elementAt(index));
+              },
+            ),
+          );
+        }
+      }
+    });
+
+
   }
 
-  GestureDetector _itemList() {
+  GestureDetector _itemList(FavoriteItem listFavorite) {
     return GestureDetector(
             onTap: (){
               Get.to(DetailsBook(1));
@@ -50,14 +74,14 @@ class Favorite extends StatelessWidget{
                       child: ClipRRect(
                         borderRadius: new BorderRadius.circular(4.0),
                         child: Image.network(
-                          "https://imgcdn.taaghche.com/frontCover/90938.jpg?w=700",
+                          listFavorite.book.url,
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
                     Center(
                       child: Text(
-                        "کوه نور ",
+                        listFavorite.book.bookName,
                       ),
                     ),
 

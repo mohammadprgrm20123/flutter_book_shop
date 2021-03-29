@@ -84,4 +84,19 @@ class AppRepository {
 
     return favoriteItem;
   }
+
+
+  Future<List<FavoriteItem>> getFavortieBooks(int userId) async{
+    List<FavoriteItem> listfavoriteBooks = [];
+    await _apiClient.dio.get("favorite",queryParameters: {
+      "userId" : userId
+    }).then((value) {
+      print(value.data.toString());
+      listfavoriteBooks = FavoriteItem().BookListFromJson(value.data);
+    }).onError((error, stackTrace) {
+      throw "error";
+    });
+    return listfavoriteBooks;
+  }
+
 }
