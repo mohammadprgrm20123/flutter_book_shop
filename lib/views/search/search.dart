@@ -95,7 +95,7 @@ class Search extends StatelessWidget {
                 color: Colors.blue,
               ),
               onPressed: () {
-                _modalBottomSheetMenu();
+                _showBottomSheet();
               },
             ),
             labelText: S.of(context).search,
@@ -123,164 +123,182 @@ class Search extends StatelessWidget {
     );
   }
 
-  void _modalBottomSheetMenu() {
+  void _showBottomSheet() {
     showModalBottomSheet(
         context: Get.context,
         builder: (builder) {
           return new Container(
-            color: Colors.transparent, //could change this to Color(0xFF737373),
-            //so you don't have to change MaterialApp canvasColor
-            child: new Container(
-                decoration: new BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: new BorderRadius.only(
-                        topLeft: const Radius.circular(10.0),
-                        topRight: const Radius.circular(10.0))),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "فیلتر بر اساس دسته بندی",
-                          style: TextStyle(fontSize: 23.0),
+              decoration: _boxDecorationBottomSheet(),
+              child: _scrollableBottomSheet());
+        });
+  }
+
+  SingleChildScrollView _scrollableBottomSheet() {
+    return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "فیلتر بر اساس دسته بندی",
+                      style: TextStyle(fontSize: 23.0),
+                    ),
+                  ),
+                  _listCategory(),
+                  Text(
+                    "فیلتر  قیمت",
+                    style: TextStyle(fontSize: 23.0),
+                  ),
+                  _rangeSlider(),
+                  _minAndMaxPrice(),
+                  _btnFilter(),
+                ],
+              ),
+            );
+  }
+
+  BoxDecoration _boxDecorationBottomSheet() {
+    return new BoxDecoration(
+                color: Colors.white,
+                borderRadius: new BorderRadius.only(
+                    topLeft: const Radius.circular(10.0),
+                    topRight: const Radius.circular(10.0)));
+  }
+
+  SizedBox _btnFilter() {
+    return SizedBox(
+                      width: MediaQuery.of(Get.context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: ElevatedButton(
+                            onPressed: (){
+                              _searchController.filterInList(_currentRangeValues.value);
+                              Get.back();
+                        }, child: Text("اعمال فیلتر")),
+                      ),
+                    );
+  }
+
+  Obx _minAndMaxPrice() {
+    return Obx(() {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                                _currentRangeValues.value.start.round().toString() +
+                                    "تومان"),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                                _currentRangeValues.value.end.round().toString() +
+                                    "تومان"),
+                          ),
+                        ],
+                      );
+                    });
+  }
+
+  Obx _rangeSlider() {
+    return Obx(() {
+                      return RangeSlider(
+                        values: _currentRangeValues.value,
+                        min: 5000,
+                        max: 100000,
+                        divisions: 50,
+                        labels: RangeLabels(
+                          _currentRangeValues.value.start.round().toString() +
+                              "تومان",
+                          _currentRangeValues.value.end.round().toString() +
+                              "تومان",
                         ),
-                      ),
-                      Obx(() {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Wrap(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      changeColorChips(1);
-                                      print(_searchController.mapColor[1]);
-                                    },
-                                    child: Chip(
-                                      label: Text('داستانی'),
-                                      backgroundColor:
-                                          _searchController.mapColor[1],
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      changeColorChips(2);
-                                      print(_searchController.mapColor[2]);
-                                    },
-                                    child: Chip(
-                                      label: Text('رمان'),
-                                      backgroundColor:
-                                          _searchController.mapColor[2],
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      changeColorChips(3);
-                                      print(_searchController.mapColor[3]);
-                                    },
-                                    child: Chip(
-                                      label: Text('فلسفه'),
-                                      backgroundColor:
-                                          _searchController.mapColor[3],
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      changeColorChips(4);
-                                      print(_searchController.mapColor[4]);
-                                    },
-                                    child: Chip(
-                                      label: Text('روانشناسی'),
-                                      backgroundColor:
-                                          _searchController.mapColor[4],
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      changeColorChips(5);
-                                      print(_searchController.mapColor[5]);
-                                    },
-                                    child: Chip(
-                                      label: Text('حماسی'),
-                                      backgroundColor:
-                                          _searchController.mapColor[5],
-                                    )),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                      Text(
-                        "فیلتر  قیمت",
-                        style: TextStyle(fontSize: 23.0),
-                      ),
-                      Obx(() {
-                        return RangeSlider(
-                          values: _currentRangeValues.value,
-                          min: 5000,
-                          max: 100000,
-                          divisions: 50,
-                          labels: RangeLabels(
-                            _currentRangeValues.value.start.round().toString() +
-                                "تومان",
-                            _currentRangeValues.value.end.round().toString() +
-                                "تومان",
-                          ),
-                          onChanged: (value) {
-                            print(value.start.toString() +
-                                "    " +
-                                value.end.toString());
-                            _currentRangeValues(value);
-                          },
-                        );
-                      }),
-                      Obx(() {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        onChanged: (value) {
+                          print(value.start.toString() +
+                              "    " +
+                              value.end.toString());
+                          _currentRangeValues(value);
+                        },
+                      );
+                    });
+  }
+
+  Obx _listCategory() {
+    return Obx(() {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Wrap(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                  _currentRangeValues.value.start.round().toString() +
-                                      "تومان"),
+                              padding: const EdgeInsets.all(10.0),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    changeColorChips(1);
+                                    print(_searchController.mapColor[1]);
+                                  },
+                                  child: Chip(
+                                    label: Text('داستانی'),
+                                    backgroundColor:
+                                        _searchController.mapColor[1],
+                                  )),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                  _currentRangeValues.value.end.round().toString() +
-                                      "تومان"),
+                              padding: const EdgeInsets.all(10.0),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    changeColorChips(2);
+                                    print(_searchController.mapColor[2]);
+                                  },
+                                  child: Chip(
+                                    label: Text('رمان'),
+                                    backgroundColor:
+                                        _searchController.mapColor[2],
+                                  )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    changeColorChips(3);
+                                    print(_searchController.mapColor[3]);
+                                  },
+                                  child: Chip(
+                                    label: Text('فلسفه'),
+                                    backgroundColor:
+                                        _searchController.mapColor[3],
+                                  )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    changeColorChips(4);
+                                    print(_searchController.mapColor[4]);
+                                  },
+                                  child: Chip(
+                                    label: Text('روانشناسی'),
+                                    backgroundColor:
+                                        _searchController.mapColor[4],
+                                  )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    changeColorChips(5);
+                                    print(_searchController.mapColor[5]);
+                                  },
+                                  child: Chip(
+                                    label: Text('حماسی'),
+                                    backgroundColor:
+                                        _searchController.mapColor[5],
+                                  )),
                             ),
                           ],
-                        );
-                      }),
-
-
-                      SizedBox(
-                        width: MediaQuery.of(Get.context).size.width,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: ElevatedButton(
-                              onPressed: (){
-                                _searchController.filterInList(_currentRangeValues.value);
-                                Get.back();
-                          }, child: Text("اعمال فیلتر")),
                         ),
-                      ),
-                    ],
-                  ),
-                )),
-          );
-        });
+                      );
+                    });
   }
 
   void changeColorChips(int i) {
