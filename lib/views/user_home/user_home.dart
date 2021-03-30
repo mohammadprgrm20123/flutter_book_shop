@@ -16,7 +16,6 @@ class UserHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _homeController.getAllBooks();
     return Scaffold(
       appBar: _appBar(context),
       body: _scrollView(context),
@@ -334,7 +333,7 @@ class UserHome extends StatelessWidget {
       );
   }
 
-  Positioned _circleBadge() {
+  Widget _circleBadge() {
     return Positioned(
               left: 20.0,
               bottom: 27.0,
@@ -343,9 +342,8 @@ class UserHome extends StatelessWidget {
                   width: 20.0,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle, color: Colors.red),
-                  child: Center(child: Text('1'))));
+                  child: Center(child: Obx(()=>Text('${_homeController.countCartShop}')))));
   }
-
   Icon _iconShop() {
     return Icon(
             Icons.shopping_cart_outlined,

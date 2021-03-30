@@ -114,4 +114,35 @@ class AppRepository {
 
   }
 
+
+  sendUserData(User user) async{
+    print(user.id.toString());
+    print(user.userName.toString());
+    print(user.phone.toString());
+    print(user.image.toString());
+    print(user.email.toString());
+    print(user.toJson().toString());
+    await _apiClient.dio.put("users/${user.id}",data: user.toJson()).then((value) {
+      print(value.data.toString());
+    }).onError((error, stackTrace) {
+      throw "error";
+    });
+    return user;
+  }
+
+
+  Future<List<CartShop>> getAllItemsOfCartShops() async{
+
+    List<CartShop> list =new List<CartShop>();
+    await _apiClient.dio.get("cartShop").then((value) {
+      list = CartShop().CartShopListFromJson(value.data);
+
+    }).onError((error, stackTrace) {
+      Get.snackbar("خطا", "مشکلی وبجود آمده است");
+    });
+
+    return list;
+
+}
+
 }

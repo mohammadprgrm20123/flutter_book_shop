@@ -12,6 +12,7 @@ class HomeController extends GetxController{
   List<Book> listBestBook=[];
   List<Book> listPopularBook=[];
   List<Book> listAudioBook=[];
+  RxInt _countCartShop = 0.obs;
   List<ImageCarditem> itemsAudioBook = [
   ];  RxDouble indexIndicator = 0.0.obs;
 
@@ -20,6 +21,8 @@ class HomeController extends GetxController{
   void onInit() {
     super.onInit();
     _appRepository = AppRepository();
+    getAllBooks();
+    getCountOfCartShop();
   }
 
 
@@ -77,6 +80,11 @@ class HomeController extends GetxController{
 
 
 
+  void getCountOfCartShop() async {
+    _appRepository.getAllItemsOfCartShops().then((value) {
+      _countCartShop.value = value.length;
+    });
+  }
 
-
+  RxInt get countCartShop => _countCartShop;
 }

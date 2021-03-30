@@ -7,6 +7,13 @@ class User {
   String _role;
   String _phone;
   String _email;
+  String _image;
+
+  String get image => _image;
+
+  set image(String value) {
+    _image = value;
+  }
 
   User();
 
@@ -43,6 +50,7 @@ class User {
     _role = json['role'];
     _phone = json['phone'];
     _email = json['email'];
+    _image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +61,7 @@ class User {
     data['role'] = this._role;
     data['phone'] = this._phone;
     data['email'] = this._email;
+    data['image'] = this._image;
     return data;
   }
 }
