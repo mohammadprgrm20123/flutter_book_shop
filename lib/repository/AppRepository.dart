@@ -51,7 +51,7 @@ class AppRepository {
 
   Future<Response<dynamic>> addBookToCartShop(Book book) async {
     CartShop cartShop = await setValuesOFCartShop(book);
-    await _apiClient.dio.post("cardShop", data: cartShop.toJson()).then((value) {
+    await _apiClient.dio.post("cartShop", data: cartShop.toJson()).then((value) {
       Get.snackbar("ثبت شد", "کتاب مورد نظر به سبد خرید اضافه شد");
       return value;
     });
@@ -144,5 +144,7 @@ class AppRepository {
     return list;
 
 }
+
+
 
 }

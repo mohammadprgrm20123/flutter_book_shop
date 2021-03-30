@@ -13,9 +13,10 @@ class CustomAdder extends StatefulWidget {
     return StateAdder();
   }
 
-  CustomAdder({this.value, this.textColor, this.backgroundColor,this.onChanged});
+  CustomAdder({this.value, this.textColor, this.backgroundColor,this.onChangedAdd,this.onChangedRemove});
 
-  final ValueChanged<int> onChanged;
+  final ValueChanged<int> onChangedAdd;
+  final ValueChanged<int> onChangedRemove;
 }
 
 void onChanged() => {};
@@ -79,13 +80,16 @@ class StateAdder extends State<CustomAdder> {
 
   void increment() {
     widget.value++;
-    widget.onChanged?.call(widget.value);
+    widget.onChangedAdd?.call(widget.value);
   }
 
   void decrement() {
     if(widget.value!=0)
-    widget.value--;
-    widget.onChanged?.call(widget.value);
+     {
+       widget.value--;
+       widget.onChangedRemove?.call(widget.value);
+     }
+
 
   }
 }
