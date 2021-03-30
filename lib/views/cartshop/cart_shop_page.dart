@@ -20,6 +20,7 @@ class CartShopPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Obx(() {
+            print(_cartShopController.loading.value.toString()+"Scaffoldlist");
             if (_cartShopController.loading.value == true) {
               return Center(child: CircularProgressIndicator());
             } else {
@@ -50,11 +51,14 @@ class CartShopPage extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(onPressed: (){}, child: Text("ادامه فرایند")),
+              child: ElevatedButton(onPressed: (){
+                _cartShopController.purchesRequest(_cartShopController.totalPrice.value);
+              }, child: Text("ادامه فرایند")),
             ),
             Expanded(child: Padding(
               padding: const EdgeInsets.all(8.0),
               child:Obx((){
+                print(_cartShopController.loading.value.toString()+"_calcutePrice");
                 if(_cartShopController.loading.value==false){
                return Text("${_cartShopController.totalPrice} تومان ",textAlign: TextAlign.end,style: TextStyle(fontSize: 18.0));
               }
@@ -76,14 +80,14 @@ class CartShopPage extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         itemBuilder: (_, int index) {
-          return _listItem(_cartShopController.listCartShop[index]);
+          return _listItem(_cartShopController.listCartShop[index],index);
         },
         itemCount: _cartShopController.listCartShop.length,
       ),
     );
   }
 
-  Widget _listItem(CartShop cartShop) {
+  Widget _listItem(CartShop cartShop,int index) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Card(
@@ -91,7 +95,7 @@ class CartShopPage extends StatelessWidget {
         child: Container(
           height: 180.0,
           child: Row(
-            children: [_imagAndCutomAdder(cartShop), _nameAndPrice(cartShop), _btnDelete()],
+            children: [_imagAndCutomAdder(cartShop,index), _nameAndPrice(cartShop), _btnDelete()],
           ),
         ),
       ),
@@ -103,7 +107,9 @@ class CartShopPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.delete), label: Text("حذف"))
+        ElevatedButton.icon(onPressed: (){
+
+        }, icon: Icon(Icons.delete), label: Text("حذف"))
       ],
     );
   }
@@ -127,7 +133,7 @@ class CartShopPage extends StatelessWidget {
     );
   }
 
-  Column _imagAndCutomAdder(CartShop cartShop) {
+  Column _imagAndCutomAdder(CartShop cartShop,int index) {
     return Column(
       children: [
         GestureDetector(
@@ -149,10 +155,12 @@ class CartShopPage extends StatelessWidget {
             backgroundColor: Colors.red,
             textColor: Colors.black,
             onChangedAdd: (count) {
+              _cartShopController.listCartShop[index].count=count;
               _cartShopController.increaSePrice(cartShop, count);
             },
               onChangedRemove: (count){
                 _cartShopController.decresePrice(cartShop, count);
+                _cartShopController.listCartShop[index].count=count;
               }
 
             ,

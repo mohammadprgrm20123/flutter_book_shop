@@ -1,9 +1,13 @@
 
 
 import 'package:flutter_booki_shop/models/CartShop.dart';
+import 'package:flutter_booki_shop/models/purches.dart';
 import 'package:flutter_booki_shop/repository/AppRepository.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:shamsi_date/shamsi_date.dart';
+
+import '../shareprefrence.dart';
 
 class CartShopController extends GetxController{
 
@@ -71,5 +75,25 @@ class CartShopController extends GetxController{
 
     }
   }
+
+
+  purchesRequest(double price){
+    if(price==0){
+      Get.snackbar("خطا", "تعداد کالای شما صفر است");
+    }
+    else{
+      MySharePrefrence().getId().then((userId) {
+
+        Purches purches=new Purches();
+        purches.price =price.toString();
+        purches.userId =userId;
+
+        Gregorian gNow = Gregorian.now();
+        purches.date =gNow.toString();
+        _appRepository.requestForPurches(purches);
+      });
+    }
+  }
+
 
 }

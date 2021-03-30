@@ -2,6 +2,7 @@ import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:flutter_booki_shop/models/FavoriteItem.dart';
 import 'package:flutter_booki_shop/models/User.dart';
+import 'package:flutter_booki_shop/models/purches.dart';
 import 'package:flutter_booki_shop/server/api_client.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:get/get.dart';
@@ -144,6 +145,16 @@ class AppRepository {
     return list;
 
 }
+
+  requestForPurches(Purches purches){
+
+    _apiClient.dio.post("purches",data: purches.toJson()).then((value) {
+      Get.snackbar("تبریک!!!", "خرید با موفقیت انجام شد");
+    }).onError((error, stackTrace){
+      Get.snackbar("خطا", "مشکلی وبجود آمده است");
+    });
+
+  }
 
 
 

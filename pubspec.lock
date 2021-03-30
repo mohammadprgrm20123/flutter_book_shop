@@ -273,6 +273,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
+  shamsi_date:
+    dependency: "direct main"
+    description:
+      name: shamsi_date
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.12.0"
   share:
     dependency: "direct main"
     description:
