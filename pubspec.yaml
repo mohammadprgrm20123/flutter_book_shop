@@ -39,12 +39,14 @@ dependencies:
   share: ^2.0.1
   flutter_rating_bar: ^4.0.0
   image_picker: ^0.7.3
-
+  adder_cart_shop:
+    path: adder_cart_shop
   flutter_localizations:
     sdk: flutter
 
 
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
 

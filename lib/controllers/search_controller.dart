@@ -81,10 +81,10 @@ class SearchController extends GetxController {
         break;
       }
     }
-   return CheckCategury(selected);
+   return checkCategury(selected);
   }
 
-  String CheckCategury(int selected) {
+  String checkCategury(int selected) {
     switch(selected){
 
       case 1: return "داستانی" ;break;

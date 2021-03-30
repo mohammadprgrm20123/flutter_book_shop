@@ -35,11 +35,11 @@ class CartShop {
   }
 
   List<CartShop> CartShopListFromJson(List<dynamic> dynamicList){
-    List<CartShop> Cartshop = [];
+    List<CartShop> cartshop = [];
     dynamicList.forEach((element) {
-      Cartshop.add(CartShop.fromJson(element));
+      cartshop.add(CartShop.fromJson(element));
     });
-    return Cartshop;
+    return cartshop;
   }
 
 }

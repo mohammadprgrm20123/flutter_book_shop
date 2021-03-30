@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/profile_controller.dart';
-import 'package:flutter_booki_shop/custom_widgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/User.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';

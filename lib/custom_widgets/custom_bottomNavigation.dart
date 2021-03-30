@@ -3,6 +3,8 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_booki_shop/models/CartShop.dart';
+import 'package:flutter_booki_shop/views/cartshop/cart_shop_page.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
 import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';
@@ -40,7 +42,7 @@ class CustomBtnNavigation {
         onTap: (int index) {
           switch(index){
             case 0:{
-
+              Get.to(()=>CartShopPage());
             }break;
 
             case 1:{
