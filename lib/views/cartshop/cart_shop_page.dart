@@ -14,101 +14,124 @@ class CartShopPage extends StatelessWidget{
       appBar: _appBar(context),
       body: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (_, int index) {
-                return Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Card(
-                      elevation: 8.0,
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  //Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
-                                },
-                                child: FadeInImage.assetNetwork(
-                                  fadeInCurve: Curves.linearToEaseOut,
-                                  image: "https://imgcdn.taaghche.com/frontCover/4096.jpg?w=400",
-                                  placeholder: "",
-                                  height: 120.0,
-                                  width: 100.0,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CustomAdder(
-                                  value: 2,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.black,
-                                  onChanged: (value) {
-                                    print(value);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 200.0,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 10.0,),
-                                Text("شوهر آهو خانم"),
-                                Text("قیمت : ${20000000}"),
-                              ],
-                            ),
-                          ),
-                          //SizedBox(width: 70.0,),
-                          Padding(
-                            padding: const EdgeInsets.only(right:20.0),
-                            child: Container(
-                              height: 200.0,
-                              child: Column(
-                                children: [
-                                  ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.delete), label: Text("حذف"))
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-              itemCount: 20,
-            ),
-          ),
-          Container(
-            child: Card(
-              elevation: 5.0,
-              child: Row(
-
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(onPressed: (){}, child: Text("ادامه فرایند")),
-                  ),
-                  Expanded(child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("${50000000} تومان ",textAlign: TextAlign.end,style: TextStyle(fontSize: 18.0),),
-                  ))
-                ],
-              ),
-              color: Colors.blue[100],
-            ),
-            height: 80.0,
-
-          )
+          _listCartShop(),
+          _calcutePrice()
         ],
       )
       ,
     );
     throw UnimplementedError();
+  }
+
+  Container _calcutePrice() {
+    return Container(
+          child: Card(
+            elevation: 5.0,
+            child: Row(
+
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(onPressed: (){}, child: Text("ادامه فرایند")),
+                ),
+                Expanded(child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("${50000000} تومان ",textAlign: TextAlign.end,style: TextStyle(fontSize: 18.0),),
+                ))
+              ],
+            ),
+            color: Colors.blue[100],
+          ),
+          height: 80.0,
+
+        );
+  }
+
+  Expanded _listCartShop() {
+    return Expanded(
+          child: ListView.builder(
+            itemBuilder: (_, int index) {
+              return _listItem();
+            },
+            itemCount: 20,
+          ),
+        );
+  }
+
+  Container _listItem() {
+    return Container(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Card(
+                  elevation: 8.0,
+                  child: Row(
+                    children: [
+                      _imagAndCutomAdder(),
+                      _nameAndPrice(),
+                      _btnDelete()
+                    ],
+                  ),
+                ),
+              ),
+            );
+  }
+
+  Padding _btnDelete() {
+    return Padding(
+                      padding: const EdgeInsets.only(right:20.0),
+                      child: Container(
+                        height: 200.0,
+                        child: Column(
+                          children: [
+                            ElevatedButton.icon(onPressed: (){}, icon: Icon(Icons.delete), label: Text("حذف"))
+                          ],
+                        ),
+                      ),
+                    );
+  }
+
+  Container _nameAndPrice() {
+    return Container(
+                      height: 200.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10.0,),
+                          Text("شوهر آهو خانم"),
+                          Text("قیمت : ${20000000}"),
+                        ],
+                      ),
+                    );
+  }
+
+  Column _imagAndCutomAdder() {
+    return Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            //Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
+                          },
+                          child: FadeInImage.assetNetwork(
+                            fadeInCurve: Curves.linearToEaseOut,
+                            image: "https://imgcdn.taaghche.com/frontCover/4096.jpg?w=400",
+                            placeholder: "",
+                            height: 120.0,
+                            width: 100.0,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomAdder(
+                            value: 2,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.black,
+                            onChanged: (value) {
+                              print(value);
+                            },
+                          ),
+                        ),
+                      ],
+                    );
   }
   AppBar _appBar(BuildContext context) {
     return AppBar(
