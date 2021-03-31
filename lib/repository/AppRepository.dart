@@ -137,7 +137,6 @@ class AppRepository {
     List<CartShop> list =new List<CartShop>();
     await _apiClient.dio.get("cartShop").then((value) {
       list = CartShop().CartShopListFromJson(value.data);
-
     }).onError((error, stackTrace) {
       Get.snackbar("خطا", "مشکلی وبجود آمده است");
     });
@@ -158,6 +157,21 @@ class AppRepository {
 
   requedtForDelete(CartShop cartShop){
     _apiClient.dio.delete("cartshop/${cartShop.id}");
+  }
+
+
+
+ Future<List<Purches>> getAllPerches() async{
+    List<Purches> purchesList=new List<Purches>();
+    await _apiClient.dio.get("purches").then((value) {
+        print(value.data.toString());
+        purchesList = Purches().purchesListFromJson(value.data);
+
+      }).onError((error, stackTrace){
+        Get.snackbar("خطا", "مشکلی بوجود آمده است");
+      });
+    return purchesList;
+
   }
 
 }

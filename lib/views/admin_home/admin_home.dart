@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/admin_home_controller.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
+import 'package:flutter_booki_shop/views/admin_report.dart';
 import 'package:get/get.dart';
 
 class AdminHome extends StatelessWidget{
@@ -21,10 +22,11 @@ class AdminHome extends StatelessWidget{
             return Center(child: CircularProgressIndicator());
           }
           else{
-            if(_adminHomeController.listAllBook.length==0){
+            if(_adminHomeController.listAllBooks.length==0){
               return Center(child: Text("موردی وجود ندارد"));
+            }else{
+              return _listBooks();
             }
-            return _listBooks();
           }
         }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -41,9 +43,9 @@ class AdminHome extends StatelessWidget{
           Expanded(
             child: ListView.builder(
               itemBuilder: (_, int index) {
-                return  _listItem(_adminHomeController.listAllBook[index]);
+                return  _listItem(_adminHomeController.listAllBooks[index]);
               },
-              itemCount: _adminHomeController.listAllBook.length,
+              itemCount: _adminHomeController.listAllBooks.length,
             ),
           )
         ],
@@ -102,21 +104,27 @@ class AdminHome extends StatelessWidget{
   Widget _image(Book book) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          GestureDetector(
-            onTap: () {
-              //Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
-            },
-            child: FadeInImage.assetNetwork(
-              fadeInCurve: Curves.linearToEaseOut,
-              image: book.url,
-              placeholder: "",
-              height: 120.0,
-              width: 80.0,
-            ),
+      child: Card(
+        elevation: 7.0,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  //Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
+                },
+                child: FadeInImage.assetNetwork(
+                  fadeInCurve: Curves.linearToEaseOut,
+                  image: book.url,
+                  placeholder: "",
+                  height: 120.0,
+                  width: 80.0,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -153,7 +161,7 @@ class AdminHome extends StatelessWidget{
       onPressed: (){
 
       },
-      child: Icon(Icons.home_outlined),
+      child: Icon(Icons.add),
     );
   }
   AnimatedBottomNavigationBar _bottomNavigationBar() {
@@ -171,6 +179,7 @@ class AdminHome extends StatelessWidget{
         onTap: (int index) {
           switch(index){
             case 0:{
+              Get.to(()=>AdminReport());
             }break;
 
             case 1:{

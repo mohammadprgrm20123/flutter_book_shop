@@ -35,7 +35,7 @@ class Purches {
     data['price'] = this._price;
     return data;
   }
-  List<Purches> CartShopListFromJson(List<dynamic> dynamicList){
+  List<Purches> purchesListFromJson(List<dynamic> dynamicList){
     List<Purches> p = [];
     dynamicList.forEach((element) {
       p.add(Purches.fromJson(element));
