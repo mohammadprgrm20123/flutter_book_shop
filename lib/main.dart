@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/main_controller.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'package:flutter_booki_shop/views/admin/admin_home.dart';
+import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';

@@ -26,8 +26,6 @@ class Favorite extends StatelessWidget{
       bottomNavigationBar: CustomBtnNavigation().bottomNavigationBar(),
       body: _listBooks()
     );
-
-    throw UnimplementedError();
   }
 
   Widget _listBooks() {
