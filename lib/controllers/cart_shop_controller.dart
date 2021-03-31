@@ -96,4 +96,9 @@ class CartShopController extends GetxController{
   }
 
 
+  requestForDeletecartSHopItem(CartShop cartShop){
+    _appRepository.requedtForDelete(cartShop);
+  }
+
+
 }

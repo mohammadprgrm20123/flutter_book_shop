@@ -156,6 +156,8 @@ class AppRepository {
 
   }
 
-
+  requedtForDelete(CartShop cartShop){
+    _apiClient.dio.delete("cartshop/${cartShop.id}");
+  }
 
 }

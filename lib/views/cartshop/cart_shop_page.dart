@@ -95,23 +95,33 @@ class CartShopPage extends StatelessWidget {
         child: Container(
           height: 180.0,
           child: Row(
-            children: [_imagAndCutomAdder(cartShop,index), _nameAndPrice(cartShop), _btnDelete()],
+            children: [_imagAndCutomAdder(cartShop,index), _nameAndPrice(cartShop), _btnDelete(cartShop)],
           ),
         ),
       ),
     );
   }
 
-  Widget _btnDelete() {
+  Widget _btnDelete(CartShop cartShop) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ElevatedButton.icon(onPressed: (){
-
+          _removeItemLIst(cartShop);
         }, icon: Icon(Icons.delete), label: Text("حذف"))
       ],
     );
+  }
+
+  void _removeItemLIst(CartShop cartShop) {
+     _cartShopController.loading(true);
+     _cartShopController.listCartShop.remove(cartShop);
+     if(cartShop.count!=0){
+       _cartShopController.decresePrice(cartShop,cartShop.count);
+     }
+    _cartShopController.loading(false);
+     requedtForDelete(cartShop);
   }
 
   Widget _nameAndPrice(CartShop cartShop) {
@@ -183,5 +193,9 @@ class CartShopPage extends StatelessWidget {
     return Text("سبد خرید",
         style: TextStyle(
             fontFamily: 'Dana', color: Colors.black, fontSize: 17.0));
+  }
+
+  void requedtForDelete(CartShop cartShop) {
+    _cartShopController.requestForDeletecartSHopItem(cartShop);
   }
 }
