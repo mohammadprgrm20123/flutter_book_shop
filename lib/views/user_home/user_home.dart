@@ -156,7 +156,7 @@ class UserHome extends StatelessWidget {
                     child: FadeInImage.assetNetwork(
                       fadeInCurve: Curves.linearToEaseOut,
                       image: _homeController.listPopularBook[index].url,
-                      placeholder: 'assets/images/1.jpg',
+                      placeholder: 'assets/images/noImage.jpg',
                     ),
                   ),
                 ),
@@ -205,7 +205,7 @@ class UserHome extends StatelessWidget {
                     child: FadeInImage.assetNetwork(
                       fadeInCurve: Curves.linearToEaseOut,
                       image: _homeController.listBestBook[index].url,
-                      placeholder: 'assets/images/1.jpg',
+                      placeholder: 'assets/images/noImage.jpg',
                     ),
                   ),
                 ),

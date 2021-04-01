@@ -52,7 +52,7 @@ class AdminReport extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("خرید موفق"),
-              Text("تاریخ    :  ${_getDate(purches)}"),
+              Text("تاریخ     :  ${_getDate(purches)}"),
               Text(" قیمت    :${purches.price}"),
             ],
           ),

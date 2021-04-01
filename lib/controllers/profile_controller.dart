@@ -38,11 +38,6 @@ class ProfileController extends GetxController{
       _appRepository.getUserProfile(value).then((value) {
         _loading(false);
         _user = value;
-        print(_user.email);
-        print(_user.userName);
-        print(_user.role);
-        print(_user.password);
-        print(_user.id);
         _imageUint8 = base64Decode(_user.image);
       }).onError((error, stackTrace){
         _loading(false);
@@ -74,7 +69,7 @@ class ProfileController extends GetxController{
 
   saveUserData(User user){
    if(checkUserValues()){
-     _appRepository.sendUserData(user);
+     _appRepository.updateUserData(user);
    }
   }
 

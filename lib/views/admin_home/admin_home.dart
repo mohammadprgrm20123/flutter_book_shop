@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/admin_home_controller.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
+import 'package:flutter_booki_shop/views/addBook/add_book_page.dart';
 import 'package:flutter_booki_shop/views/admin_report.dart';
+import 'package:flutter_booki_shop/views/editbook/edit_book_page.dart';
 import 'package:get/get.dart';
 
 class AdminHome extends StatelessWidget{
@@ -12,8 +14,13 @@ class AdminHome extends StatelessWidget{
 
   AdminHomeController _adminHomeController =Get.put(AdminHomeController());
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
+    print("build");
     // TODO: implement build
     return Scaffold(
         appBar: _appBar(context),
@@ -116,8 +123,9 @@ class AdminHome extends StatelessWidget{
                 },
                 child: FadeInImage.assetNetwork(
                   fadeInCurve: Curves.linearToEaseOut,
-                  image: book.url,
-                  placeholder: "",
+                  image: "${book.url}",
+                  placeholder: "assets/images/noImage.jpg",
+
                   height: 120.0,
                   width: 80.0,
                 ),
@@ -135,7 +143,9 @@ class AdminHome extends StatelessWidget{
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ElevatedButton.icon(
-            onPressed: () {}, icon: Icon(Icons.edit),label: Text("ویرایش"))
+            onPressed: () {
+              Get.to(()=>EditBookPage(book));
+            }, icon: Icon(Icons.edit),label: Text("ویرایش"))
       ],
     );
   }
@@ -156,10 +166,11 @@ class AdminHome extends StatelessWidget{
   }
 
 
+
   FloatingActionButton _floatingActionButton() {
     return FloatingActionButton(
       onPressed: (){
-
+        Get.to(()=>AddBookPage());
       },
       child: Icon(Icons.add),
     );

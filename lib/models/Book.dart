@@ -11,15 +11,16 @@ class Book {
   double score;
   String category;
   String pages;
-  String releaseDate;
-  String createdAt;
+  String releaseDate="";
+  String createdAt="";
   String url;
   String autherName;
   String desc;
-  Tags tags;
+  Tags tags=new Tags();
 
-  Book();
-
+  Book({this.price,this.bookName,this.publisherName,this.translator,this.score
+    ,this.category,this.pages,this.releaseDate,this.createdAt,this.url
+    ,this.autherName,this.desc,this.tags});
   Book.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'];
@@ -57,6 +58,25 @@ class Book {
     }
     return data;
   }
+  Map<String, dynamic> toJsonWithoutId() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['price'] = this.price;
+    data['bookName'] = this.bookName;
+    data['publisherName'] = this.publisherName;
+    data['translator'] = this.translator;
+    data['score'] = this.score;
+    data['category'] = this.category;
+    data['pages'] = this.pages;
+    data['releaseDate'] = this.releaseDate;
+    data['createdAt'] = this.createdAt;
+    data['url'] = this.url;
+    data['autherName'] = this.autherName;
+    data['desc'] = this.desc;
+    if (this.tags != null) {
+      data['tags'] = this.tags.toJson();
+    }
+    return data;
+  }
 
   List<Book> BookListFromJson(List<dynamic> dynamicList){
     List<Book> listBook = [];
@@ -70,11 +90,11 @@ class Book {
 }
 
 class Tags {
-  String tag0;
-  String tag1;
-  String tag2;
-  String tag3;
-  String tag4;
+  String tag0="";
+  String tag1="";
+  String tag2="";
+  String tag3="";
+  String tag4="";
 
   Tags({this.tag0, this.tag1, this.tag2, this.tag3, this.tag4});
 

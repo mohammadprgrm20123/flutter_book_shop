@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:flutter_booki_shop/models/FavoriteItem.dart';
@@ -32,6 +33,7 @@ class AppRepository {
     await _apiClient.dio.get("books").then((value) {
       listbook = Book().BookListFromJson(value.data);
     }).onError((error, stackTrace) {
+      print(error.toString());
       throw "error";
     });
     return listbook;
@@ -67,10 +69,10 @@ class AppRepository {
   }
 
   Future<CartShop> setValuesOFCartShop(Book book) async {
-     CartShop cartShop=new CartShop();
-     cartShop.book=book;
-     await MySharePrefrence().getId().then((value) {
-       cartShop.userid =value;
+    CartShop cartShop=new CartShop();
+    cartShop.book=book;
+    await MySharePrefrence().getId().then((value) {
+      cartShop.userid =value;
     });
     cartShop.count = 1;
     return cartShop;
@@ -112,18 +114,14 @@ class AppRepository {
       throw "error";
     });
     return user;
-
   }
 
 
-  sendUserData(User user) async{
-    print(user.id.toString());
-    print(user.userName.toString());
-    print(user.phone.toString());
-    print(user.image.toString());
-    print(user.email.toString());
+  updateUserData(User user) async {
     print(user.toJson().toString());
-    await _apiClient.dio.put("users/${user.id}",data: user.toJson()).then((value) {
+    await _apiClient.dio
+        .put("users/${user.id}", data: user.toJson())
+        .then((value) {
       print(value.data.toString());
     }).onError((error, stackTrace) {
       throw "error";
@@ -133,7 +131,6 @@ class AppRepository {
 
 
   Future<List<CartShop>> getAllItemsOfCartShops() async{
-
     List<CartShop> list =new List<CartShop>();
     await _apiClient.dio.get("cartShop").then((value) {
       list = CartShop().CartShopListFromJson(value.data);
@@ -142,17 +139,14 @@ class AppRepository {
     });
 
     return list;
-
-}
+  }
 
   requestForPurches(Purches purches){
-
     _apiClient.dio.post("purches",data: purches.toJson()).then((value) {
       Get.snackbar("تبریک!!!", "خرید با موفقیت انجام شد");
     }).onError((error, stackTrace){
       Get.snackbar("خطا", "مشکلی وبجود آمده است");
     });
-
   }
 
   requedtForDelete(CartShop cartShop){
@@ -160,18 +154,39 @@ class AppRepository {
   }
 
 
-
- Future<List<Purches>> getAllPerches() async{
+  Future<List<Purches>> getAllPerches() async{
     List<Purches> purchesList=new List<Purches>();
     await _apiClient.dio.get("purches").then((value) {
-        print(value.data.toString());
-        purchesList = Purches().purchesListFromJson(value.data);
-
-      }).onError((error, stackTrace){
-        Get.snackbar("خطا", "مشکلی بوجود آمده است");
-      });
+      print(value.data.toString());
+      purchesList = Purches().purchesListFromJson(value.data);
+    }).onError((error, stackTrace) {
+      Get.snackbar("خطا", "مشکلی بوجود آمده است");
+    });
     return purchesList;
-
   }
 
+  requestAddBook(Book book) async {
+    await _apiClient.dio
+        .post("books", data: book.toJsonWithoutId())
+        .then((value) {
+      Get.snackbar("تبریک!!", "محصول مورد نظر با موفقیت ثبت شد",
+          backgroundColor: Colors.green[200]);
+    }).onError((error, stackTrace) {
+      Get.snackbar("خطا", "مشکلی بوجود آمده است",
+          backgroundColor: Colors.red[200]);
+    });
+  }
+
+  requestForEditBook(Book book) async {
+    print(book.id.toString()+"--------");
+    await _apiClient.dio
+        .put("books/${book.id}", data: book.toJson())
+        .then((value) {
+      Get.snackbar("تبریک!!", "محصول مورد نظر با موفقیت  ویرایش شد",
+          backgroundColor: Colors.green[200]);
+    }).onError((error, stackTrace) {
+      Get.snackbar("خطا", "مشکلی بوجود آمده است",
+          backgroundColor: Colors.red[200]);
+    });
+  }
 }
