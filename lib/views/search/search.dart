@@ -239,7 +239,7 @@ class Search extends StatelessWidget {
         values: _currentRangeValues.value,
         min: MIN_VALUE_PRICE,
         max: MAX_VALUE_PRICE,
-        divisions: DIVISTIONS,
+        divisions: DIVISIONS,
         labels: RangeLabels(
           _currentRangeValues.value.start.round().toString() +
               S.of(Get.context).toman,

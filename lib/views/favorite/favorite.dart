@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 
 class Favorite extends StatelessWidget{
 
+  static const int CROSS_AXIS_COUNT =3;
   FavoriteController _favoriteController = Get.put(FavoriteController());
 
   @override
@@ -35,19 +36,10 @@ class Favorite extends StatelessWidget{
       }
       else{
         if(_favoriteController.listFavorite.length==0){
-          return Center(child: Text("موردی وجود ندارد "));
+          return Center(child: Text(S.of(Get.context).not_exit_cases));
         }
         else{
-          return Container(
-            child: GridView.builder(
-              itemCount: _favoriteController.listFavorite.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3),
-              itemBuilder: (BuildContext context, int index) {
-                return _itemList(_favoriteController.listFavorite.elementAt(index));
-              },
-            ),
-          );
+          return _gridView();
         }
       }
     });
@@ -55,39 +47,62 @@ class Favorite extends StatelessWidget{
 
   }
 
-  GestureDetector _itemList(FavoriteItem listFavorite) {
+  Widget _gridView() {
+    return Container(
+          child: GridView.builder(
+            itemCount: _favoriteController.listFavorite.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: CROSS_AXIS_COUNT),
+            itemBuilder: (BuildContext context, int index) {
+              return _itemList(_favoriteController.listFavorite.elementAt(index));
+            },
+          ),
+        );
+  }
+
+  Widget _itemList(FavoriteItem listFavorite) {
     return GestureDetector(
             onTap: (){
-              Get.to(DetailsBook(1));
+              Get.to(DetailsBook(listFavorite.book.id));
             },
-            child: Card(
-              elevation: 7.0,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            child: _card(listFavorite),
+          );
+  }
 
-                      child: ClipRRect(
-                        borderRadius: new BorderRadius.circular(4.0),
-                        child: Image.network(
-                          listFavorite.book.url,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: Text(
-                        listFavorite.book.bookName,
-                      ),
-                    ),
-
-                  ],
-                ),
+  Widget _card(FavoriteItem listFavorite) {
+    return Card(
+            elevation: 7.0,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  _imageBook(listFavorite),
+                  _textBookName(listFavorite),
+                ],
               ),
             ),
           );
+  }
+
+  Widget _textBookName(FavoriteItem listFavorite) {
+    return Center(
+                  child: Text(
+                    listFavorite.book.bookName,
+                  ),
+                );
+  }
+
+  Widget _imageBook(FavoriteItem listFavorite) {
+    return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: ClipRRect(
+                    borderRadius: new BorderRadius.circular(4.0),
+                    child: Image.network(
+                      listFavorite.book.url,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
   }
 
   AppBar _appBar(BuildContext context) {
@@ -98,11 +113,11 @@ class Favorite extends StatelessWidget{
     );
   }
 
-  Text _title(BuildContext context) {
+  Widget _title(BuildContext context) {
     return Text(
       S.of(context).favorite,
       style:
-      TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0),
+      TextStyle(fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0),
     );
   }
 
