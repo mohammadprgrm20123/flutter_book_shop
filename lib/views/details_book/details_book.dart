@@ -9,16 +9,13 @@ import 'package:share/share.dart';
 
 class DetailsBook extends StatelessWidget {
 
+  static const int MAX_STARS =5;
   final int _bookId;
-
-
   DetailController _detailController = Get.put(DetailController());
 
   DetailsBook(this._bookId) {
     _detailController.getDeatilsBook(_bookId);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,21 +38,7 @@ class DetailsBook extends StatelessWidget {
         }
         else{
          return Column(
-            children: [
-              _image(_detailController.book.url),
-              _bookName(_detailController.book.bookName),
-              _autherName(_detailController.book.autherName,_detailController.book.translator),
-              _score(_detailController.book.score),
-              _btnAddToShop(context,_detailController.book.price),
-              _btnAddFavorite(context),
-              _divider(),
-              _introduction(context),
-              _description(context,_detailController.book.desc),
-              _dividerThikness10(),
-              _otherPropertiesOfBook(_detailController.book),
-              _dividerThikness10(),
-              _listTags(_detailController.book.tags)
-            ],
+            children: _children(context),
           );
         }
       });
@@ -63,9 +46,27 @@ class DetailsBook extends StatelessWidget {
 
       }
 
+  List<Widget> _children(BuildContext context) {
+    return [
+            _image(_detailController.book.url),
+            _bookName(_detailController.book.bookName),
+            _autherName(_detailController.book.autherName,_detailController.book.translator),
+            _score(_detailController.book.score),
+            _btnAddToShop(context,_detailController.book.price),
+            _btnAddFavorite(context),
+            _divider(),
+            _introduction(context),
+            _description(context,_detailController.book.desc),
+            _dividerThikness10(),
+            _otherPropertiesOfBook(_detailController.book),
+            _dividerThikness10(),
+            _listTags(_detailController.book.tags)
+          ];
+  }
 
 
-  Wrap _listTags(Tags tags) {
+
+  Widget _listTags(Tags tags) {
 
     return Wrap(
               direction: Axis.horizontal,
@@ -79,7 +80,7 @@ class DetailsBook extends StatelessWidget {
             );
   }
 
-  Container _itemTag(String tag) {
+  Widget _itemTag(String tag) {
     return Container(
                 margin: const EdgeInsets.only(right: 8.0, bottom: 15.0),
                 decoration: BoxDecoration(
@@ -93,7 +94,7 @@ class DetailsBook extends StatelessWidget {
               );
   }
 
-  SingleChildScrollView _otherPropertiesOfBook(Book book) {
+  Widget _otherPropertiesOfBook(Book book) {
     return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -108,7 +109,7 @@ class DetailsBook extends StatelessWidget {
             );
   }
 
-  Padding _coutPages(String countPage) {
+  Widget _coutPages(String countPage) {
     return Padding(
                   padding: const EdgeInsets.only(left:8.0),
                   child: Card(
@@ -130,7 +131,7 @@ class DetailsBook extends StatelessWidget {
                 );
   }
 
-  Card _publisher(String pulisher) {
+  Widget _publisher(String pulisher) {
     return Card(
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -144,7 +145,7 @@ class DetailsBook extends StatelessWidget {
                 );
   }
 
-  Card _price(String price) {
+  Widget _price(String price) {
     return Card(
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -158,7 +159,7 @@ class DetailsBook extends StatelessWidget {
                 );
   }
 
-  Padding _category(String catagory) {
+  Widget _category(String catagory) {
     return Padding(
                   padding: const EdgeInsets.only(right:8.0),
                   child: Card(
@@ -175,7 +176,7 @@ class DetailsBook extends StatelessWidget {
                 );
   }
 
-  Divider _dividerThikness10() {
+  Widget _dividerThikness10() {
     return Divider(
               height: 10.0,
               thickness: 1.0,
@@ -183,14 +184,14 @@ class DetailsBook extends StatelessWidget {
             );
   }
 
-  Padding _description(BuildContext context, String desc) {
+  Widget _description(BuildContext context, String desc) {
     return Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(desc,style: TextStyle(fontSize: 13.0,color: Colors.black45)),
             );
   }
 
-  Align _introduction(BuildContext context) {
+  Widget _introduction(BuildContext context) {
     return Align(
                 alignment: Alignment.topRight,
                 child: Padding(
@@ -199,7 +200,7 @@ class DetailsBook extends StatelessWidget {
                 ));
   }
 
-  Padding _divider() {
+  Widget _divider() {
     return Padding(
               padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 20.0),
               child: Divider(
@@ -209,52 +210,60 @@ class DetailsBook extends StatelessWidget {
             );
   }
 
-  Padding _btnAddFavorite(BuildContext context) {
+  Widget _btnAddFavorite(BuildContext context) {
     return Padding(
               padding: const EdgeInsets.symmetric(horizontal:30.0,vertical: 10.0),
               child: SizedBox(
                 height: 50.0,
                 width: MediaQuery.of(context).size.width,
-                child: OutlineButton(
-                    child:Obx((){
-                      if(_detailController.loadingBtnClick.value==true){
-                        return CircularProgressIndicator();
-                      }
-                      else{
-                        return new Text(S.of(context).add_to_favorite);
-                      }
-                    }),
-                    onPressed: (){
-                      _detailController.addBookToFavoriteList(_detailController.book);
-                    },
-                    shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(4.0))
-                ),
+                child: _outlineButton(context),
               ),
             );
   }
 
-  Padding _btnAddToShop(BuildContext context, String price) {
+  Widget _outlineButton(BuildContext context) {
+    return OutlineButton(
+                  child:Obx((){
+                    if(_detailController.loadingBtnClick.value==true){
+                      return CircularProgressIndicator();
+                    }
+                    else{
+                      return new Text(S.of(context).add_to_favorite);
+                    }
+                  }),
+                  onPressed: (){
+                    _detailController.addBookToFavoriteList(_detailController.book);
+                  },
+                  shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(4.0))
+              );
+  }
+
+  Widget _btnAddToShop(BuildContext context, String price) {
     return Padding(
               padding: const EdgeInsets.symmetric(horizontal:30.0),
               child: SizedBox(
                   height: 50.0,
                   width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(onPressed: (){
-                    _detailController.addBookToCartShop(_detailController.book);
-                  },
-                      child: Obx((){
-                        if(_detailController.loadingBtnClick.value==true){
-                          return CircularProgressIndicator();
-                        }
-                        else{
-                         return Text('اضافه کردن به سبد خرید    $price تومان ');
-                        }
-                      }) ,
-                  )),
+                  child: _btn(price)),
             );
   }
 
-  Row _score(double score) {
+  Widget _btn(String price) {
+    return ElevatedButton(onPressed: (){
+                  _detailController.addBookToCartShop(_detailController.book);
+                },
+                    child: Obx((){
+                      if(_detailController.loadingBtnClick.value==true){
+                        return CircularProgressIndicator();
+                      }
+                      else{
+                       return Text('اضافه کردن به سبد خرید    $price تومان ');
+                      }
+                    }) ,
+                );
+  }
+
+  Widget _score(double score) {
     return Row(
               children: [
                 Padding(
@@ -265,33 +274,42 @@ class DetailsBook extends StatelessWidget {
                     size: 30.0,
                   ),
                   onPressed: () {
-                    print("sddsdsdsdsdsdsd");
-                    Share.share("${_detailController.book.bookName} \n ${_detailController.book.desc} ");
+                    _shareData();
                   }),
                 ),
-                Expanded(child: Text('$score/5',textAlign: TextAlign.end,style: TextStyle(fontSize: 14.0),)),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: RatingBar.builder(
-                    initialRating: score,
-                    minRating: 1,
-                    wrapAlignment: WrapAlignment.start,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemSize: 20.0,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    )
-                  ),
-                ),
+                _textScore(score),
+                _ratingBar(score),
               ],
             );
   }
 
-  Padding _autherName(String autherName, String translator) {
+  Widget _textScore(double score) => Expanded(child: Text('$score/$MAX_STARS',textAlign: TextAlign.end,style: TextStyle(fontSize: 14.0),));
+
+  Widget _ratingBar(double score) {
+    return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: RatingBar.builder(
+                  initialRating: score,
+                  minRating: 1,
+                  wrapAlignment: WrapAlignment.start,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: MAX_STARS,
+                  itemSize: 20.0,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  )
+                ),
+              );
+  }
+
+  void _shareData() {
+     Share.share("${_detailController.book.bookName} \n ${_detailController.book.desc} ");
+  }
+
+  Widget _autherName(String autherName, String translator) {
     return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
@@ -301,7 +319,7 @@ class DetailsBook extends StatelessWidget {
             );
   }
 
-  Padding _bookName(String bookName) {
+  Widget _bookName(String bookName) {
     return Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
@@ -312,43 +330,44 @@ class DetailsBook extends StatelessWidget {
             );
   }
 
-  Center _image(String url) {
+  Widget _image(String url) {
     return Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 12.0),
-                child: Card(
-                  elevation: 10.0,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: FadeInImage.assetNetwork(
-                      fadeInCurve: Curves.bounceIn,
-                      height: 240.0,
-                      image:
-                          url,
-                      placeholder: 'assets/images/1.jpg',
-                    ),
-                  ),
-                ),
+                child: _cardImageBook(url),
               ),
             );
+  }
+
+  Widget _cardImageBook(String url) {
+    return Card(
+                elevation: 10.0,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: FadeInImage.assetNetwork(
+                    fadeInCurve: Curves.bounceIn,
+                    height: 240.0,
+                    image:
+                        url,
+                    placeholder: 'assets/images/1.jpg',
+                  ),
+                ),
+              );
   }
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      title: _titile(context),
+      title: _title(context),
       centerTitle: true,
       iconTheme: IconThemeData(color: Colors.black),
     );
   }
 
-  Text _titile(BuildContext context) {
+  Widget _title(BuildContext context) {
     return Text(S.of(context).details,
         style: TextStyle(
-            fontFamily: 'Dana', color: Colors.black, fontSize: 17.0));
-  }
-
-  void addTocart() {
+            fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
   }
 
 }
