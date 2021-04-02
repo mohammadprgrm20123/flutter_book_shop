@@ -1,12 +1,11 @@
 
-
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:flutter_booki_shop/models/purches.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shamsi_date/shamsi_date.dart';
-
 import '../shareprefrence.dart';
 
 class CartShopController extends GetxController{
@@ -45,10 +44,7 @@ class CartShopController extends GetxController{
 
   List<CartShop> get listCartShop => _listCartShop;
 
-
-
   double calcuteTotalPrice(){
-
     if(_listCartShop!=null){
       _listCartShop.forEach((element) {
         totalPrice +=double.parse(element.book.price);
@@ -67,7 +63,6 @@ class CartShopController extends GetxController{
   }
 
   decresePrice(CartShop cartShop,int count){
-    print(count.toString()+"======");
     if(count==0){
       totalPrice.value = totalPrice.value-double.parse(cartShop.book.price);
     }else{
@@ -77,9 +72,9 @@ class CartShopController extends GetxController{
   }
 
 
-  purchesRequest(double price){
+  purchaseRequest(double price){
     if(price==0){
-      Get.snackbar("خطا", "تعداد کالای شما صفر است");
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).count_of_cart_shops_zero);
     }
     else{
       MySharePrefrence().getId().then((userId) {
@@ -96,7 +91,7 @@ class CartShopController extends GetxController{
   }
 
 
-  requestForDeletecartSHopItem(CartShop cartShop){
+  requestForDeleteCartShopItem(CartShop cartShop){
     _appRepository.requedtForDelete(cartShop);
   }
 

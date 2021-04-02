@@ -19,7 +19,7 @@ class EditBookPage extends StatelessWidget {
 
   TextEditingController _bookNameCtr =new TextEditingController();
   TextEditingController _priceCtr =new TextEditingController();
-  TextEditingController _autherNameCtr =new TextEditingController();
+  TextEditingController _authorNameCtr =new TextEditingController();
   TextEditingController _translatorNameCtr =new TextEditingController();
   TextEditingController _scoreCtr =new TextEditingController();
   TextEditingController _categoryCtr =new TextEditingController();
@@ -39,7 +39,7 @@ class EditBookPage extends StatelessWidget {
     _editBookController.book = book;
     _bookNameCtr.text =book.bookName;
     _priceCtr.text =book.price;
-    _autherNameCtr.text =book.autherName;
+    _authorNameCtr.text =book.authorName;
     _translatorNameCtr.text =book.translator;
     _scoreCtr.text =book.score.toString();
     _categoryCtr.text =book.category;
@@ -276,20 +276,20 @@ class EditBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
-          controller: _autherNameCtr,
-          onChanged: (autherName) {
-            _editBookController.book.autherName = autherName;
+          controller: _authorNameCtr,
+          onChanged: (authorName) {
+            _editBookController.book.authorName = authorName;
           },
-          decoration: _autherDecoration()),
+          decoration: _authorDecoration()),
     );
   }
 
-  InputDecoration _autherDecoration() {
+  InputDecoration _authorDecoration() {
     return InputDecoration(
             prefixIcon: Icon(Icons.account_circle),
             border: OutlineInputBorder(),
-            labelText: S.of(Get.context).auther_name,
-            hintText: S.of(Get.context).auther_name);
+            labelText: S.of(Get.context).author_name,
+            hintText: S.of(Get.context).author_name);
   }
 
   Widget _price() {
@@ -351,7 +351,7 @@ class EditBookPage extends StatelessWidget {
 
   bool checkEmpty() {
     if (_editBookController.book.bookName.isEmpty ||
-        _editBookController.book.autherName.isEmpty ||
+        _editBookController.book.authorName.isEmpty ||
         _editBookController.book.translator.isEmpty ||
         _editBookController.book.pages.isEmpty ||
         _editBookController.book.desc.isEmpty) {

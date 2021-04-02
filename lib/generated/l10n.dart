@@ -175,90 +175,90 @@ class S {
     );
   }
 
-  /// `معروف ترین ها`
+  /// `Populars`
   String get popular {
     return Intl.message(
-      'معروف ترین ها',
+      'Populars',
       name: 'popular',
       desc: '',
       args: [],
     );
   }
 
-  /// `کتاب های صوتی`
+  /// `Audios books`
   String get audio_books {
     return Intl.message(
-      'کتاب های صوتی',
+      'Audios books',
       name: 'audio_books',
       desc: '',
       args: [],
     );
   }
 
-  /// `خطا`
+  /// `Error`
   String get Error {
     return Intl.message(
-      'خطا',
+      'Error',
       name: 'Error',
       desc: '',
       args: [],
     );
   }
 
-  /// `کاربری با این مشخصات وجود ندارد`
+  /// `User with this Info `
   String get details_error {
     return Intl.message(
-      'کاربری با این مشخصات وجود ندارد',
+      'User with this Info ',
       name: 'details_error',
       desc: '',
       args: [],
     );
   }
 
-  /// `bookishop_user`
+  /// `There is no user with this profile`
   String get bookishopuser {
     return Intl.message(
-      'bookishop_user',
+      'There is no user with this profile',
       name: 'bookishopuser',
       desc: '',
       args: [],
     );
   }
 
-  /// `لطفا مقادیر را پر کنید`
+  /// `Please fill in the values`
   String get please_fill_parameters {
     return Intl.message(
-      'لطفا مقادیر را پر کنید',
+      'Please fill in the values',
       name: 'please_fill_parameters',
       desc: '',
       args: [],
     );
   }
 
-  /// `نام کاربری`
+  /// `userName`
   String get userName {
     return Intl.message(
-      'نام کاربری',
+      'userName',
       name: 'userName',
       desc: '',
       args: [],
     );
   }
 
-  /// `رمز عبور`
+  /// `Password`
   String get password {
     return Intl.message(
-      'رمز عبور',
+      'Password',
       name: 'password',
       desc: '',
       args: [],
     );
   }
 
-  /// `ورود`
+  /// `Enter`
   String get enter {
     return Intl.message(
-      'ورود',
+      'Enter',
       name: 'enter',
       desc: '',
       args: [],
@@ -275,20 +275,20 @@ class S {
     );
   }
 
-  /// `فارسی`
+  /// `Persion`
   String get persion {
     return Intl.message(
-      'فارسی',
+      'Persion',
       name: 'persion',
       desc: '',
       args: [],
     );
   }
 
-  /// `انگلیسی`
+  /// `English`
   String get English {
     return Intl.message(
-      'انگلیسی',
+      'English',
       name: 'English',
       desc: '',
       args: [],
@@ -305,431 +305,451 @@ class S {
     );
   }
 
-  /// `خروج`
+  /// `Exit`
   String get Exit {
     return Intl.message(
-      'خروج',
+      'Exit',
       name: 'Exit',
       desc: '',
       args: [],
     );
   }
 
-  /// `موردی وجود ندارد`
+  /// `There is no case`
   String get not_exit_cases {
     return Intl.message(
-      'موردی وجود ندارد',
+      'There is no case',
       name: 'not_exit_cases',
       desc: '',
       args: [],
     );
   }
 
-  /// `فیلتر بر اساس دسته بندی`
+  /// `Filter by category`
   String get filter_by_category {
     return Intl.message(
-      'فیلتر بر اساس دسته بندی',
+      'Filter by category',
       name: 'filter_by_category',
       desc: '',
       args: [],
     );
   }
 
-  /// `فیلتر  قیمت`
+  /// `Filter by crice`
   String get filter_price {
     return Intl.message(
-      'فیلتر  قیمت',
+      'Filter by crice',
       name: 'filter_price',
       desc: '',
       args: [],
     );
   }
 
-  /// `اعمال فیلتر`
+  /// `Apply filter`
   String get set_filter {
     return Intl.message(
-      'اعمال فیلتر',
+      'Apply filter',
       name: 'set_filter',
       desc: '',
       args: [],
     );
   }
 
-  /// `تومان`
+  /// `Toman`
   String get toman {
     return Intl.message(
-      'تومان',
+      'Toman',
       name: 'toman',
       desc: '',
       args: [],
     );
   }
 
-  /// `داستانی`
+  /// `Story`
   String get category_stoy {
     return Intl.message(
-      'داستانی',
+      'Story',
       name: 'category_stoy',
       desc: '',
       args: [],
     );
   }
 
-  /// `رمان`
+  /// `Noval`
   String get novel {
     return Intl.message(
-      'رمان',
+      'Noval',
       name: 'novel',
       desc: '',
       args: [],
     );
   }
 
-  /// `فلسفه`
+  /// `philosophy`
   String get philosophy {
     return Intl.message(
-      'فلسفه',
+      'philosophy',
       name: 'philosophy',
       desc: '',
       args: [],
     );
   }
 
-  /// `روانشناسی`
-  String get psychology {
-    return Intl.message(
-      'روانشناسی',
-      name: 'psychology',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `حماسی`
+  /// `epic`
   String get epic {
     return Intl.message(
-      'حماسی',
+      'epic',
       name: 'epic',
       desc: '',
       args: [],
     );
   }
 
-  /// `نام کتاب`
+  /// `Book name`
   String get book_name {
     return Intl.message(
-      'نام کتاب',
+      'Book name',
       name: 'book_name',
       desc: '',
       args: [],
     );
   }
 
-  /// `ویرایش محصول`
+  /// `Edit Book`
   String get edit_product {
     return Intl.message(
-      'ویرایش محصول',
+      'Edit Book',
       name: 'edit_product',
       desc: '',
       args: [],
     );
   }
 
-  /// `خطا`
+  /// `Error`
   String get error {
     return Intl.message(
-      'خطا',
+      'Error',
       name: 'error',
       desc: '',
       args: [],
     );
   }
 
-  /// `قیمت`
+  /// `price`
   String get price {
     return Intl.message(
-      'قیمت',
+      'price',
       name: 'price',
       desc: '',
       args: [],
     );
   }
 
-  /// `نام نویسنده`
-  String get auther_name {
+  /// `Author Name`
+  String get author_name {
     return Intl.message(
-      'نام نویسنده',
-      name: 'auther_name',
+      'Author Name',
+      name: 'author_name',
       desc: '',
       args: [],
     );
   }
 
-  /// `نام مترجم`
+  /// `Translator name`
   String get translator_name {
     return Intl.message(
-      'نام مترجم',
+      'Translator name',
       name: 'translator_name',
       desc: '',
       args: [],
     );
   }
 
-  /// `تعداد صفحات`
+  /// `number of pages`
   String get count_pages {
     return Intl.message(
-      'تعداد صفحات',
+      'number of pages',
       name: 'count_pages',
       desc: '',
       args: [],
     );
   }
 
-  /// `ناشر`
+  /// `Publisher`
   String get publisher {
     return Intl.message(
-      'ناشر',
+      'Publisher',
       name: 'publisher',
       desc: '',
       args: [],
     );
   }
 
-  /// `خلاصه کتاب`
+  /// `Summery of book`
   String get summery_of_book {
     return Intl.message(
-      'خلاصه کتاب',
+      'Summery of book',
       name: 'summery_of_book',
       desc: '',
       args: [],
     );
   }
 
-  /// `تگ اول`
+  /// `First Tag`
   String get firstTag {
     return Intl.message(
-      'تگ اول',
+      'First Tag',
       name: 'firstTag',
       desc: '',
       args: [],
     );
   }
 
-  /// `تگ دوم`
+  /// `Second Tag`
   String get second_tag {
     return Intl.message(
-      'تگ دوم',
+      'Second Tag',
       name: 'second_tag',
       desc: '',
       args: [],
     );
   }
 
-  /// `تگ سوم`
+  /// `Third Tag`
   String get third_tag {
     return Intl.message(
-      'تگ سوم',
+      'Third Tag',
       name: 'third_tag',
       desc: '',
       args: [],
     );
   }
 
-  /// `تگ چهارم`
+  /// `Forth Tag`
   String get forth_tag {
     return Intl.message(
-      'تگ چهارم',
+      'Forth Tag',
       name: 'forth_tag',
       desc: '',
       args: [],
     );
   }
 
-  /// `ثبت`
+  /// `Record`
   String get record {
     return Intl.message(
-      'ثبت',
+      'Record',
       name: 'record',
       desc: '',
       args: [],
     );
   }
 
-  /// `سبد خرید`
+  /// `Cart Shop`
   String get cart_shop {
     return Intl.message(
-      'سبد خرید',
+      'Cart Shop',
       name: 'cart_shop',
       desc: '',
       args: [],
     );
   }
 
-  /// `حذف`
+  /// `Delete`
   String get delete {
     return Intl.message(
-      'حذف',
+      'Delete',
       name: 'delete',
       desc: '',
       args: [],
     );
   }
 
-  /// `ادامه فرایند`
+  /// `Continue`
   String get continue1 {
     return Intl.message(
-      'ادامه فرایند',
+      'Continue',
       name: 'continue1',
       desc: '',
       args: [],
     );
   }
 
-  /// `خرید موفق`
+  /// `Success Purchase`
   String get success_purchase {
     return Intl.message(
-      'خرید موفق',
+      'Success Purchase',
       name: 'success_purchase',
       desc: '',
       args: [],
     );
   }
 
-  /// `تاریخ`
+  /// `Date`
   String get date {
     return Intl.message(
-      'تاریخ',
+      'Date',
       name: 'date',
       desc: '',
       args: [],
     );
   }
 
-  /// `گزارش خرید ها`
+  /// `Report Purchase`
   String get report_purchase {
     return Intl.message(
-      'گزارش خرید ها',
+      'Report Purchase',
       name: 'report_purchase',
       desc: '',
       args: [],
     );
   }
 
-  /// `دسته بندی`
+  /// `Category`
   String get category {
     return Intl.message(
-      'دسته بندی',
+      'Category',
       name: 'category',
       desc: '',
       args: [],
     );
   }
 
-  /// `امتیاز`
+  /// `Score`
   String get score {
     return Intl.message(
-      'امتیاز',
+      'Score',
       name: 'score',
       desc: '',
       args: [],
     );
   }
 
-  /// `ویرایش`
+  /// `Edit`
   String get edit {
     return Intl.message(
-      'ویرایش',
+      'Edit',
       name: 'edit',
       desc: '',
       args: [],
     );
   }
 
-  /// `مدیریت`
+  /// `Management`
   String get managment {
     return Intl.message(
-      'مدیریت',
+      'Management',
       name: 'managment',
       desc: '',
       args: [],
     );
   }
 
-  /// `اضافه کردن محصول`
+  /// `Add product`
   String get add_product {
     return Intl.message(
-      'اضافه کردن محصول',
+      'Add product',
       name: 'add_product',
       desc: '',
       args: [],
     );
   }
 
-  /// `کتاب مورد نظر به سبد خرید اضافه شد`
+  /// `The desired book was added to the cart`
   String get book_add_cart_shop {
     return Intl.message(
-      'کتاب مورد نظر به سبد خرید اضافه شد',
+      'The desired book was added to the cart',
       name: 'book_add_cart_shop',
       desc: '',
       args: [],
     );
   }
 
-  /// `کتاب مورد نظر به لیست علاقه مندی ها اضافه شد`
+  /// `The book was added to the favorites list`
   String get book_add_to_favortie {
     return Intl.message(
-      'کتاب مورد نظر به لیست علاقه مندی ها اضافه شد',
+      'The book was added to the favorites list',
       name: 'book_add_to_favortie',
       desc: '',
       args: [],
     );
   }
 
-  /// `ثبت شد`
+  /// `it is registered`
   String get record_done {
     return Intl.message(
-      'ثبت شد',
+      'it is registered',
       name: 'record_done',
       desc: '',
       args: [],
     );
   }
 
-  /// `مشکلی وبجود آمده است`
+  /// `There is a problem`
   String get has_problem {
     return Intl.message(
-      'مشکلی وبجود آمده است',
+      'There is a problem',
       name: 'has_problem',
       desc: '',
       args: [],
     );
   }
 
-  /// `محصول مورد نظر با موفقیت ثبت شد`
+  /// `The product was successfully registered`
   String get record_product {
     return Intl.message(
-      'محصول مورد نظر با موفقیت ثبت شد',
+      'The product was successfully registered',
       name: 'record_product',
       desc: '',
       args: [],
     );
   }
 
-  /// `تبریک!!`
+  /// `Congratulations!!`
   String get congratulation {
     return Intl.message(
-      'تبریک!!',
+      'Congratulations!!',
       name: 'congratulation',
       desc: '',
       args: [],
     );
   }
 
-  /// `محصول مورد نظر با موفقیت  ویرایش شد`
+  /// `The product was successfully edited`
   String get success_edit {
     return Intl.message(
-      'محصول مورد نظر با موفقیت  ویرایش شد',
+      'The product was successfully edited',
       name: 'success_edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check your internet`
+  String get check_network {
+    return Intl.message(
+      'Please check your internet',
+      name: 'check_network',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The number of your goods is zero`
+  String get count_of_cart_shops_zero {
+    return Intl.message(
+      'The number of your goods is zero',
+      name: 'count_of_cart_shops_zero',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Psychology`
+  String get psychology {
+    return Intl.message(
+      'Psychology',
+      name: 'psychology',
       desc: '',
       args: [],
     );

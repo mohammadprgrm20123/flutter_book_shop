@@ -1,5 +1,7 @@
 
 
+import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
@@ -11,8 +13,6 @@ class DetailController extends GetxController{
   Book _book ;
   AppRepository _appRepository;
   RxBool get loading => _loading;
-
-
   Book get book => _book;
 
   @override
@@ -30,8 +30,8 @@ class DetailController extends GetxController{
       _book =value;
     }).onError((error, stackTrace){
       _loading(false);
-      Get.snackbar("خطا", "مشکلی بوجود آمده است");
-    });
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+          backgroundColor: Colors.red[200]);    });
   }
 
   addBookToCartShop(Book book){
@@ -40,8 +40,8 @@ class DetailController extends GetxController{
       _loadingBtnClick(false);
     }).onError((error, stackTrace) {
       _loadingBtnClick(false);
-      Get.snackbar("خطا", "مشکلی پیش آمده است");
-    });
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+          backgroundColor: Colors.red[200]);    });
   }
 
   addBookToFavoriteList(Book book){
@@ -50,8 +50,8 @@ class DetailController extends GetxController{
       _loadingBtnClick(false);
     }).onError((error, stackTrace) {
       _loadingBtnClick(false);
-      Get.snackbar("خطا", "مشکلی پیش آمده است");
-    });
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+          backgroundColor: Colors.red[200]);    });
   }
 
   RxBool get loadingBtnClick => _loadingBtnClick;

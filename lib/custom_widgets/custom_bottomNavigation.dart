@@ -1,12 +1,8 @@
 
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:flutter_booki_shop/views/cart_shop/cart_shop_page.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
-import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';
 import 'package:flutter_booki_shop/views/user_home/user_home.dart';
 import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/search/search.dart';

@@ -1,6 +1,6 @@
 
 
-import 'dart:convert';
+import'dart:convert';
 
 class Book {
   int id;
@@ -11,16 +11,16 @@ class Book {
   double score;
   String category;
   String pages;
-  String releaseDate="";
-  String createdAt="";
+  String releaseDate;
+  String createdAt;
   String url;
-  String autherName;
+  String authorName;
   String desc;
   Tags tags=new Tags();
 
   Book({this.price,this.bookName,this.publisherName,this.translator,this.score
     ,this.category,this.pages,this.releaseDate,this.createdAt,this.url
-    ,this.autherName,this.desc,this.tags});
+    ,this.authorName,this.desc,this.tags});
   Book.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'];
@@ -33,7 +33,7 @@ class Book {
     releaseDate = json['releaseDate'];
     createdAt = json['createdAt'];
     url = json['url'];
-    autherName = json['autherName'];
+    authorName = json['authorName'];
     desc = json['desc'];
     tags = json['tags'] != null ? new Tags.fromJson(json['tags']) : null;
   }
@@ -51,7 +51,7 @@ class Book {
     data['releaseDate'] = this.releaseDate;
     data['createdAt'] = this.createdAt;
     data['url'] = this.url;
-    data['autherName'] = this.autherName;
+    data['authorName'] = this.authorName;
     data['desc'] = this.desc;
     if (this.tags != null) {
       data['tags'] = this.tags.toJson();
@@ -70,7 +70,7 @@ class Book {
     data['releaseDate'] = this.releaseDate;
     data['createdAt'] = this.createdAt;
     data['url'] = this.url;
-    data['autherName'] = this.autherName;
+    data['authorName'] = this.authorName;
     data['desc'] = this.desc;
     if (this.tags != null) {
       data['tags'] = this.tags.toJson();

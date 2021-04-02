@@ -75,7 +75,6 @@ class StateAdder extends State<CustomAdder> {
         ],
       ),
     );
-    throw UnimplementedError();
   }
 
   void increment() {

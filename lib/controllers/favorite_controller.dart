@@ -1,6 +1,6 @@
 
-
-
+import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/FavoriteItem.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
@@ -11,12 +11,9 @@ class FavoriteController extends GetxController{
   RxBool _loading =false.obs;
   AppRepository _appRepository;
   Set<FavoriteItem> _listFavorite=Set<FavoriteItem>();
-
   RxBool get loading => _loading;
-
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     _appRepository = AppRepository();
   }
@@ -31,7 +28,8 @@ class FavoriteController extends GetxController{
       print(_listFavorite.length.toString());
     }).onError((error, stackTrace) {
       _loading(false);
-      Get.snackbar("خطا", "مشکلی بوجود آمده است");
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+          backgroundColor: Colors.red[200]);
     });
   }
 

@@ -1,7 +1,6 @@
-import 'dart:collection';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
@@ -41,21 +40,18 @@ class SearchController extends GetxController {
       _loading(false);
     }).onError((error, stackTrace) {
       _loading(false);
-      Get.snackbar("خطا", "لطفا اینترنت خود را چک کنید");
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+          backgroundColor: Colors.red[200]);
     });
   }
 
   searchInList(String text) {
-    print("serachInlist");
     _loading(true);
-
     _searchList = _listAll.where((book) => book.bookName.contains(text) ||
-        book.autherName.contains(text) ||
+        book.authorName.contains(text) ||
         book.publisherName.contains(text) ||
         book.category.contains(text) ||
         book.desc.contains(text)).toList();
-
-    print(_searchList.toString());
     _loading(false);
 
   }
@@ -72,8 +68,6 @@ class SearchController extends GetxController {
   }
 
   String findCategurySelected() {
-
-    String categury="";
     int selected = 0;
     for(int i=1;i<=mapColor.length;i++){
       if(mapColor[i]==Colors.blue){
@@ -87,11 +81,11 @@ class SearchController extends GetxController {
   String checkCategury(int selected) {
     switch(selected){
 
-      case 1: return "داستانی" ;break;
-      case 2: return "رمان" ;break;
-      case 3: return "فلسفه" ; break;
-      case 4: return "روانشناسی" ; break;
-      case 5: return "حماسی" ;break;
+      case 1: return S.of(Get.context).category_stoy ;break;
+      case 2: return S.of(Get.context).novel ;break;
+      case 3: return S.of(Get.context).philosophy ; break;
+      case 4: return S.of(Get.context).psychology ; break;
+      case 5: return S.of(Get.context).epic ;break;
     }
 
   }

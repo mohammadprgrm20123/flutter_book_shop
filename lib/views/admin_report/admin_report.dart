@@ -4,7 +4,6 @@ import 'package:flutter_booki_shop/controllers/admin_report_controller.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/purches.dart';
 import 'package:get/get.dart';
-import 'package:shamsi_date/shamsi_date.dart';
 
 class AdminReport extends StatelessWidget {
   AdminReportController _adminReportController = Get.put(AdminReportController());

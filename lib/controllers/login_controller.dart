@@ -1,6 +1,5 @@
 
 
-import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/User.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
@@ -14,17 +13,13 @@ class LoginController extends GetxController{
   RxBool _validatePasswrod = false.obs;
   RxBool _obscureText = true.obs;
   RxBool _loading= false.obs;
-
   RxBool get loading => _loading;
-
   RxBool get obscureText => _obscureText;
-
   @override
   void onInit() {
     super.onInit();
     _appRepository = AppRepository();
   }
-
 
   RxBool get validateUsername => _validateUsername;
 

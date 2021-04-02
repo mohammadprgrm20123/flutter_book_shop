@@ -156,14 +156,14 @@ class AppRepository {
 
 
   Future<List<Purchase>> getAllPerches() async{
-    List<Purchase> purchesList=new List<Purchase>();
+    List<Purchase> purchaseList=[];
     await _apiClient.dio.get(ApiClient.END_POINT_PURCHASE).then((value) {
       print(value.data.toString());
-      purchesList = Purchase().purchesListFromJson(value.data);
+      purchaseList = Purchase().purchesListFromJson(value.data);
     }).onError((error, stackTrace) {
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem);
     });
-    return purchesList;
+    return purchaseList;
   }
 
   requestAddBook(Book book) async {

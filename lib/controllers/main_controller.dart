@@ -1,6 +1,5 @@
 
 import 'package:get/get.dart';
-
 import '../shareprefrence.dart';
 
 class MainController extends GetxController{
@@ -31,8 +30,9 @@ class MainController extends GetxController{
             _indexStartPage(1);
           }
         }
-        _loading(false);
+
       }
+      _loading(false);
     });
 
   }

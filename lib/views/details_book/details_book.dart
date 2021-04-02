@@ -50,7 +50,7 @@ class DetailsBook extends StatelessWidget {
     return [
             _image(_detailController.book.url),
             _bookName(_detailController.book.bookName),
-            _autherName(_detailController.book.autherName,_detailController.book.translator),
+            _authorName(_detailController.book.authorName,_detailController.book.translator),
             _score(_detailController.book.score),
             _btnAddToShop(context,_detailController.book.price),
             _btnAddFavorite(context),
@@ -309,11 +309,11 @@ class DetailsBook extends StatelessWidget {
      Share.share("${_detailController.book.bookName} \n ${_detailController.book.desc} ");
   }
 
-  Widget _autherName(String autherName, String translator) {
+  Widget _authorName(String authorName, String translator) {
     return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
-                '$autherName/$translator',
+                '$authorName/$translator',
                 style: TextStyle(color: Colors.black38, fontSize: 14.0),
               ),
             );

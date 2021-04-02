@@ -35,7 +35,6 @@ class CartShopPage extends StatelessWidget {
       )
       ,
     );
-    throw UnimplementedError();
   }
 
   Center _textNotExist() {
@@ -67,7 +66,7 @@ class CartShopPage extends StatelessWidget {
     return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(onPressed: (){
-              _cartShopController.purchesRequest(_cartShopController.totalPrice.value);
+              _cartShopController.purchaseRequest(_cartShopController.totalPrice.value);
             }, child: Text(S.of(Get.context).continue1)),
           );
   }
@@ -213,6 +212,6 @@ class CartShopPage extends StatelessWidget {
   }
 
   void requestForDelete(CartShop cartShop) {
-    _cartShopController.requestForDeletecartSHopItem(cartShop);
+    _cartShopController.requestForDeleteCartShopItem(cartShop);
   }
 }

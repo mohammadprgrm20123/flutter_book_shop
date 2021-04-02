@@ -1,5 +1,6 @@
  import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/custom_widgets/card_item.dart';
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,6 @@ class HomeController extends GetxController{
     getCountOfCartShop();
   }
 
-
   RxBool get loading => _loading;
 
   getAllBooks(){
@@ -37,7 +37,8 @@ class HomeController extends GetxController{
       seprateAudioBook();
     }).onError((error, stackTrace) {
       _loading(false);
-      Get.snackbar("خطا","لطفا اینترنت خود را چک کنید");
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+          backgroundColor: Colors.red[200]);
     });
 
 
@@ -63,8 +64,6 @@ class HomeController extends GetxController{
 
   void seprateAudioBook() {
     List<Book> allBook = listAllBook;
-    List<Book> listAudio = [];
-
     allBook.forEach((book) {
       if(book.category=="صوتی"){
         listAudioBook.add(book);
@@ -75,9 +74,6 @@ class HomeController extends GetxController{
     });
 
   }
-
-
-
 
   void getCountOfCartShop() async {
     _appRepository.getAllItemsOfCartShops().then((value) {

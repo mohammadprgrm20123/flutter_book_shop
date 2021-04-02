@@ -2,10 +2,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MySharePrefrence {
-  var _pref;
-  getMySharePrefrence() async{
-    _pref = await SharedPreferences.getInstance();
-  }
 
 
   void setId(int id) async{

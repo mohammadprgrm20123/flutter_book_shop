@@ -258,14 +258,14 @@ class AddBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
-          onChanged: (autherName) {
-            _addBookController.book.autherName = autherName;
+          onChanged: (authorName) {
+            _addBookController.book.authorName = authorName;
           },
           decoration: InputDecoration(
               prefixIcon: Icon(Icons.account_circle),
               border: OutlineInputBorder(),
-              labelText: S.of(Get.context).auther_name,
-              hintText: S.of(Get.context).auther_name)),
+              labelText: S.of(Get.context).author_name,
+              hintText: S.of(Get.context).author_name)),
     );
   }
 
@@ -331,7 +331,7 @@ class AddBookPage extends StatelessWidget {
 
   bool checkEmpty() {
     if (_addBookController.book.bookName.isEmpty ||
-        _addBookController.book.autherName.isEmpty ||
+        _addBookController.book.authorName.isEmpty ||
         _addBookController.book.translator.isEmpty ||
         _addBookController.book.pages.isEmpty ||
         _addBookController.book.desc.isEmpty) {

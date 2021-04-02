@@ -103,7 +103,7 @@ class AdminHome extends StatelessWidget{
                 children: [
                   Text("${book.bookName}"),
                   Text("${S.of(Get.context).price} : ${book.price}"),
-                  Text("${S.of(Get.context).auther_name} : ${_getBookName(book)}"),
+                  Text("${S.of(Get.context).author_name} : ${_getBookName(book)}"),
                   Text("${S.of(Get.context).category} : ${book.category}"),
                   Text("${S.of(Get.context).score} : ${book.score}"),
                 ],
@@ -111,7 +111,7 @@ class AdminHome extends StatelessWidget{
   }
 
   String _getBookName(Book book) {
-  return book.autherName;
+  return book.authorName;
   }
 
   Widget _image(Book book) {

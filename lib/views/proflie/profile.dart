@@ -129,25 +129,39 @@ class Profile extends StatelessWidget {
     );
   }
 
-  DropdownButton<String> _dropdownButton() {
-    return DropdownButton<String>(
-        value: _spinnerItems[0],
-        icon: Icon(Icons.arrow_drop_down),
-        iconSize: 24,
-        elevation: 16,
-        style: TextStyle(
-            color: Colors.black, fontSize: 18, fontFamily: S.of(Get.context).name_font_dana),
-        underline: Container(
-          height: 2,
-          color: Colors.deepPurpleAccent,
-        ),
-        onChanged: (String data) {
-        },
-        items: ItemsSpinner(),
-      );
+  Obx _dropdownButton() {
+    return
+      Obx((){
+      return  DropdownButton<String>(
+          value: _spinnerItems[_profileController.indexLanguageActive.value],
+          icon: Icon(Icons.arrow_drop_down),
+          iconSize: 24,
+          elevation: 16,
+          style: TextStyle(
+              color: Colors.black, fontSize: 18, fontFamily: S.of(Get.context).name_font_dana),
+          underline: Container(
+            height: 2,
+            color: Colors.deepPurpleAccent,
+          ),
+          onChanged: (String data) {
+            if(data==S.of(Get.context).English){
+              var locale = Locale('en', 'US');
+              Get.updateLocale(locale);
+              _profileController.indexLanguageActive(1);
+            }
+            else{
+              var locale = Locale('fa', 'IR');
+              Get.updateLocale(locale);
+              _profileController.indexLanguageActive(0);
+            }
+          },
+          items: itemsSpinner(),
+        );
+
+      });
   }
 
-  List<DropdownMenuItem<String>> ItemsSpinner() {
+  List<DropdownMenuItem<String>> itemsSpinner() {
     return _spinnerItems.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,

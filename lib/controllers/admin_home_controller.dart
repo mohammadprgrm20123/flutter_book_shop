@@ -1,9 +1,6 @@
 
-
-
-
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
-import 'package:flutter_booki_shop/models/purches.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +27,7 @@ class AdminHomeController extends GetxController{
       listAllBooks = value;
     }).onError((error, stackTrace) {
       _loading(false);
-      Get.snackbar("خطا","لطفا اینترنت خود را چک کنید");
+      Get.snackbar(S.of(Get.context).error,S.of(Get.context).check_network);
     });
   }
 
