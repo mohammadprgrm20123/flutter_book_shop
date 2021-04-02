@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/profile_controller.dart';
@@ -10,19 +9,16 @@ import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:get/get.dart';
 
 class Profile extends StatelessWidget {
-  List<String> _spinnerItems = ['فارسی', 'انگلیسی'];
+  List<String> _spinnerItems = [S.of(Get.context).persion, S.of(Get.context).English];
 
   ProfileController _profileController = Get.put(ProfileController());
-  TextEditingController phoneCtr =new TextEditingController();
-  TextEditingController userNameCtr =new TextEditingController();
-  TextEditingController passwordCtr =new TextEditingController();
+  TextEditingController _phoneCtr =new TextEditingController();
+  TextEditingController _userNameCtr =new TextEditingController();
+  TextEditingController _passwordCtr =new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     setFirstValues();
-
-
-    // TODO: implement build
     return Scaffold(
       appBar: _appBar(context),
       body: _scrollView(context),
@@ -38,20 +34,24 @@ class Profile extends StatelessWidget {
             }
             else{
               return  Column(
-                children: <Widget>[
-                  _userImage(context),
-                  _phoneItem(),
-                  _userNameItem(),
-                  _passwordItem(),
-                  _languageItem(),
-                  _exitBtn(context)
-                ],
+                children: _childrenColumn(context),
               );
             }
           })
 
 
     );
+  }
+
+  List<Widget> _childrenColumn(BuildContext context) {
+    return <Widget>[
+                _userImage(context),
+                _phoneItem(),
+                _userNameItem(),
+                _passwordItem(),
+                _languageItem(),
+                _exitBtn(context)
+              ];
   }
 
 
@@ -65,32 +65,39 @@ class Profile extends StatelessWidget {
               onTap: (){
                 _profileController.openCamera();
               },
-              child: SizedBox(
-                height: 120.0,
-                width: 120.0,
-                child:
-                Obx((){
-                  if(_profileController.loading.value==true){
-                    return CircularProgressIndicator();
-                  }
-                  else{
-                    if(_profileController.imageUint8!=null){
-                      return ClipRRect(
-                          borderRadius: BorderRadius.circular(100.0),
-                          child: Image.memory(_profileController.imageUint8,));
-                    }
-                    else{
-                      return CircleAvatar(child: Icon(Icons.camera_alt,size: 45.0,));
-                    }
-                  }
-                }),
-
-              ),
+              child: _image(),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget _image() {
+    return SizedBox(
+              height: 120.0,
+              width: 120.0,
+              child:
+              _loadUserImage(),
+            );
+  }
+
+  Widget _loadUserImage() {
+    return Obx((){
+                if(_profileController.loading.value==true){
+                  return CircularProgressIndicator();
+                }
+                else{
+                  if(_profileController.imageUint8!=null){
+                    return ClipRRect(
+                        borderRadius: BorderRadius.circular(100.0),
+                        child: Image.memory(_profileController.imageUint8,));
+                  }
+                  else{
+                    return CircleAvatar(child: Icon(Icons.camera_alt,size: 45.0,));
+                  }
+                }
+              });
   }
 
   SizedBox _exitBtn(BuildContext context) {
@@ -104,7 +111,7 @@ class Profile extends StatelessWidget {
           child: ElevatedButton(onPressed: () {
             MySharePrefrence().clearShareprefrence();
             Get.offAll(()=>Login());
-          }, child: Text("خروج ")),
+          }, child: Text(S.of(Get.context).Exit)),
         ));
   }
 
@@ -115,32 +122,38 @@ class Profile extends StatelessWidget {
         leading: const Icon(Icons.today),
         subtitle: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text('فارسی'),
+          child: Text(S.of(Get.context).persion),
         ),
-        title: DropdownButton<String>(
-          value: _spinnerItems[0],
-          icon: Icon(Icons.arrow_drop_down),
-          iconSize: 24,
-          elevation: 16,
-          style: TextStyle(
-              color: Colors.black, fontSize: 18, fontFamily: 'Dana'),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (String data) {
-            //Get.updateLocale(Locale('en'));
-          },
-          items:
-          _spinnerItems.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
+        title: _dropdownButton(),
       ),
     );
+  }
+
+  DropdownButton<String> _dropdownButton() {
+    return DropdownButton<String>(
+        value: _spinnerItems[0],
+        icon: Icon(Icons.arrow_drop_down),
+        iconSize: 24,
+        elevation: 16,
+        style: TextStyle(
+            color: Colors.black, fontSize: 18, fontFamily: S.of(Get.context).name_font_dana),
+        underline: Container(
+          height: 2,
+          color: Colors.deepPurpleAccent,
+        ),
+        onChanged: (String data) {
+        },
+        items: ItemsSpinner(),
+      );
+  }
+
+  List<DropdownMenuItem<String>> ItemsSpinner() {
+    return _spinnerItems.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList();
   }
 
   Widget _passwordItem() {
@@ -149,7 +162,7 @@ class Profile extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.lock),
         title: new TextField(
-          controller: passwordCtr,
+          controller: _passwordCtr,
         ),
       ),
     );
@@ -161,7 +174,7 @@ class Profile extends StatelessWidget {
       child: ListTile(
         leading: const Icon(Icons.supervisor_account_rounded),
         title: new TextFormField(
-          controller: userNameCtr,
+          controller: _userNameCtr,
           decoration: new InputDecoration(
             hintText: '${_profileController.user.userName}',
           ),
@@ -171,13 +184,12 @@ class Profile extends StatelessWidget {
   }
 
   Widget _phoneItem() {
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
         leading: const Icon(Icons.phone),
         title: new TextField(
-          controller: phoneCtr,
+          controller: _phoneCtr,
           decoration: new InputDecoration(
             hintText: '${_profileController.user.phone}',
           ),
@@ -188,12 +200,7 @@ class Profile extends StatelessWidget {
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
-      title: new Text(
-        S.of(context)
-            .profile,
-        style: TextStyle(
-            fontFamily: 'Dana', color: Colors.black, fontSize: 17.0),
-      ),
+      title: _title(context),
       centerTitle: true,
       backgroundColor: Colors.white,
       iconTheme: IconThemeData(color: Colors.black),
@@ -206,36 +213,38 @@ class Profile extends StatelessWidget {
     );
   }
 
-  void sendUserData() {
-    User user = User();
-    if(userNameCtr.text.isEmpty){
-      user.userName = _profileController.user.userName;
-    }else{
-      user.userName = userNameCtr.text;
-    }
+  Text _title(BuildContext context) {
+    return new Text(
+      S.of(context)
+          .profile,
+      style: TextStyle(
+          fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0),
+    );
+  }
 
-    if(passwordCtr.text.isEmpty){
-      user.password = _profileController.user.password;
-    }
-    else{
-      user.password = passwordCtr.text;
-    }
-    if(phoneCtr.text.isEmpty){
-      user.phone = _profileController.user.phone;
-    }
-    else{
-      user.phone=phoneCtr.text;
-    }
+  void sendUserData() {
+    User user = _getUserData();
+    _profileController.sendUserData(user);
+  }
+
+  User _getUserData() {
+     User user = User();
+    if(_userNameCtr.text.isEmpty)  user.userName = _profileController.user.userName;
+    else user.userName = _userNameCtr.text;
+    if(_passwordCtr.text.isEmpty) user.password = _profileController.user.password;
+    else user.password = _passwordCtr.text;
+    if(_phoneCtr.text.isEmpty) user.phone = _profileController.user.phone;
+    else user.phone=_phoneCtr.text;
     user.id = _profileController.user.id;
     user.image =base64Encode(_profileController.imageUint8);
     user.email = _profileController.user.email;
     user.role = _profileController.user.role;
-    _profileController.saveUserData(user);
+    return user;
   }
 
   void setFirstValues() {
-    phoneCtr.text = _profileController.user.phone;
-    userNameCtr.text = _profileController.user.userName;
-    passwordCtr.text = _profileController.user.password;
+    _phoneCtr.text = _profileController.user.phone;
+    _userNameCtr.text = _profileController.user.userName;
+    _passwordCtr.text = _profileController.user.password;
   }
 }

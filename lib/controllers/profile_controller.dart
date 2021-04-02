@@ -67,7 +67,7 @@ class ProfileController extends GetxController{
 
 
 
-  saveUserData(User user){
+  sendUserData(User user){
    if(checkUserValues()){
      _appRepository.updateUserData(user);
    }

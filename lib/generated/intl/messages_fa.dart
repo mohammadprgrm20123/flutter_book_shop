@@ -21,7 +21,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
+    "English" : MessageLookupByLibrary.simpleMessage("انگلیسی"),
     "Error" : MessageLookupByLibrary.simpleMessage("خطا"),
+    "Exit" : MessageLookupByLibrary.simpleMessage("خروج"),
     "add_to_favorite" : MessageLookupByLibrary.simpleMessage("    اضافه کردن به علاقه مندی ها     "),
     "app_name" : MessageLookupByLibrary.simpleMessage("بوکی شاپ"),
     "audio_books" : MessageLookupByLibrary.simpleMessage("کتاب های صوتی"),
@@ -32,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "favorite" : MessageLookupByLibrary.simpleMessage("علاقه مندی ها"),
     "more" : MessageLookupByLibrary.simpleMessage("بیشتر"),
     "password" : MessageLookupByLibrary.simpleMessage("رمز عبور"),
+    "persion" : MessageLookupByLibrary.simpleMessage("فارسی"),
     "please_fill_parameters" : MessageLookupByLibrary.simpleMessage("لطفا مقادیر را پر کنید"),
     "popular" : MessageLookupByLibrary.simpleMessage("معروف ترین ها"),
     "profile" : MessageLookupByLibrary.simpleMessage("پروفایل"),

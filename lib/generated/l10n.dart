@@ -274,6 +274,46 @@ class S {
       args: [],
     );
   }
+
+  /// `فارسی`
+  String get persion {
+    return Intl.message(
+      'فارسی',
+      name: 'persion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `انگلیسی`
+  String get English {
+    return Intl.message(
+      'انگلیسی',
+      name: 'English',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dana`
+  String get name_font_dana {
+    return Intl.message(
+      'Dana',
+      name: 'name_font_dana',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `خروج`
+  String get Exit {
+    return Intl.message(
+      'خروج',
+      name: 'Exit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

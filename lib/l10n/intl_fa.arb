@@ -16,5 +16,8 @@
   "please_fill_parameters": "لطفا مقادیر را پر کنید",
   "userName": "نام کاربری",
   "password": "رمز عبور",
-  "enter": "ورود"
+  "enter": "ورود",
+  "persion": "فارسی",
+  "English": "انگلیسی",
+  "Exit": "خروج"
 }

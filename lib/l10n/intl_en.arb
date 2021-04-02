@@ -22,5 +22,9 @@
   "userName": "نام کاربری",
   "password": "رمز عبور",
   "enter": "ورود",
-  "userRole": "user"
+  "userRole": "user",
+  "persion": "فارسی",
+  "English": "انگلیسی",
+  "name_font_dana": "Dana",
+  "Exit": "خروج"
 }
