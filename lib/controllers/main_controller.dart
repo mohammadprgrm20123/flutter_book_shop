@@ -19,10 +19,7 @@ class MainController extends GetxController{
 
   void checkUserLogin() async{
     _loading(true);
-    print("checkUserLogin");
     await MySharePrefrence().getRole().then((value){
-      print("checkUserLogin --->$value");
-      _loading(false);
       if(value.toString()=='none'){
         _indexStartPage(0);
       }
@@ -34,8 +31,8 @@ class MainController extends GetxController{
             _indexStartPage(1);
           }
         }
+        _loading(false);
       }
-      _loading(false);
     });
 
   }

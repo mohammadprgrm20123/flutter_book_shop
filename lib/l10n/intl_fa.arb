@@ -12,5 +12,9 @@
   "popular": "معروف ترین ها",
   "audio_books": "کتاب های صوتی",
   "Error": "خطا",
-  "details_error": "کاربری با این مشخصات وجود ندارد"
+  "details_error": "کاربری با این مشخصات وجود ندارد",
+  "please_fill_parameters": "لطفا مقادیر را پر کنید",
+  "userName": "نام کاربری",
+  "password": "رمز عبور",
+  "enter": "ورود"
 }

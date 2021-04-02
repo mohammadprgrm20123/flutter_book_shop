@@ -7,7 +7,6 @@ import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:flutter_booki_shop/views/user_home/user_home.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatelessWidget {
   TextEditingController _usernameCtr = new TextEditingController();
@@ -17,9 +16,6 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
-
     return SafeArea(
       top: true,
       child: Scaffold(
@@ -48,20 +44,28 @@ class Login extends StatelessWidget {
       child: Container(
           height: 50.0,
           width: MediaQuery.of(Get.context).size.width,
-          child: ElevatedButton(
-              onPressed: () async {
-                if (!checkEmpty()) {
-                  _loginController
-                      .requestValidateUser(_usernameCtr.text, _passwordCtr.text)
-                      .then((value) {
-                        saveValues(value);
-                        goTo(value.role);
-                  });
-                }
-              },
-              child: Obx(()=>_loginController.loading.value? CircularProgressIndicator(backgroundColor: Colors.white,):Text("ورود")),
-              )
+          child: _elevatedButtonLogin()
     ));
+  }
+
+  Widget _elevatedButtonLogin() {
+    return ElevatedButton(
+            onPressed: () async {
+              _checkParameters();
+            },
+            child: Obx(()=>_loginController.loading.value? CircularProgressIndicator(backgroundColor: Colors.white,):Text(S.of(Get.context).enter)),
+            );
+  }
+
+  void _checkParameters() {
+     if (!checkEmpty()) {
+      _loginController
+          .requestValidateUser(_usernameCtr.text, _passwordCtr.text)
+          .then((value) {
+            saveValues(value);
+            goTo(value.role);
+      });
+    }
   }
 
   Padding _password() {
@@ -69,40 +73,42 @@ class Login extends StatelessWidget {
             child: ObxValue((data) {
                 bool data =_loginController.validatePasswrod.value;
                 bool obscureText = _loginController.obscureText.value;
-             return TextFormField (
-               controller: _passwordCtr,
-               obscureText: obscureText,
-               decoration: _passwordDecoration(data),
-               maxLength: 12,
-              buildCounter: _biuldCounterPassword,
-            );
+             return _textFieldPassword(obscureText, data);
               },
-              true.obs,
+              false.obs,
             )
           );
   }
 
-  Widget _biuldCounterPassword(BuildContext context,
-           {int currentLength, int maxLength, bool isFocused}) {
+  TextField _textFieldPassword(bool obscureText, bool data) {
+    return TextField (
+             controller: _passwordCtr,
+             obscureText: obscureText,
+             decoration: _passwordDecoration(data),
+             maxLength: 12,
+             buildCounter: _biuldCounterPassword,
+          );
+  }
+
+  Widget _biuldCounterPassword(BuildContext context,{int currentLength, int maxLength, bool isFocused}) {
          return isFocused
              ? Text(
-           '$currentLength/$maxLength ',
+           '$currentLength/$maxLength',
            style: new TextStyle(
              fontSize: 14.0,
            ),
-           semanticsLabel: 'Input constraints',
          )
              : null;
        }
 
   InputDecoration _passwordDecoration(bool data) {
     return InputDecoration(
-                  errorText: data? 'لطفا مقادیر را پر کنید':null,
+                  errorText: data? S.of(Get.context).please_fill_parameters:null,
                   prefixIcon: Icon(Icons.lock),
                   suffixIcon: _onTapSuffixIcon(),
                   border: OutlineInputBorder(),
-                  labelText: 'رمز عبور ',
-                  hintText: 'رمز عبور',
+                  labelText: S.of(Get.context).password,
+                  hintText: S.of(Get.context).password,
                   // counter: Text("1/8")
                 );
   }
@@ -123,35 +129,35 @@ class Login extends StatelessWidget {
   ObxValue<RxBool> _userName() {
    return  ObxValue((data) {
       bool data =_loginController.validateUsername.value;
-
       return  Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
-          controller: _usernameCtr,
-          decoration: _usernameDecoration(data),
-        ),
+        child: _textFieldUserName(data),
       );
     },
       false.obs,
     );
   }
 
+  TextField _textFieldUserName(bool data) {
+    return TextField(
+        controller: _usernameCtr,
+        decoration: _usernameDecoration(data),
+      );
+  }
+
   InputDecoration _usernameDecoration(bool data) {
     return InputDecoration(
-            errorText: data? 'لطفا مقادیر را پر کنید':null,
+            errorText: data? S.of(Get.context).please_fill_parameters:null,
             prefixIcon: Icon(Icons.account_circle),
             border: OutlineInputBorder(),
-            labelText: 'نام کاربری',
-            hintText: 'نام کاربری'
+            labelText: S.of(Get.context).userName,
+            hintText: S.of(Get.context).userName,
         );
   }
 
-  Container _iconLogin() {
+  Widget _iconLogin() {
     return Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.blue
-                ),
+                decoration: _boxDecorationIconLogin(),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Icon(Icons.login,size: 40.0,color: Colors.white,),
@@ -159,14 +165,21 @@ class Login extends StatelessWidget {
               );
   }
 
+  BoxDecoration _boxDecorationIconLogin() {
+    return BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue
+              );
+  }
+
   bool checkEmpty() {
     if(_passwordCtr.text.isEmpty || _usernameCtr.text.isEmpty){
       if(_passwordCtr.text.isEmpty) _loginController.validatePasswrod(true);
+
       else _loginController.validatePasswrod(false);
-
       if(_usernameCtr.text.isEmpty) _loginController.validateUsername(true);
-      else _loginController.validateUsername(false);
 
+      else _loginController.validateUsername(false);
     return true;
     }
     _loginController.validatePasswrod(false);
@@ -183,12 +196,11 @@ class Login extends StatelessWidget {
   }
 
   void goTo(String role) {
-    if(role=='user'){
+    if(role==S.of(Get.context).userRole){
       Get.offAll(UserHome());
     }
     else{
       Get.offAll(AdminHome());
-      // goto admin page
     }
   }
 

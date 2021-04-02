@@ -32,13 +32,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "bookishopuser" : MessageLookupByLibrary.simpleMessage("bookishop_user"),
     "details" : MessageLookupByLibrary.simpleMessage("details"),
     "details_error" : MessageLookupByLibrary.simpleMessage("کاربری با این مشخصات وجود ندارد"),
+    "enter" : MessageLookupByLibrary.simpleMessage("ورود"),
     "favorite" : MessageLookupByLibrary.simpleMessage("favorite"),
     "more" : MessageLookupByLibrary.simpleMessage("more"),
+    "password" : MessageLookupByLibrary.simpleMessage("رمز عبور"),
+    "please_fill_parameters" : MessageLookupByLibrary.simpleMessage("لطفا مقادیر را پر کنید"),
     "popular" : MessageLookupByLibrary.simpleMessage("معروف ترین ها"),
     "profile" : MessageLookupByLibrary.simpleMessage("profile"),
     "sd" : MessageLookupByLibrary.simpleMessage("ابلهی رادیدم سمین و خلعتی ثمین در بر. (گلستان ).\n|| مقابل غث در سخن به معنی کلام استوار و متعین. (اقرب الموارد) : و میفرستاد سوی بلخ و غث و سمین بازمی نمود. (تاریخ بیهقی چ ادیب ص 250). چون صدق با کذب و غث با سمین و صواب با خطا امتزاج و اختلاط پذیرد تمیز عسر شود. (تاریخ بیهقی ص 16).\nگرچه در تألیف این ابیات نیست\nبی سمین غثی و بی غثی کروت."),
     "search" : MessageLookupByLibrary.simpleMessage("search"),
     "the_best" : MessageLookupByLibrary.simpleMessage("the best"),
-    "the_most_famous_books" : MessageLookupByLibrary.simpleMessage("The most famous books")
+    "the_most_famous_books" : MessageLookupByLibrary.simpleMessage("The most famous books"),
+    "userName" : MessageLookupByLibrary.simpleMessage("نام کاربری"),
+    "userRole" : MessageLookupByLibrary.simpleMessage("user")
   };
 }

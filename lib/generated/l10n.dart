@@ -224,6 +224,56 @@ class S {
       args: [],
     );
   }
+
+  /// `لطفا مقادیر را پر کنید`
+  String get please_fill_parameters {
+    return Intl.message(
+      'لطفا مقادیر را پر کنید',
+      name: 'please_fill_parameters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نام کاربری`
+  String get userName {
+    return Intl.message(
+      'نام کاربری',
+      name: 'userName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `رمز عبور`
+  String get password {
+    return Intl.message(
+      'رمز عبور',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ورود`
+  String get enter {
+    return Intl.message(
+      'ورود',
+      name: 'enter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `user`
+  String get userRole {
+    return Intl.message(
+      'user',
+      name: 'userRole',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

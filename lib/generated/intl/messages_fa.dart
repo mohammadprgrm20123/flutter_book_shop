@@ -28,12 +28,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "book_introduction" : MessageLookupByLibrary.simpleMessage("معرفی کتاب"),
     "details" : MessageLookupByLibrary.simpleMessage("مشخصات"),
     "details_error" : MessageLookupByLibrary.simpleMessage("کاربری با این مشخصات وجود ندارد"),
+    "enter" : MessageLookupByLibrary.simpleMessage("ورود"),
     "favorite" : MessageLookupByLibrary.simpleMessage("علاقه مندی ها"),
     "more" : MessageLookupByLibrary.simpleMessage("بیشتر"),
+    "password" : MessageLookupByLibrary.simpleMessage("رمز عبور"),
+    "please_fill_parameters" : MessageLookupByLibrary.simpleMessage("لطفا مقادیر را پر کنید"),
     "popular" : MessageLookupByLibrary.simpleMessage("معروف ترین ها"),
     "profile" : MessageLookupByLibrary.simpleMessage("پروفایل"),
     "search" : MessageLookupByLibrary.simpleMessage("جستوجو"),
     "the_best" : MessageLookupByLibrary.simpleMessage("بهترین ترین ها"),
-    "the_most_famous_books" : MessageLookupByLibrary.simpleMessage("معروف ترین کتاب ها")
+    "the_most_famous_books" : MessageLookupByLibrary.simpleMessage("معروف ترین کتاب ها"),
+    "userName" : MessageLookupByLibrary.simpleMessage("نام کاربری")
   };
 }

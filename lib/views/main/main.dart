@@ -34,10 +34,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Obx(() {
-        print(_mainController.loading.value.toString());
-        print(_mainController.indexStartPage.value.toString() + "-->index");
         if (_mainController.loading.value == true) {
-          return CircularProgressIndicator();
+          return  _loading();
         }
         else {
           return _listPage[_mainController.indexStartPage.value];
@@ -53,4 +51,6 @@ class MyApp extends StatelessWidget {
       locale: Locale('fa'),
     );
   }
+
+  Scaffold _loading() => Scaffold(body: Center(child: CircularProgressIndicator(),),);
 }
