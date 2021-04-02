@@ -8,7 +8,7 @@ class AdminReportController extends GetxController{
 
   RxBool _loading = false.obs;
   AppRepository _appRepository;
-  List<Purches> _listPurches;
+  List<Purchase> _listPurches;
   @override
   void onInit() {
     super.onInit();
@@ -31,5 +31,5 @@ class AdminReportController extends GetxController{
     });
   }
 
-  List<Purches> get listPurches => _listPurches;
+  List<Purchase> get listPurches => _listPurches;
 }

@@ -84,7 +84,7 @@ class CartShopController extends GetxController{
     else{
       MySharePrefrence().getId().then((userId) {
 
-        Purches purches=new Purches();
+        Purchase purches=new Purchase();
         purches.price =price.toString();
         purches.userId =userId;
 

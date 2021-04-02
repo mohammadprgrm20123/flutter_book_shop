@@ -584,6 +584,36 @@ class S {
       args: [],
     );
   }
+
+  /// `خرید موفق`
+  String get success_purchase {
+    return Intl.message(
+      'خرید موفق',
+      name: 'success_purchase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `تاریخ`
+  String get date {
+    return Intl.message(
+      'تاریخ',
+      name: 'date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `گزارش خرید ها`
+  String get report_purchase {
+    return Intl.message(
+      'گزارش خرید ها',
+      name: 'report_purchase',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

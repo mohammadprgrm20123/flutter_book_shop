@@ -53,5 +53,8 @@
   "record": "ثبت",
   "cart_shop": "سبد خرید",
   "delete": "حذف",
-  "continue1": "ادامه فرایند"
+  "continue1": "ادامه فرایند",
+  "success_purchase": "خرید موفق",
+  "date": "تاریخ",
+  "report_purchase": "گزارش خرید ها"
 }

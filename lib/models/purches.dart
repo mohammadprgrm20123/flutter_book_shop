@@ -1,10 +1,10 @@
-class Purches {
+class Purchase {
   int _id;
   int _userId;
   String _date;
   String _price;
 
-  Purches({int id, int userId, String date, String price}) {
+  Purchase({int id, int userId, String date, String price}) {
     this._id = id;
     this._userId = userId;
     this._date = date;
@@ -20,7 +20,7 @@ class Purches {
   String get price => _price;
   set price(String price) => _price = price;
 
-  Purches.fromJson(Map<String, dynamic> json) {
+  Purchase.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _userId = json['userId'];
     _date = json['date'];
@@ -35,10 +35,10 @@ class Purches {
     data['price'] = this._price;
     return data;
   }
-  List<Purches> purchesListFromJson(List<dynamic> dynamicList){
-    List<Purches> p = [];
+  List<Purchase> purchesListFromJson(List<dynamic> dynamicList){
+    List<Purchase> p = [];
     dynamicList.forEach((element) {
-      p.add(Purches.fromJson(element));
+      p.add(Purchase.fromJson(element));
     });
     return p;
   }

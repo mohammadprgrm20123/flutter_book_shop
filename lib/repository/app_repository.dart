@@ -141,7 +141,7 @@ class AppRepository {
     return list;
   }
 
-  requestForPurches(Purches purches){
+  requestForPurches(Purchase purches){
     _apiClient.dio.post("purches",data: purches.toJson()).then((value) {
       Get.snackbar("تبریک!!!", "خرید با موفقیت انجام شد");
     }).onError((error, stackTrace){
@@ -154,11 +154,11 @@ class AppRepository {
   }
 
 
-  Future<List<Purches>> getAllPerches() async{
-    List<Purches> purchesList=new List<Purches>();
+  Future<List<Purchase>> getAllPerches() async{
+    List<Purchase> purchesList=new List<Purchase>();
     await _apiClient.dio.get("purches").then((value) {
       print(value.data.toString());
-      purchesList = Purches().purchesListFromJson(value.data);
+      purchesList = Purchase().purchesListFromJson(value.data);
     }).onError((error, stackTrace) {
       Get.snackbar("خطا", "مشکلی بوجود آمده است");
     });
