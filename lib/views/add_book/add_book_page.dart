@@ -5,6 +5,7 @@ import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:get/get.dart';
 
+@immutable
 class AddBookPage extends StatelessWidget {
   List<String> spinnerList = [
     S.of(Get.context).category_stoy,

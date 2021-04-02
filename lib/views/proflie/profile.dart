@@ -7,7 +7,7 @@ import 'package:flutter_booki_shop/models/User.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:get/get.dart';
-
+@immutable
 class Profile extends StatelessWidget {
   List<String> _spinnerItems = [S.of(Get.context).persion, S.of(Get.context).English];
 

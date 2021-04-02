@@ -7,7 +7,7 @@ import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:flutter_booki_shop/views/user_home/user_home.dart';
 import 'package:get/get.dart';
-
+@immutable
 class Login extends StatelessWidget {
   TextEditingController _usernameCtr = new TextEditingController();
   TextEditingController _passwordCtr = new TextEditingController();

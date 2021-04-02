@@ -23,6 +23,7 @@ class CustomBtnNavigation {
   }
   AnimatedBottomNavigationBar bottomNavigationBar() {
     return AnimatedBottomNavigationBar(
+      activeIndex: null,
         icons: [
           Icons.shopping_bag_outlined,
           Icons.favorite_border,

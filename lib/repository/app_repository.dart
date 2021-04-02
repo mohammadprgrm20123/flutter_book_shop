@@ -57,7 +57,7 @@ class AppRepository {
     return book;
   }
 
-  Future<Response<dynamic>> addBookToCartShop(Book book) async {
+   addBookToCartShop(Book book) async {
     CartShop cartShop = await setValuesOFCartShop(book);
     await _apiClient.dio.post(ApiClient.END_POINT_CARTSHOPS, data: cartShop.toJson()).then((value) {
       Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).book_add_cart_shop);
@@ -65,7 +65,7 @@ class AppRepository {
     });
   }
 
-  Future<Response<dynamic>> addToFavoriteList(Book book) async{
+   addToFavoriteList(Book book) async{
     FavoriteItem favoriteItem = await setValuesFavorite(book);
     await _apiClient.dio.post(ApiClient.END_POINT_FAVORITE, data: favoriteItem.toJson()).then((value) {
       Get.snackbar(S.of(Get.context).record_done, S.of(Get.context).book_add_to_favortie);
@@ -136,7 +136,7 @@ class AppRepository {
 
 
   Future<List<CartShop>> getAllItemsOfCartShops() async{
-    List<CartShop> list =new List<CartShop>();
+    List<CartShop> list =[];
     await _apiClient.dio.get(ApiClient.END_POINT_CARTSHOPS).then((value) {
       list = CartShop().CartShopListFromJson(value.data);
     }).onError((error, stackTrace) {

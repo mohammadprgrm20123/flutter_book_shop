@@ -12,6 +12,7 @@ import 'package:flutter_booki_shop/views/edit_books/edit_book_page.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';
 import 'package:get/get.dart';
 
+@immutable
 class AdminHome extends StatelessWidget{
 
 
@@ -180,6 +181,7 @@ class AdminHome extends StatelessWidget{
 
   AnimatedBottomNavigationBar _bottomNavigationBar() {
     return AnimatedBottomNavigationBar(
+      activeIndex: null,
         icons: [
           Icons.insert_chart,
           Icons.account_circle,

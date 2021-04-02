@@ -7,6 +7,7 @@ import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/views/details_book/details_book.dart';
 import 'package:get/get.dart';
 
+@immutable
 class Search extends StatelessWidget {
   static const double MIN_VALUE_PRICE = 5000;
   static const double MAX_VALUE_PRICE = 1000000;

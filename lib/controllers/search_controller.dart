@@ -100,6 +100,7 @@ class SearchController extends GetxController {
       case 4: return S.of(Get.context).psychology ; break;
       case 5: return S.of(Get.context).epic ;break;
     }
+    return S.of(Get.context).category_stoy;
 
   }
 

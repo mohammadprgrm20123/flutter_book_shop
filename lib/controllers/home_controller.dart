@@ -47,9 +47,7 @@ class HomeController extends GetxController{
 
   void seprateBestBooks(){
     List<Book> listBest = [];
-    listAllBook;
-
-   listAllBook.forEach((book) {
+    listAllBook.forEach((book) {
      if(book.score>=4.2 && book.category!="صوتی"){
        listBest.add(book);
      }

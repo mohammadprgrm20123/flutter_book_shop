@@ -6,6 +6,7 @@ import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:share/share.dart';
+@immutable
 
 class DetailsBook extends StatelessWidget {
 
@@ -289,6 +290,7 @@ class DetailsBook extends StatelessWidget {
     return Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: RatingBar.builder(
+                  onRatingUpdate: null,
                   initialRating: score,
                   minRating: 1,
                   wrapAlignment: WrapAlignment.start,

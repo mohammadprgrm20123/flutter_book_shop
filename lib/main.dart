@@ -6,7 +6,7 @@ import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import '../user_home/user_home.dart';
+import 'views/user_home/user_home.dart';
 
 void main() async {
   runApp(MyApp());
@@ -22,10 +22,12 @@ class MyApp extends StatelessWidget {
     AdminHome()
   ];
 
+  MyApp();
+
   @override
   Widget build(BuildContext context) {
     _mainController.checkUserLogin();
-    return GetMaterialApp(
+    return MaterialApp(
       theme: ThemeData(
         fontFamily: 'Dana',
         iconTheme: IconThemeData(
