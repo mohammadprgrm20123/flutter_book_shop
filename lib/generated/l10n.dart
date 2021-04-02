@@ -414,6 +414,146 @@ class S {
       args: [],
     );
   }
+
+  /// `نام کتاب`
+  String get book_name {
+    return Intl.message(
+      'نام کتاب',
+      name: 'book_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ویرایش محصول`
+  String get edit_product {
+    return Intl.message(
+      'ویرایش محصول',
+      name: 'edit_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `خطا`
+  String get error {
+    return Intl.message(
+      'خطا',
+      name: 'error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `قیمت`
+  String get price {
+    return Intl.message(
+      'قیمت',
+      name: 'price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نام نویسنده`
+  String get auther_name {
+    return Intl.message(
+      'نام نویسنده',
+      name: 'auther_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نام مترجم`
+  String get translator_name {
+    return Intl.message(
+      'نام مترجم',
+      name: 'translator_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `تعداد صفحات`
+  String get count_pages {
+    return Intl.message(
+      'تعداد صفحات',
+      name: 'count_pages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ناشر`
+  String get publisher {
+    return Intl.message(
+      'ناشر',
+      name: 'publisher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `خلاصه کتاب`
+  String get summery_of_book {
+    return Intl.message(
+      'خلاصه کتاب',
+      name: 'summery_of_book',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `تگ اول`
+  String get firstTag {
+    return Intl.message(
+      'تگ اول',
+      name: 'firstTag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `تگ دوم`
+  String get second_tag {
+    return Intl.message(
+      'تگ دوم',
+      name: 'second_tag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `تگ سوم`
+  String get third_tag {
+    return Intl.message(
+      'تگ سوم',
+      name: 'third_tag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `تگ چهارم`
+  String get forth_tag {
+    return Intl.message(
+      'تگ چهارم',
+      name: 'forth_tag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ثبت`
+  String get record {
+    return Intl.message(
+      'ثبت',
+      name: 'record',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

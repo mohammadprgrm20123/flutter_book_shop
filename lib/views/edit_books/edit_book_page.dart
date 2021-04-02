@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_booki_shop/controllers/add_book_controller.dart';
 import 'package:flutter_booki_shop/controllers/edit_book_controller.dart';
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:get/get.dart';
 
+
 class EditBookPage extends StatelessWidget {
   List<String> spinnerList = [
-    "داستانی",
-    "رمان",
-    "فلسفه",
-    "حماسی",
-    "روانشناسی",
+    S.of(Get.context).category_stoy,
+    S.of(Get.context).novel,
+    S.of(Get.context).philosophy,
+    S.of(Get.context).epic,
+    S.of(Get.context).psychology,
   ];
   EditBookController _editBookController = Get.put(EditBookController());
 
@@ -31,9 +32,11 @@ class EditBookPage extends StatelessWidget {
   TextEditingController _tag4BookCtr =new TextEditingController();
 
   EditBookPage(Book book){
-    print(book.id.toString());
+    _initFirstValues(book);
+  }
+
+  void _initFirstValues(Book book) {
     _editBookController.book = book;
-    print(_editBookController.book.category);
     _bookNameCtr.text =book.bookName;
     _priceCtr.text =book.price;
     _autherNameCtr.text =book.autherName;
@@ -70,7 +73,6 @@ class EditBookPage extends StatelessWidget {
       _authorName(),
       _translatorName(),
       _score(),
-     // _category(context),
       _countPages(),
       _publisher(),
       _descOfBook(),
@@ -79,11 +81,10 @@ class EditBookPage extends StatelessWidget {
       _thirdTag(),
       _forthTag(),
       _btnAddProduct(context)
-
     ];
   }
 
-  SizedBox _btnAddProduct(BuildContext context) {
+  Widget _btnAddProduct(BuildContext context) {
     return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Padding(
@@ -93,10 +94,7 @@ class EditBookPage extends StatelessWidget {
                 sendRequestAddBook();
                 Get.offAll(()=>AdminHome());
               }
-              // _addBookController.requestForAddBook();
-            }, child: Text("ثبت")
-
-
+            }, child: Text(S.of(context).record)
             )));
   }
 
@@ -108,13 +106,16 @@ class EditBookPage extends StatelessWidget {
           onChanged: (tag4) {
             _editBookController.book.tags.tag4=tag4;
           },
-          decoration: InputDecoration(
-              prefixIcon: Icon(Icons.tag),
-              border: OutlineInputBorder(),
-              labelText: 'تگ چهارم',
-              // errorText: _forthTagCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
-              hintText: 'تگ چهارم ')),
+          decoration: _decorationForthTag()),
     );
+  }
+
+  InputDecoration _decorationForthTag() {
+    return InputDecoration(
+            prefixIcon: Icon(Icons.tag),
+            border: OutlineInputBorder(),
+            labelText: S.of(Get.context).forth_tag,
+            hintText: S.of(Get.context).forth_tag);
   }
 
   Widget _thirdTag() {
@@ -125,13 +126,16 @@ class EditBookPage extends StatelessWidget {
           onChanged: (tag3) {
             _editBookController.book.tags.tag3=tag3;
           },
-          decoration: InputDecoration(
-              prefixIcon: Icon(Icons.tag),
-              border: OutlineInputBorder(),
-              //  errorText: _thirdTagCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
-              labelText: 'تگ سوم',
-              hintText: 'تگ سوم ')),
+          decoration: _decorationThirdTag()),
     );
+  }
+
+  InputDecoration _decorationThirdTag() {
+    return InputDecoration(
+            prefixIcon: Icon(Icons.tag),
+            border: OutlineInputBorder(),
+            labelText: S.of(Get.context).third_tag,
+            hintText: S.of(Get.context).third_tag);
   }
 
   Widget _secondTag() {
@@ -142,13 +146,16 @@ class EditBookPage extends StatelessWidget {
           onChanged: (tag2) {
             _editBookController.book.tags.tag2=tag2;
           },
-          decoration: InputDecoration(
-            //  errorText: _secondTagCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
-              prefixIcon: Icon(Icons.tag),
-              border: OutlineInputBorder(),
-              labelText: 'تگ دوم',
-              hintText: 'تگ دوم ')),
+          decoration: _decorationSecondTag()),
     );
+  }
+
+  InputDecoration _decorationSecondTag() {
+    return InputDecoration(
+            prefixIcon: Icon(Icons.tag),
+            border: OutlineInputBorder(),
+            labelText: S.of(Get.context).second_tag,
+            hintText: S.of(Get.context).second_tag);
   }
 
   Widget _firstTag() {
@@ -159,13 +166,16 @@ class EditBookPage extends StatelessWidget {
           onChanged: (tag1) {
             _editBookController.book.tags.tag1=tag1;
           },
-          decoration: InputDecoration(
-            //errorText: _firstTagCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
-              prefixIcon: Icon(Icons.tag),
-              border: OutlineInputBorder(),
-              labelText: 'تگ اول',
-              hintText: 'تگ اول')),
+          decoration: _decorationFirstTag()),
     );
+  }
+
+  InputDecoration _decorationFirstTag() {
+    return InputDecoration(
+            prefixIcon: Icon(Icons.tag),
+            border: OutlineInputBorder(),
+            labelText: S.of(Get.context).firstTag,
+            hintText: S.of(Get.context).firstTag);
   }
 
   Widget _descOfBook() {
@@ -178,11 +188,10 @@ class EditBookPage extends StatelessWidget {
             _editBookController.book.desc = summery;
           },
           decoration: InputDecoration(
-            //errorText: _summeryCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
               prefixIcon: Icon(Icons.description),
               border: OutlineInputBorder(),
-              labelText: 'خلاصه کتاب',
-              hintText: 'خلاصه کتاب')),
+              labelText: S.of(Get.context).summery_of_book,
+              hintText: S.of(Get.context).summery_of_book)),
     );
   }
 
@@ -195,11 +204,10 @@ class EditBookPage extends StatelessWidget {
             _editBookController.book.publisherName = publisher;
           },
           decoration: InputDecoration(
-            //  errorText: _publisherCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
               prefixIcon: Icon(Icons.account_circle),
               border: OutlineInputBorder(),
-              labelText: 'ناشر',
-              hintText: 'ناشر')),
+              labelText: S.of(Get.context).publisher,
+              hintText: S.of(Get.context).publisher)),
     );
   }
 
@@ -211,46 +219,16 @@ class EditBookPage extends StatelessWidget {
           onChanged: (countPages) {
             _editBookController.book.pages = countPages;
           },
-          decoration: InputDecoration(
-            //  errorText: _countPageCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
-              prefixIcon: Icon(Icons.pages),
-              border: OutlineInputBorder(),
-              labelText: 'تعداد صفحات',
-              hintText: 'تعداد صفحات')),
+          decoration: _decorationCountPages()),
     );
   }
 
-  Widget _category(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Obx(() {
-          return DropdownButton<String>(
-            value: _editBookController.category.value,
-            icon: Icon(Icons.arrow_drop_down),
-            iconSize: 24,
-            elevation: 16,
-            style: TextStyle(
-                color: Colors.black, fontSize: 18, fontFamily: 'Dana'),
-            underline: Container(
-              height: 2,
-              color: Colors.blue,
-            ),
-            onChanged: (String data) {
-              _editBookController.category.value = data;
-              _editBookController.book.category = data;
-            },
-            items: spinnerList.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          );
-        }),
-      ),
-    );
+  InputDecoration _decorationCountPages() {
+    return InputDecoration(
+            prefixIcon: Icon(Icons.pages),
+            border: OutlineInputBorder(),
+            labelText: S.of(Get.context).count_pages,
+            hintText: S.of(Get.context).count_pages);
   }
 
   Widget _score() {
@@ -261,13 +239,17 @@ class EditBookPage extends StatelessWidget {
           onChanged: (score) {
             _editBookController.book.score = double.parse(score).roundToDouble();
           },
-          decoration: InputDecoration(
-            //   errorText: _scoreCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
-              prefixIcon: Icon(Icons.score),
-              border: OutlineInputBorder(),
-              labelText: 'امتیاز',
-              hintText: 'امتیاز')),
+          decoration: _decorationScore()),
     );
+  }
+
+  InputDecoration _decorationScore() {
+    return InputDecoration(
+          //   errorText: _scoreCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
+            prefixIcon: Icon(Icons.score),
+            border: OutlineInputBorder(),
+            labelText: 'امتیاز',
+            hintText: 'امتیاز');
   }
 
   Widget _translatorName() {
@@ -278,13 +260,16 @@ class EditBookPage extends StatelessWidget {
           onChanged: (translator) {
             _editBookController.book.translator = translator;
           },
-          decoration: InputDecoration(
-            //  errorText: _translatorCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
-              prefixIcon: Icon(Icons.translate),
-              border: OutlineInputBorder(),
-              labelText: 'نام مترجم',
-              hintText: 'نام مترجم')),
+          decoration: _decorationTranslatorName()),
     );
+  }
+
+  InputDecoration _decorationTranslatorName() {
+    return InputDecoration(
+            prefixIcon: Icon(Icons.translate),
+            border: OutlineInputBorder(),
+            labelText: S.of(Get.context).translator_name,
+            hintText: S.of(Get.context).translator_name);
   }
 
   Widget _authorName() {
@@ -295,12 +280,16 @@ class EditBookPage extends StatelessWidget {
           onChanged: (autherName) {
             _editBookController.book.autherName = autherName;
           },
-          decoration: InputDecoration(
-              prefixIcon: Icon(Icons.account_circle),
-              border: OutlineInputBorder(),
-              labelText: 'نام نویسنده',
-              hintText: 'نام نویسنده')),
+          decoration: _autherDecoration()),
     );
+  }
+
+  InputDecoration _autherDecoration() {
+    return InputDecoration(
+            prefixIcon: Icon(Icons.account_circle),
+            border: OutlineInputBorder(),
+            labelText: S.of(Get.context).auther_name,
+            hintText: S.of(Get.context).auther_name);
   }
 
   Widget _price() {
@@ -311,12 +300,16 @@ class EditBookPage extends StatelessWidget {
           onChanged: (price) {
             _editBookController.book.price = price;
           },
-          decoration: InputDecoration(
-              prefixIcon: Icon(Icons.account_circle),
-              border: OutlineInputBorder(),
-              labelText: 'قیمت',
-              hintText: 'قیمت')),
+          decoration: _decorationPrice()),
     );
+  }
+
+  InputDecoration _decorationPrice() {
+    return InputDecoration(
+            prefixIcon: Icon(Icons.account_circle),
+            border: OutlineInputBorder(),
+            labelText: S.of(Get.context).price,
+            hintText: S.of(Get.context).price);
   }
 
 
@@ -328,28 +321,32 @@ class EditBookPage extends StatelessWidget {
           onChanged: (bookName) {
             _editBookController.book.bookName = bookName;
           },
-          decoration: InputDecoration(
-              prefixIcon: Icon(Icons.account_circle),
-              border: OutlineInputBorder(),
-              labelText: 'نام کتاب',
-              hintText: 'نام کتاب')),
+          decoration: _decorationBookName()),
     );
+  }
+
+  InputDecoration _decorationBookName() {
+    return InputDecoration(
+            prefixIcon: Icon(Icons.account_circle),
+            border: OutlineInputBorder(),
+            labelText: S.of(Get.context).book_name,
+            hintText: S.of(Get.context).book_name);
   }
 
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      title: _titile(context),
+      title: _title(context),
       centerTitle: true,
       iconTheme: IconThemeData(color: Colors.black),
     );
   }
 
-  Text _titile(BuildContext context) {
-    return Text("ویرایش محصول",
+  Widget _title(BuildContext context) {
+    return Text(S.of(Get.context).edit_product,
         style:
-        TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0));
+        TextStyle(fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
   }
 
   bool checkEmpty() {
@@ -358,7 +355,7 @@ class EditBookPage extends StatelessWidget {
         _editBookController.book.translator.isEmpty ||
         _editBookController.book.pages.isEmpty ||
         _editBookController.book.desc.isEmpty) {
-      Get.snackbar("خطا", "لطفا فیلد ها رو به صورت کامل پر کنید");
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).please_fill_parameters);
       return true;
     }
     return false;
@@ -367,19 +364,5 @@ class EditBookPage extends StatelessWidget {
   void sendRequestAddBook() {
     _editBookController.requestForEditBook(_editBookController.book);
   }
-
-  Book _initBookParameters() {
-   // _addBookController.book.tags = _initTagParameters();
-  //  return _addBookController.book;
-  }
-
-  Tags _initTagParameters() {
-    /*Tags tags = new Tags(
-        tag0: _tag0.value,
-        tag1: _tag1.value,
-        tag2: _tag2.value,
-        tag3: _tag3.value,
-        tag4: _tag4.value);
-    return tags;*/
-  }
+  
 }

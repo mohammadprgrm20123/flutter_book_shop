@@ -36,5 +36,19 @@
   "novel": "رمان",
   "philosophy": "فلسفه",
   "psychology": "روانشناسی",
-  "epic": "حماسی"
+  "epic": "حماسی",
+  "book_name": "نام کتاب",
+  "edit_product": "ویرایش محصول",
+  "error": "خطا",
+  "price": "قیمت",
+  "auther_name": "نام نویسنده",
+  "translator_name": "نام مترجم",
+  "count_pages": "تعداد صفحات",
+  "publisher": "ناشر",
+  "summery_of_book": "خلاصه کتاب",
+  "firstTag": "تگ اول",
+  "second_tag": "تگ دوم",
+  "third_tag": "تگ سوم",
+  "forth_tag": "تگ چهارم",
+  "record": "ثبت"
 }
