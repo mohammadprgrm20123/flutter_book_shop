@@ -19,5 +19,15 @@
   "enter": "ورود",
   "persion": "فارسی",
   "English": "انگلیسی",
-  "Exit": "خروج"
+  "Exit": "خروج",
+  "not_exit_cases": "موردی وجود ندارد",
+  "filter_by_category": "فیلتر بر اساس دسته بندی",
+  "filter_price": "فیلتر  قیمت",
+  "set_filter": "اعمال فیلتر",
+  "toman": "تومان",
+  "category_stoy": "داستانی",
+  "novel": "رمان",
+  "philosophy": "فلسفه",
+  "psychology": "روانشناسی",
+  "epic": "حماسی"
 }

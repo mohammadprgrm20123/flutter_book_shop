@@ -314,6 +314,106 @@ class S {
       args: [],
     );
   }
+
+  /// `موردی وجود ندارد`
+  String get not_exit_cases {
+    return Intl.message(
+      'موردی وجود ندارد',
+      name: 'not_exit_cases',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `فیلتر بر اساس دسته بندی`
+  String get filter_by_category {
+    return Intl.message(
+      'فیلتر بر اساس دسته بندی',
+      name: 'filter_by_category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `فیلتر  قیمت`
+  String get filter_price {
+    return Intl.message(
+      'فیلتر  قیمت',
+      name: 'filter_price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `اعمال فیلتر`
+  String get set_filter {
+    return Intl.message(
+      'اعمال فیلتر',
+      name: 'set_filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `تومان`
+  String get toman {
+    return Intl.message(
+      'تومان',
+      name: 'toman',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `داستانی`
+  String get category_stoy {
+    return Intl.message(
+      'داستانی',
+      name: 'category_stoy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `رمان`
+  String get novel {
+    return Intl.message(
+      'رمان',
+      name: 'novel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `فلسفه`
+  String get philosophy {
+    return Intl.message(
+      'فلسفه',
+      name: 'philosophy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `روانشناسی`
+  String get psychology {
+    return Intl.message(
+      'روانشناسی',
+      name: 'psychology',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `حماسی`
+  String get epic {
+    return Intl.message(
+      'حماسی',
+      name: 'epic',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
