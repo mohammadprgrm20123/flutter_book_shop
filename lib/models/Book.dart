@@ -51,7 +51,7 @@ class Book {
     data['releaseDate'] = this.releaseDate;
     data['createdAt'] = this.createdAt;
     data['url'] = this.url;
-    data['authorName'] = this.authorName;
+    data['autherName'] = this.authorName;
     data['desc'] = this.desc;
     if (this.tags != null) {
       data['tags'] = this.tags.toJson();
@@ -70,7 +70,7 @@ class Book {
     data['releaseDate'] = this.releaseDate;
     data['createdAt'] = this.createdAt;
     data['url'] = this.url;
-    data['authorName'] = this.authorName;
+    data['autherName'] = this.authorName;
     data['desc'] = this.desc;
     if (this.tags != null) {
       data['tags'] = this.tags.toJson();
@@ -85,7 +85,6 @@ class Book {
     });
    return listBook;
   }
-
 
 }
 

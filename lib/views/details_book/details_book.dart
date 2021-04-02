@@ -361,6 +361,7 @@ class DetailsBook extends StatelessWidget {
       title: _title(context),
       centerTitle: true,
       iconTheme: IconThemeData(color: Colors.black),
+
     );
   }
 
@@ -369,6 +370,8 @@ class DetailsBook extends StatelessWidget {
         style: TextStyle(
             fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
   }
+
+
 
 }
 

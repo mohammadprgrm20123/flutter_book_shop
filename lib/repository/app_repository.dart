@@ -30,14 +30,18 @@ class AppRepository {
   }
 
   Future<List<Book>> getAllBooks() async {
-    List<Book> listbook = [];
+    List<Book> listBook = [];
     await _apiClient.dio.get(ApiClient.END_POINT_BOOKS).then((value) {
-      listbook = Book().BookListFromJson(value.data);
+      print('${value.toString()}--->getAllBooks Repo');
+      listBook = Book().BookListFromJson(value.data);
+      listBook.forEach((element) {
+        print('${element.id}--->getAllBooks Repo');
+      });
     }).onError((error, stackTrace) {
       print(error.toString());
       throw S.of(Get.context).error;
     });
-    return listbook;
+    return listBook;
   }
 
 

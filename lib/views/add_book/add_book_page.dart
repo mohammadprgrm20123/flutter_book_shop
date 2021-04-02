@@ -14,11 +14,7 @@ class AddBookPage extends StatelessWidget {
     S.of(Get.context).psychology,
   ];
   
-  RxString _tag0 = "".obs;
-  RxString _tag1 = "".obs;
-  RxString _tag2 = "".obs;
-  RxString _tag3 = "".obs;
-  RxString _tag4 = "".obs;
+
 
   AddBookController _addBookController = Get.put(AddBookController());
 
@@ -52,7 +48,6 @@ class AddBookPage extends StatelessWidget {
       _thirdTag(),
       _forthTag(),
       _btnAddProduct(context)
-
     ];
   }
 
@@ -84,7 +79,7 @@ class AddBookPage extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: TextField(
           onChanged: (tag4) {
-            _tag4.value = tag4;
+            _addBookController.tag4 = tag4;
           },
           decoration: InputDecoration(
               prefixIcon: Icon(Icons.tag),
@@ -99,7 +94,7 @@ class AddBookPage extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: TextField(
           onChanged: (tag3) {
-            _tag3.value = tag3;
+            _addBookController.tag3 = tag3;
           },
           decoration: InputDecoration(
               prefixIcon: Icon(Icons.tag),
@@ -114,7 +109,7 @@ class AddBookPage extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: TextField(
           onChanged: (tag2) {
-            _tag2.value = tag2;
+            _addBookController.tag2 = tag2;
           },
           decoration: InputDecoration(
               prefixIcon: Icon(Icons.tag),
@@ -130,8 +125,8 @@ class AddBookPage extends StatelessWidget {
       child: TextField(
           onChanged: (tag1) {
             print(tag1);
-            _tag0.value = tag1;
-            _tag1.value = tag1;
+            _addBookController.tag1 = tag1;
+            _addBookController.tag0 = tag1;
           },
           decoration: InputDecoration(
               prefixIcon: Icon(Icons.tag),
@@ -145,6 +140,7 @@ class AddBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
+          keyboardType: TextInputType.text,
           onChanged: (summery) {
             _addBookController.book.desc = summery;
           },
@@ -160,6 +156,7 @@ class AddBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
+          keyboardType: TextInputType.text,
           onChanged: (publisher) {
             _addBookController.book.publisherName = publisher;
           },
@@ -175,6 +172,7 @@ class AddBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
+          keyboardType: TextInputType.number,
           onChanged: (publisher) {
             _addBookController.book.pages = publisher;
           },
@@ -228,8 +226,9 @@ class AddBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
+          keyboardType: TextInputType.number,
           onChanged: (score) {
-            _addBookController.book.score = double.parse(score).roundToDouble();
+            _addBookController.book.score = double.parse(score);
           },
           decoration: InputDecoration(
               prefixIcon: Icon(Icons.score),
@@ -243,6 +242,7 @@ class AddBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
+          keyboardType: TextInputType.text,
           onChanged: (translator) {
             _addBookController.book.translator = translator;
           },
@@ -258,6 +258,7 @@ class AddBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
+          keyboardType: TextInputType.text,
           onChanged: (authorName) {
             _addBookController.book.authorName = authorName;
           },
@@ -273,6 +274,7 @@ class AddBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
+          keyboardType: TextInputType.number,
           onChanged: (price) {
             _addBookController.book.price = price;
           },
@@ -289,6 +291,7 @@ class AddBookPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: TextField(
+        keyboardType: TextInputType.text,
           onChanged: (bookName) {
             _addBookController.book.bookName = bookName;
           },
@@ -342,22 +345,25 @@ class AddBookPage extends StatelessWidget {
   }
 
   void sendRequestAddBook() {
-    print(_addBookController.book.bookName);
     _addBookController.requestForAddBook(_initBookParameters());
   }
 
   Book _initBookParameters() {
     _addBookController.book.tags = _initTagParameters();
+    _addBookController.book.category = "رمان";
+    _addBookController.book.releaseDate = "";
+    _addBookController.book.createdAt = "";
+    _addBookController.book.url = "";
     return _addBookController.book;
   }
 
   Tags _initTagParameters() {
     Tags tags = new Tags(
-        tag0: _tag0.value,
-        tag1: _tag1.value,
-        tag2: _tag2.value,
-        tag3: _tag3.value,
-        tag4: _tag4.value);
+        tag0: _addBookController.tag0,
+        tag1: _addBookController.tag1,
+        tag2: _addBookController.tag2,
+        tag3: _addBookController.tag3,
+        tag4: _addBookController.tag4);
     return tags;
   }
 }

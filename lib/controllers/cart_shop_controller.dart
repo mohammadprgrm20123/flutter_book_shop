@@ -58,19 +58,18 @@ class CartShopController extends GetxController{
     return totalPrice.value;
   }
 
-  increaSePrice(CartShop cartShop,int count){
-    totalPrice.value = totalPrice.value+(count*double.parse(cartShop.book.price));
+  increasePrice(CartShop cartShop){
+    totalPrice.value = totalPrice.value+(double.parse(cartShop.book.price));
   }
 
   decresePrice(CartShop cartShop,int count){
     if(count==0){
-      totalPrice.value = totalPrice.value-double.parse(cartShop.book.price);
+      totalPrice.value = totalPrice.value-(double.parse(cartShop.book.price));
     }else{
-      totalPrice.value = totalPrice.value-(count*double.parse(cartShop.book.price));
+      totalPrice.value = totalPrice.value-(double.parse(cartShop.book.price));
 
     }
   }
-
 
   purchaseRequest(double price){
     if(price==0){
@@ -93,6 +92,11 @@ class CartShopController extends GetxController{
 
   requestForDeleteCartShopItem(CartShop cartShop){
     _appRepository.requedtForDelete(cartShop);
+  }
+
+  void decreseListPrice(CartShop cartShop, int count) {
+    totalPrice.value = totalPrice.value-((count)*double.parse(cartShop.book.price));
+
   }
 
 

@@ -21,7 +21,6 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     _searchController.getAllBooks();
 
-    // TODO: implement build
     return Scaffold(
       appBar: _appBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -30,10 +29,9 @@ class Search extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            //search view
             _serachView(context),
             Obx(() {
-              if (_searchController.loading.value == true) {
+              if (_searchController.loadingSeach.value == true) {
                 return Center(child: CircularProgressIndicator());
               } else {
                 if (_searchController.searchList.length == 0) {
@@ -197,6 +195,7 @@ class Search extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: ElevatedButton(
             onPressed: () {
+              print("sdsdssd");
               _searchController.filterInList(_currentRangeValues.value);
               Get.back();
             },

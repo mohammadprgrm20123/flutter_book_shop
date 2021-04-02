@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "app_name" : MessageLookupByLibrary.simpleMessage("بوکی شاپ"),
     "audio_books" : MessageLookupByLibrary.simpleMessage("کتاب های صوتی"),
     "author_name" : MessageLookupByLibrary.simpleMessage("نام نویسنده"),
+    "book_add_cart_shop" : MessageLookupByLibrary.simpleMessage("با موفقیت به سبد خرید اضافه شد"),
     "book_add_to_favortie" : MessageLookupByLibrary.simpleMessage("کتاب مورد نظر به لیست علاقه مندی ها اضافه شد"),
     "book_introduction" : MessageLookupByLibrary.simpleMessage("معرفی کتاب"),
     "book_name" : MessageLookupByLibrary.simpleMessage("نام کتاب"),

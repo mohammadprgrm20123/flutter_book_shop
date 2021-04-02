@@ -76,7 +76,7 @@ class CartShopPage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child:Obx((){
               if(_cartShopController.loading.value==false){
-             return Text("${_cartShopController.totalPrice} ${S.of(Get.context).toman} ",textAlign: TextAlign.end,style: TextStyle(fontSize: 18.0));
+             return Text("${_cartShopController.totalPrice.round()} ${S.of(Get.context).toman} ",textAlign: TextAlign.end,style: TextStyle(fontSize: 18.0));
             }
               else{
                 return CircularProgressIndicator();
@@ -131,7 +131,7 @@ class CartShopPage extends StatelessWidget {
      _cartShopController.loading(true);
      _cartShopController.listCartShop.remove(cartShop);
      if(cartShop.count!=0){
-       _cartShopController.decresePrice(cartShop,cartShop.count);
+       _cartShopController.decreseListPrice(cartShop,cartShop.count);
      }
     _cartShopController.loading(false);
      requestForDelete(cartShop);
@@ -174,7 +174,7 @@ class CartShopPage extends StatelessWidget {
           textColor: Colors.black,
           onChangedAdd: (count) {
             _cartShopController.listCartShop[index].count=count;
-            _cartShopController.increaSePrice(cartShop, count);
+            _cartShopController.increasePrice(cartShop);
           },
             onChangedRemove: (count){
               _cartShopController.decresePrice(cartShop, count);
