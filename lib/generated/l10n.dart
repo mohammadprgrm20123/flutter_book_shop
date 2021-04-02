@@ -554,6 +554,36 @@ class S {
       args: [],
     );
   }
+
+  /// `سبد خرید`
+  String get cart_shop {
+    return Intl.message(
+      'سبد خرید',
+      name: 'cart_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `حذف`
+  String get delete {
+    return Intl.message(
+      'حذف',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ادامه فرایند`
+  String get continue1 {
+    return Intl.message(
+      'ادامه فرایند',
+      name: 'continue1',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

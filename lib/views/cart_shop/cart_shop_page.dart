@@ -2,16 +2,16 @@ import 'package:adder_cart_shop/custom_adder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/cart_shop_controller.dart';
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class CartShopPage extends StatelessWidget {
   CartShopController _cartShopController = Get.put(CartShopController());
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     return Scaffold(
       appBar: _appBar(context),
       body: Column(
@@ -20,14 +20,11 @@ class CartShopPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Obx(() {
-            print(_cartShopController.loading.value.toString()+"Scaffoldlist");
             if (_cartShopController.loading.value == true) {
               return Center(child: CircularProgressIndicator());
             } else {
               if (_cartShopController.listCartShop.length == 0) {
-                return Center(
-                  child: Text("موردی وجود ندارد"),
-                );
+                return _textNotExist();
               } else {
                 return _listCartShop();
               }
@@ -41,6 +38,12 @@ class CartShopPage extends StatelessWidget {
     throw UnimplementedError();
   }
 
+  Center _textNotExist() {
+    return Center(
+                child: Text(S.of(Get.context).not_exit_cases),
+              );
+  }
+
   Container  _calcutePrice() {
     return Container(
       child: Card(
@@ -49,24 +52,8 @@ class CartShopPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(onPressed: (){
-                _cartShopController.purchesRequest(_cartShopController.totalPrice.value);
-              }, child: Text("ادامه فرایند")),
-            ),
-            Expanded(child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child:Obx((){
-                print(_cartShopController.loading.value.toString()+"_calcutePrice");
-                if(_cartShopController.loading.value==false){
-               return Text("${_cartShopController.totalPrice} تومان ",textAlign: TextAlign.end,style: TextStyle(fontSize: 18.0));
-              }
-                else{
-                  return CircularProgressIndicator();
-                }
-              }
-            )))
+            _btnContinue(),
+            _totalPrice()
           ],
         ),
         color: Colors.blue[100],
@@ -74,6 +61,29 @@ class CartShopPage extends StatelessWidget {
       height: 80.0,
 
     );
+  }
+
+  Padding _btnContinue() {
+    return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(onPressed: (){
+              _cartShopController.purchesRequest(_cartShopController.totalPrice.value);
+            }, child: Text(S.of(Get.context).continue1)),
+          );
+  }
+
+  Expanded _totalPrice() {
+    return Expanded(child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child:Obx((){
+              if(_cartShopController.loading.value==false){
+             return Text("${_cartShopController.totalPrice} ${S.of(Get.context).toman} ",textAlign: TextAlign.end,style: TextStyle(fontSize: 18.0));
+            }
+              else{
+                return CircularProgressIndicator();
+              }
+            }
+          )));
   }
 
   Expanded _listCartShop() {
@@ -90,13 +100,17 @@ class CartShopPage extends StatelessWidget {
   Widget _listItem(CartShop cartShop,int index) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
-      child: Card(
-        elevation: 8.0,
-        child: Container(
-          height: 180.0,
-          child: Row(
-            children: [_imagAndCutomAdder(cartShop,index), _nameAndPrice(cartShop), _btnDelete(cartShop)],
-          ),
+      child: _card(cartShop, index),
+    );
+  }
+
+  Card _card(CartShop cartShop, int index) {
+    return Card(
+      elevation: 8.0,
+      child: Container(
+        height: 180.0,
+        child: Row(
+          children: [_imageAndCustomAdder(cartShop,index), _nameAndPrice(cartShop), _btnDelete(cartShop)],
         ),
       ),
     );
@@ -109,7 +123,7 @@ class CartShopPage extends StatelessWidget {
       children: [
         ElevatedButton.icon(onPressed: (){
           _removeItemLIst(cartShop);
-        }, icon: Icon(Icons.delete), label: Text("حذف"))
+        }, icon: Icon(Icons.delete), label: Text(S.of(Get.context).delete))
       ],
     );
   }
@@ -121,7 +135,7 @@ class CartShopPage extends StatelessWidget {
        _cartShopController.decresePrice(cartShop,cartShop.count);
      }
     _cartShopController.loading(false);
-     requedtForDelete(cartShop);
+     requestForDelete(cartShop);
   }
 
   Widget _nameAndPrice(CartShop cartShop) {
@@ -134,7 +148,7 @@ class CartShopPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("${cartShop.book.bookName}"),
-                Text("قیمت : ${cartShop.book.price}"),
+                Text("${S.of(Get.context).price} : ${cartShop.book.price}"),
               ],
             ),
           ],
@@ -143,59 +157,62 @@ class CartShopPage extends StatelessWidget {
     );
   }
 
-  Column _imagAndCutomAdder(CartShop cartShop,int index) {
+  Column _imageAndCustomAdder(CartShop cartShop,int index) {
     return Column(
       children: [
-        GestureDetector(
-          onTap: () {
-            //Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
-          },
-          child: FadeInImage.assetNetwork(
-            fadeInCurve: Curves.linearToEaseOut,
-            image: cartShop.book.url,
-            placeholder: "",
-            height: 120.0,
-            width: 80.0,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: CustomAdder(
-            value: cartShop.count,
-            backgroundColor: Colors.red,
-            textColor: Colors.black,
-            onChangedAdd: (count) {
-              _cartShopController.listCartShop[index].count=count;
-              _cartShopController.increaSePrice(cartShop, count);
-            },
-              onChangedRemove: (count){
-                _cartShopController.decresePrice(cartShop, count);
-                _cartShopController.listCartShop[index].count=count;
-              }
-
-            ,
-          ),
-        ),
+        _imageBook(cartShop),
+        _customAdder(cartShop, index),
       ],
     );
+  }
+
+  Padding _customAdder(CartShop cartShop, int index) {
+    return Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: CustomAdder(
+          value: cartShop.count,
+          backgroundColor: Colors.red,
+          textColor: Colors.black,
+          onChangedAdd: (count) {
+            _cartShopController.listCartShop[index].count=count;
+            _cartShopController.increaSePrice(cartShop, count);
+          },
+            onChangedRemove: (count){
+              _cartShopController.decresePrice(cartShop, count);
+              _cartShopController.listCartShop[index].count=count;
+            }
+
+          ,
+        ),
+      );
+  }
+
+  FadeInImage _imageBook(CartShop cartShop) {
+    return FadeInImage.assetNetwork(
+        fadeInCurve: Curves.linearToEaseOut,
+        image: cartShop.book.url,
+        placeholder: "",
+        height: 120.0,
+        width: 80.0,
+      );
   }
 
   AppBar _appBar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      title: _titile(context),
+      title: _title(context),
       centerTitle: true,
       iconTheme: IconThemeData(color: Colors.black),
     );
   }
 
-  Text _titile(BuildContext context) {
-    return Text("سبد خرید",
+  Text _title(BuildContext context) {
+    return Text(S.of(Get.context).cart_shop,
         style: TextStyle(
-            fontFamily: 'Dana', color: Colors.black, fontSize: 17.0));
+            fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
   }
 
-  void requedtForDelete(CartShop cartShop) {
+  void requestForDelete(CartShop cartShop) {
     _cartShopController.requestForDeletecartSHopItem(cartShop);
   }
 }
