@@ -84,22 +84,26 @@ class UserHome extends StatelessWidget {
         return CircularProgressIndicator();
       }
       else{
-        return  Padding(
-          padding: const EdgeInsets.only(bottom: 15.0),
-          child: HorizontalCardPager(
-            initialPage: _homeController.itemsAudioBook.length~/2,
-            onPageChanged: (page) => {},
-            onSelectedItem: (page)  {
-              Get.to(() => DetailsBook(_homeController.listAudioBook[page].id));
-            },
-            items: _homeController.itemsAudioBook,
-            // set ImageCardItem or IconTitleCardItem class
-          ),
-        );
+        return  _itemListAudioBooks();
       }
     },false.obs);
 
 
+  }
+
+  Padding _itemListAudioBooks() {
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 15.0),
+        child: HorizontalCardPager(
+          initialPage: _homeController.itemsAudioBook.length~/2,
+          onPageChanged: (page) => {},
+          onSelectedItem: (page)  {
+            Get.to(() => DetailsBook(_homeController.listAudioBook[page].id));
+          },
+          items: _homeController.itemsAudioBook,
+          // set ImageCardItem or IconTitleCardItem class
+        ),
+      );
   }
 
   Padding _iconArrow() {
@@ -146,22 +150,7 @@ class UserHome extends StatelessWidget {
           height: 200.0,
           child: ListView.builder(
             itemBuilder: (BuildContext _, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: GestureDetector(
-                    onTap: (){
-                      Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
-                    },
-                    child: FadeInImage.assetNetwork(
-                      fadeInCurve: Curves.linearToEaseOut,
-                      image: '${_homeController.listPopularBook[index].url}',
-                      placeholder: 'assets/images/noImage.png',
-                    ),
-                  ),
-                ),
-              );
+              return _itemListPopularBooks(index);
             },
             itemCount: _homeController.listPopularBook.length,
             scrollDirection: Axis.horizontal,
@@ -170,6 +159,25 @@ class UserHome extends StatelessWidget {
       }
     },false.obs);
 
+  }
+
+  Padding _itemListPopularBooks(int index) {
+    return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: GestureDetector(
+                  onTap: (){
+                    Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
+                  },
+                  child: FadeInImage.assetNetwork(
+                    fadeInCurve: Curves.linearToEaseOut,
+                    image: '${_homeController.listPopularBook[index].url}',
+                    placeholder: 'assets/images/noImage.png',
+                  ),
+                ),
+              ),
+            );
   }
 
   Container _bestBooks(BuildContext context) {
@@ -195,22 +203,7 @@ class UserHome extends StatelessWidget {
           height: 200.0,
           child: ListView.builder(
             itemBuilder: (BuildContext _, int index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: (){
-                    Get.to(DetailsBook(_homeController.listBestBook[index].id));
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: FadeInImage.assetNetwork(
-                      fadeInCurve: Curves.linearToEaseOut,
-                      image: '${_homeController.listBestBook[index].url}',
-                      placeholder: 'assets/images/noImage.png' ,
-                    ),
-                  ),
-                ),
-              );
+              return _itemListBestBooks(index);
             },
             itemCount: _homeController.listBestBook.length,
             scrollDirection: Axis.horizontal,
@@ -221,22 +214,35 @@ class UserHome extends StatelessWidget {
 
   }
 
+  Padding _itemListBestBooks(int index) {
+    return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: (){
+                  Get.to(DetailsBook(_homeController.listBestBook[index].id));
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: FadeInImage.assetNetwork(
+                    fadeInCurve: Curves.linearToEaseOut,
+                    image: '${_homeController.listBestBook[index].url}',
+                    placeholder: 'assets/images/noImage.png' ,
+                  ),
+                ),
+              ),
+            );
+  }
+
   ObxValue<RxBool> _circleIndicator() {
     return ObxValue(
       (data) {
-
         double data = _homeController.indexIndicator.value;
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: DotsIndicator(
             dotsCount: 3,
             position: data,
-            decorator: DotsDecorator(
-              size: const Size.square(9.0),
-              activeSize: const Size(18.0, 9.0),
-              activeShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0)),
-            ),
+            decorator: _dotsDecorator(),
           ),
         );
       },
@@ -244,49 +250,74 @@ class UserHome extends StatelessWidget {
     );
   }
 
+  DotsDecorator _dotsDecorator() {
+    return DotsDecorator(
+            size: const Size.square(9.0),
+            activeSize: const Size(18.0, 9.0),
+            activeShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5.0)),
+          );
+  }
+
   CarouselSlider _bannerList(BuildContext context) {
     return CarouselSlider(
-      items: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Image(
-                image: AssetImage(S.of(context).assetsimages1jpg),
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Image(
-                image: AssetImage(S.of(context).assetsimages2jpg),
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(11.0),
-              child: Image(
-                image: AssetImage(S.of(context).assetsimages3jpg),
-              ),
-            ),
-          ),
-        ),
-      ],
+      items: _itemsBanner(context),
       options: _bannerListOptions(),
+    );
+  }
+
+  List<Widget> _itemsBanner(BuildContext context) {
+    return [
+      _itemBannerFirst(context),
+      _itemBannerSecond(context),
+      _itemBannerThird(context),
+    ];
+  }
+
+  Padding _itemBannerThird(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(11.0),
+          child: Image(
+            image: AssetImage(S.of(context).assetsimages3jpg),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _itemBannerSecond(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Image(
+            image: AssetImage(S.of(context).assetsimages2jpg),
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _itemBannerFirst(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Image(
+            image: AssetImage(S.of(context).assetsimages1jpg),
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      ),
     );
   }
 
@@ -315,7 +346,6 @@ class UserHome extends StatelessWidget {
       backgroundColor: Colors.white,
       centerTitle: true,
       actions: [
-        //badge shop
         _badgeShop()
       ],
     );
