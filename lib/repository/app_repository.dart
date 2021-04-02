@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:flutter_booki_shop/models/FavoriteItem.dart';
@@ -17,24 +18,24 @@ class AppRepository {
 
   Future<User> validateUser(String userName, String password) async {
     User user;
-    await _apiClient.dio.get('users', queryParameters: {
+    await _apiClient.dio.get(ApiClient.END_POINT_USERS, queryParameters: {
       "userName": userName,
       "password": password
     }).then((value) {
       user = User.fromJson(value.data[0]);
     }).onError((error, stackTrace) {
-      throw 'error';
+      throw S.of(Get.context).error;
     });
     return user;
   }
 
   Future<List<Book>> getAllBooks() async {
     List<Book> listbook = [];
-    await _apiClient.dio.get("books").then((value) {
+    await _apiClient.dio.get(ApiClient.END_POINT_BOOKS).then((value) {
       listbook = Book().BookListFromJson(value.data);
     }).onError((error, stackTrace) {
       print(error.toString());
-      throw "error";
+      throw S.of(Get.context).error;
     });
     return listbook;
   }
@@ -42,28 +43,28 @@ class AppRepository {
 
   Future<Book> getDetailsBook(int bookId) async{
     Book book;
-    await _apiClient.dio.get('books', queryParameters: {
+    await _apiClient.dio.get(ApiClient.END_POINT_BOOKS, queryParameters: {
       "id": bookId,
     }).then((value) {
       book = Book.fromJson(value.data[0]);
     }).onError((error, stackTrace) {
-      throw 'error';
+      throw S.of(Get.context).error;
     });
     return book;
   }
 
   Future<Response<dynamic>> addBookToCartShop(Book book) async {
     CartShop cartShop = await setValuesOFCartShop(book);
-    await _apiClient.dio.post("cartShop", data: cartShop.toJson()).then((value) {
-      Get.snackbar("ثبت شد", "کتاب مورد نظر به سبد خرید اضافه شد");
+    await _apiClient.dio.post(ApiClient.END_POINT_CARTSHOPS, data: cartShop.toJson()).then((value) {
+      Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).book_add_cart_shop);
       return value;
     });
   }
 
   Future<Response<dynamic>> addToFavoriteList(Book book) async{
     FavoriteItem favoriteItem = await setValuesFavorite(book);
-    await _apiClient.dio.post("favorite", data: favoriteItem.toJson()).then((value) {
-      Get.snackbar("ثبت شد", "کتاب مورد نظر به لیست علاقه مندی ها اضافه شد");
+    await _apiClient.dio.post(ApiClient.END_POINT_FAVORITE, data: favoriteItem.toJson()).then((value) {
+      Get.snackbar(S.of(Get.context).record_done, S.of(Get.context).book_add_to_favortie);
       return value;
     });
   }
@@ -91,13 +92,13 @@ class AppRepository {
 
   Future<List<FavoriteItem>> getFavortieBooks(int userId) async{
     List<FavoriteItem> listfavoriteBooks = [];
-    await _apiClient.dio.get("favorite",queryParameters: {
+    await _apiClient.dio.get(ApiClient.END_POINT_FAVORITE,queryParameters: {
       "userId" : userId
     }).then((value) {
       print(value.data.toString());
       listfavoriteBooks = FavoriteItem().BookListFromJson(value.data);
     }).onError((error, stackTrace) {
-      throw "error";
+      throw S.of(Get.context).error;
     });
     return listfavoriteBooks;
   }
@@ -106,12 +107,12 @@ class AppRepository {
   Future<User> getUserProfile(int userId) async{
     User user;
 
-    await _apiClient.dio.get("users",queryParameters: {
+    await _apiClient.dio.get(ApiClient.END_POINT_USERS,queryParameters: {
       "id" : userId
     }).then((value) {
       user = User.fromJson(value.data[0]);
     }).onError((error, stackTrace) {
-      throw "error";
+      throw S.of(Get.context).error;
     });
     return user;
   }
@@ -120,11 +121,11 @@ class AppRepository {
   updateUserData(User user) async {
     print(user.toJson().toString());
     await _apiClient.dio
-        .put("users/${user.id}", data: user.toJson())
+        .put("${ApiClient.END_POINT_USERS}/${user.id}", data: user.toJson())
         .then((value) {
       print(value.data.toString());
     }).onError((error, stackTrace) {
-      throw "error";
+      throw S.of(Get.context).error;
     });
     return user;
   }
@@ -132,60 +133,59 @@ class AppRepository {
 
   Future<List<CartShop>> getAllItemsOfCartShops() async{
     List<CartShop> list =new List<CartShop>();
-    await _apiClient.dio.get("cartShop").then((value) {
+    await _apiClient.dio.get(ApiClient.END_POINT_CARTSHOPS).then((value) {
       list = CartShop().CartShopListFromJson(value.data);
     }).onError((error, stackTrace) {
-      Get.snackbar("خطا", "مشکلی وبجود آمده است");
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem);
     });
 
     return list;
   }
 
   requestForPurches(Purchase purches){
-    _apiClient.dio.post("purches",data: purches.toJson()).then((value) {
-      Get.snackbar("تبریک!!!", "خرید با موفقیت انجام شد");
+    _apiClient.dio.post(ApiClient.END_POINT_PURCHASE,data: purches.toJson()).then((value) {
+      Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).success_purchase);
     }).onError((error, stackTrace){
-      Get.snackbar("خطا", "مشکلی وبجود آمده است");
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem);
     });
   }
 
   requedtForDelete(CartShop cartShop){
-    _apiClient.dio.delete("cartshop/${cartShop.id}");
+    _apiClient.dio.delete("${ApiClient.END_POINT_CARTSHOPS}/${cartShop.id}");
   }
 
 
   Future<List<Purchase>> getAllPerches() async{
     List<Purchase> purchesList=new List<Purchase>();
-    await _apiClient.dio.get("purches").then((value) {
+    await _apiClient.dio.get(ApiClient.END_POINT_PURCHASE).then((value) {
       print(value.data.toString());
       purchesList = Purchase().purchesListFromJson(value.data);
     }).onError((error, stackTrace) {
-      Get.snackbar("خطا", "مشکلی بوجود آمده است");
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem);
     });
     return purchesList;
   }
 
   requestAddBook(Book book) async {
     await _apiClient.dio
-        .post("books", data: book.toJsonWithoutId())
+        .post(ApiClient.END_POINT_BOOKS, data: book.toJsonWithoutId())
         .then((value) {
-      Get.snackbar("تبریک!!", "محصول مورد نظر با موفقیت ثبت شد",
+      Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).record_product,
           backgroundColor: Colors.green[200]);
     }).onError((error, stackTrace) {
-      Get.snackbar("خطا", "مشکلی بوجود آمده است",
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
           backgroundColor: Colors.red[200]);
     });
   }
 
   requestForEditBook(Book book) async {
-    print(book.id.toString()+"--------");
     await _apiClient.dio
-        .put("books/${book.id}", data: book.toJson())
+        .put("${ApiClient.END_POINT_BOOKS}/${book.id}", data: book.toJson())
         .then((value) {
-      Get.snackbar("تبریک!!", "محصول مورد نظر با موفقیت  ویرایش شد",
+      Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).success_edit,
           backgroundColor: Colors.green[200]);
     }).onError((error, stackTrace) {
-      Get.snackbar("خطا", "مشکلی بوجود آمده است",
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
           backgroundColor: Colors.red[200]);
     });
   }

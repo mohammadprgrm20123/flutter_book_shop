@@ -61,5 +61,12 @@
   "score": "امتیاز",
   "edit": "ویرایش",
   "managment": "مدیریت",
-  "add_product": "اضافه کردن محصول"
+  "add_product": "اضافه کردن محصول",
+  "book_add_cart_shop": "کتاب مورد نظر به سبد خرید اضافه شد",
+  "book_add_to_favortie": "کتاب مورد نظر به لیست علاقه مندی ها اضافه شد",
+  "record_done": "ثبت شد",
+  "has_problem": "مشکلی وبجود آمده است",
+  "record_product": "محصول مورد نظر با موفقیت ثبت شد",
+  "congratulation": "تبریک!!",
+  "success_edit": "محصول مورد نظر با موفقیت  ویرایش شد"
 }

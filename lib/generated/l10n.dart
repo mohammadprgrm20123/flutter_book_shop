@@ -664,6 +664,76 @@ class S {
       args: [],
     );
   }
+
+  /// `کتاب مورد نظر به سبد خرید اضافه شد`
+  String get book_add_cart_shop {
+    return Intl.message(
+      'کتاب مورد نظر به سبد خرید اضافه شد',
+      name: 'book_add_cart_shop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `کتاب مورد نظر به لیست علاقه مندی ها اضافه شد`
+  String get book_add_to_favortie {
+    return Intl.message(
+      'کتاب مورد نظر به لیست علاقه مندی ها اضافه شد',
+      name: 'book_add_to_favortie',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ثبت شد`
+  String get record_done {
+    return Intl.message(
+      'ثبت شد',
+      name: 'record_done',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `مشکلی وبجود آمده است`
+  String get has_problem {
+    return Intl.message(
+      'مشکلی وبجود آمده است',
+      name: 'has_problem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `محصول مورد نظر با موفقیت ثبت شد`
+  String get record_product {
+    return Intl.message(
+      'محصول مورد نظر با موفقیت ثبت شد',
+      name: 'record_product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `تبریک!!`
+  String get congratulation {
+    return Intl.message(
+      'تبریک!!',
+      name: 'congratulation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `محصول مورد نظر با موفقیت  ویرایش شد`
+  String get success_edit {
+    return Intl.message(
+      'محصول مورد نظر با موفقیت  ویرایش شد',
+      name: 'success_edit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
