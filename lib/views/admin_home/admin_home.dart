@@ -3,8 +3,10 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/admin_home_controller.dart';
+import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/views/add_book/add_book_page.dart';
+import 'package:flutter_booki_shop/views/details_book/details_book.dart';
 import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/admin_report/admin_report.dart';
 import 'package:flutter_booki_shop/views/edit_books/edit_book_page.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';
@@ -14,15 +16,9 @@ class AdminHome extends StatelessWidget{
 
 
   AdminHomeController _adminHomeController =Get.put(AdminHomeController());
-
-
-
-
-
+  
   @override
   Widget build(BuildContext context) {
-    print("build");
-    // TODO: implement build
     return Scaffold(
         appBar: _appBar(context),
         body: Obx((){
@@ -31,7 +27,7 @@ class AdminHome extends StatelessWidget{
           }
           else{
             if(_adminHomeController.listAllBooks.length==0){
-              return Center(child: Text("موردی وجود ندارد"));
+              return Center(child: Text(S.of(Get.context).not_exit_cases));
             }else{
               return _listBooks();
             }
@@ -42,10 +38,9 @@ class AdminHome extends StatelessWidget{
       bottomNavigationBar: _bottomNavigationBar(),
 
     );
-    throw UnimplementedError();
   }
 
-  Column _listBooks() {
+  Widget _listBooks() {
     return Column(
         children: [
           Expanded(
@@ -63,19 +58,28 @@ class AdminHome extends StatelessWidget{
   Widget _listItem(Book book) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
-      child: Card(
-        elevation: 8.0,
-        child: Container(
-          height: 180.0,
-          child: Row(
-            children: [_image(book), _nameAndPrice(book), _btnEdit(book)],
-          ),
-        ),
+      child: GestureDetector(
+        onTap: (){
+          Get.to(()=>DetailsBook(book.id));
+        },
+        child: _card(book),
       ),
     );
   }
 
-  Widget _nameAndPrice(Book book) {
+  Widget _card(Book book) {
+    return Card(
+        elevation: 8.0,
+        child: Container(
+          height: 180.0,
+          child: Row(
+            children: [_image(book), _otherDetails(book), _btnEdit(book)],
+          ),
+        ),
+      );
+  }
+
+  Widget _otherDetails(Book book) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -84,16 +88,7 @@ class AdminHome extends StatelessWidget{
           child: Row(
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("${book.bookName}"),
-                    Text("قیمت : ${book.price}"),
-                    Text("نویسنده : ${_getBookName(book)}"),
-                    Text("دسته بندی : ${book.category}"),
-                    Text("امتیاز : ${book.score}"),
-                  ],
-                ),
+                child: _columnDetails(book),
               ),
             ],
           ),
@@ -102,37 +97,45 @@ class AdminHome extends StatelessWidget{
     );
   }
 
+  Widget _columnDetails(Book book) {
+    return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("${book.bookName}"),
+                  Text("${S.of(Get.context).price} : ${book.price}"),
+                  Text("${S.of(Get.context).auther_name} : ${_getBookName(book)}"),
+                  Text("${S.of(Get.context).category} : ${book.category}"),
+                  Text("${S.of(Get.context).score} : ${book.score}"),
+                ],
+              );
+  }
+
   String _getBookName(Book book) {
-   /* if(book.autherName.length>14){
-      return book.autherName.substring(0,14);
-    }*/
   return book.autherName;
   }
 
   Widget _image(Book book) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 7.0,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  //Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
-                },
-                child: FadeInImage.assetNetwork(
-                  fadeInCurve: Curves.linearToEaseOut,
-                  image: "${book.url}",
-                  placeholder: "assets/images/noImage.jpg",
+      child: _cardImage(book),
+    );
+  }
 
-                  height: 120.0,
-                  width: 80.0,
-                ),
-              ),
-            ],
-          ),
+  Widget _cardImage(Book book) {
+    return Card(
+      elevation: 7.0,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            FadeInImage.assetNetwork(
+              fadeInCurve: Curves.linearToEaseOut,
+              image: "${book.url}",
+              placeholder: "assets/images/noImage.jpg",
+              height: 120.0,
+              width: 80.0,
+            ),
+          ],
         ),
       ),
     );
@@ -146,7 +149,7 @@ class AdminHome extends StatelessWidget{
         ElevatedButton.icon(
             onPressed: () {
               Get.to(()=>EditBookPage(book));
-            }, icon: Icon(Icons.edit),label: Text("ویرایش"))
+            }, icon: Icon(Icons.edit),label: Text(S.of(Get.context).edit))
       ],
     );
   }
@@ -160,13 +163,11 @@ class AdminHome extends StatelessWidget{
     );
   }
 
-  Text _titile(BuildContext context) {
-    return Text("مدیریت",
+  Widget _titile(BuildContext context) {
+    return Text(S.of(Get.context).managment,
         style:
-            TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0));
+            TextStyle(fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
   }
-
-
 
   FloatingActionButton _floatingActionButton() {
     return FloatingActionButton(
@@ -176,6 +177,7 @@ class AdminHome extends StatelessWidget{
       child: Icon(Icons.add),
     );
   }
+
   AnimatedBottomNavigationBar _bottomNavigationBar() {
     return AnimatedBottomNavigationBar(
         icons: [

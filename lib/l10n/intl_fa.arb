@@ -47,5 +47,8 @@
   "delete": "حذف",
   "continue1": "ادامه فرایند",
   "success_purchase": "خرید موفق",
-  "report_purchase": "گزارش خرید ها"
+  "report_purchase": "گزارش خرید ها",
+  "category": "دسته بندی",
+  "score": "امتیاز",
+  "edit": "ویرایش"
 }

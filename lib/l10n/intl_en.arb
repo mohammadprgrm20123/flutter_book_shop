@@ -56,5 +56,9 @@
   "continue1": "ادامه فرایند",
   "success_purchase": "خرید موفق",
   "date": "تاریخ",
-  "report_purchase": "گزارش خرید ها"
+  "report_purchase": "گزارش خرید ها",
+  "category": "دسته بندی",
+  "score": "امتیاز",
+  "edit": "ویرایش",
+  "managment": "مدیریت"
 }

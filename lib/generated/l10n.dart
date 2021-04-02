@@ -614,6 +614,46 @@ class S {
       args: [],
     );
   }
+
+  /// `دسته بندی`
+  String get category {
+    return Intl.message(
+      'دسته بندی',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `امتیاز`
+  String get score {
+    return Intl.message(
+      'امتیاز',
+      name: 'score',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ویرایش`
+  String get edit {
+    return Intl.message(
+      'ویرایش',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `مدیریت`
+  String get managment {
+    return Intl.message(
+      'مدیریت',
+      name: 'managment',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
