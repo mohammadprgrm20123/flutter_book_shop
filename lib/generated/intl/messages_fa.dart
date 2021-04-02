@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "English" : MessageLookupByLibrary.simpleMessage("انگلیسی"),
     "Error" : MessageLookupByLibrary.simpleMessage("خطا"),
     "Exit" : MessageLookupByLibrary.simpleMessage("خروج"),
+    "add_product" : MessageLookupByLibrary.simpleMessage("اضافه کردن محصول"),
     "add_to_favorite" : MessageLookupByLibrary.simpleMessage("    اضافه کردن به علاقه مندی ها     "),
     "app_name" : MessageLookupByLibrary.simpleMessage("بوکی شاپ"),
     "audio_books" : MessageLookupByLibrary.simpleMessage("کتاب های صوتی"),

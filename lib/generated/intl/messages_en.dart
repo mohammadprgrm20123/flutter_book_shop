@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "English" : MessageLookupByLibrary.simpleMessage("انگلیسی"),
     "Error" : MessageLookupByLibrary.simpleMessage("خطا"),
     "Exit" : MessageLookupByLibrary.simpleMessage("خروج"),
+    "add_product" : MessageLookupByLibrary.simpleMessage("اضافه کردن محصول"),
     "add_to_favorite" : MessageLookupByLibrary.simpleMessage("     add to favorite list      "),
     "app_name" : MessageLookupByLibrary.simpleMessage("booki shop"),
     "assetsimages1jpg" : MessageLookupByLibrary.simpleMessage("assets/images/1.jpg"),

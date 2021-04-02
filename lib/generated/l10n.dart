@@ -654,6 +654,16 @@ class S {
       args: [],
     );
   }
+
+  /// `اضافه کردن محصول`
+  String get add_product {
+    return Intl.message(
+      'اضافه کردن محصول',
+      name: 'add_product',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
