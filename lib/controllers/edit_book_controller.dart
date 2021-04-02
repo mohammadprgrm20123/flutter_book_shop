@@ -1,7 +1,7 @@
 
 
 import 'package:flutter_booki_shop/models/Book.dart';
-import 'package:flutter_booki_shop/repository/AppRepository.dart';
+import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
 class EditBookController extends GetxController{

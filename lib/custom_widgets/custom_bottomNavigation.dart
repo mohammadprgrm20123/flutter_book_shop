@@ -4,7 +4,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_booki_shop/models/CartShop.dart';
-import 'package:flutter_booki_shop/views/cartshop/cart_shop_page.dart';
+import 'package:flutter_booki_shop/views/cart_shop/cart_shop_page.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
 import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';

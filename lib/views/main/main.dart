@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/main_controller.dart';
@@ -7,21 +6,21 @@ import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'views/user_home/user_home.dart';
+import '../user_home/user_home.dart';
 
 void main() async {
   runApp(MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
 
-
+  MainController _mainController =Get.put(MainController());
   List<Widget> _listPage = [
     Login(),
     UserHome(),
     AdminHome()
   ];
-  MainController _mainController =Get.put(MainController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +28,22 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       theme: ThemeData(
         fontFamily: 'Dana',
-         iconTheme: IconThemeData(
-        color: Colors.black, //change your color here
-      ),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
         primarySwatch: Colors.blue,
       ),
-      home: Obx((){
-        Widget page = _listPage[_mainController.indexStartPage.value];
-        return page;
+      home: Obx(() {
+        print(_mainController.loading.value.toString());
+        print(_mainController.indexStartPage.value.toString() + "-->index");
+        if (_mainController.loading.value == true) {
+          return CircularProgressIndicator();
+        }
+        else {
+          return _listPage[_mainController.indexStartPage.value];
+        }
       }),
       localizationsDelegates: [
-        // ... app-specific localization delegate[s] here
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -49,8 +53,4 @@ class MyApp extends StatelessWidget {
       locale: Locale('fa'),
     );
   }
-
-
-
-
 }

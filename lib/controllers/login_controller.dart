@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/User.dart';
-import 'package:flutter_booki_shop/repository/AppRepository.dart';
+import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController{

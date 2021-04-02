@@ -4,7 +4,8 @@ import 'package:flutter_booki_shop/controllers/search_controller.dart';
 import 'package:flutter_booki_shop/custom_widgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
-import 'package:flutter_booki_shop/views/details/details_book.dart';
+import 'package:flutter_booki_shop/views/details_book/details_book.dart';
+import 'package:flutter_booki_shop/views/details_book/details_book.dart';
 import 'package:get/get.dart';
 
 class Search extends StatelessWidget {

@@ -1,7 +1,7 @@
 
 
 import 'package:flutter_booki_shop/models/purches.dart';
-import 'package:flutter_booki_shop/repository/AppRepository.dart';
+import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
 class AdminReportController extends GetxController{

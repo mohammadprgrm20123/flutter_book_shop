@@ -5,7 +5,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_booki_shop/models/User.dart';
-import 'package:flutter_booki_shop/repository/AppRepository.dart';
+import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';

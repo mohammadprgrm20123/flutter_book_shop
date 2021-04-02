@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/admin_home_controller.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
-import 'package:flutter_booki_shop/views/addBook/add_book_page.dart';
-import 'package:flutter_booki_shop/views/admin_report.dart';
-import 'package:flutter_booki_shop/views/editbook/edit_book_page.dart';
+import 'package:flutter_booki_shop/views/add_book/add_book_page.dart';
+import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/admin_report/admin_report.dart';
+import 'package:flutter_booki_shop/views/edit_books/edit_book_page.dart';
+import 'package:flutter_booki_shop/views/proflie/profile.dart';
 import 'package:get/get.dart';
 
 class AdminHome extends StatelessWidget{
@@ -194,6 +195,7 @@ class AdminHome extends StatelessWidget{
             }break;
 
             case 1:{
+              Get.to(()=>Profile());
             }break;
 
           }

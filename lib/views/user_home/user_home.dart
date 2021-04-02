@@ -6,7 +6,7 @@ import 'package:flutter_booki_shop/controllers/home_controller.dart';
 import 'package:flutter_booki_shop/custom_widgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/custom_widgets/horisental_card_pager.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/details/details_book.dart';
+import 'package:flutter_booki_shop/views/details_book/details_book.dart';
 import 'package:get/get.dart';
 
 class UserHome extends StatelessWidget {
@@ -106,6 +106,7 @@ class UserHome extends StatelessWidget {
     return Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
+                onPressed: null,
                 icon: Icon(Icons.arrow_forward_ios),
               ),
             );
@@ -155,8 +156,8 @@ class UserHome extends StatelessWidget {
                     },
                     child: FadeInImage.assetNetwork(
                       fadeInCurve: Curves.linearToEaseOut,
-                      image: _homeController.listPopularBook[index].url,
-                      placeholder: 'assets/images/noImage.jpg',
+                      image: '${_homeController.listPopularBook[index].url}',
+                      placeholder: 'assets/images/noImage.png',
                     ),
                   ),
                 ),
@@ -204,8 +205,8 @@ class UserHome extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                     child: FadeInImage.assetNetwork(
                       fadeInCurve: Curves.linearToEaseOut,
-                      image: _homeController.listBestBook[index].url,
-                      placeholder: 'assets/images/noImage.jpg',
+                      image: '${_homeController.listBestBook[index].url}',
+                      placeholder: 'assets/images/noImage.png' ,
                     ),
                   ),
                 ),

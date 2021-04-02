@@ -5,7 +5,7 @@ import 'package:flutter_booki_shop/custom_widgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/FavoriteItem.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
-import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/details/details_book.dart';
+import 'package:flutter_booki_shop/views/details_book/details_book.dart';
 import 'package:get/get.dart';
 
 class Favorite extends StatelessWidget{

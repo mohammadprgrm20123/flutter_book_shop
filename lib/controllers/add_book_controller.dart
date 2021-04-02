@@ -2,7 +2,7 @@
 
 
 import 'package:flutter_booki_shop/models/Book.dart';
-import 'package:flutter_booki_shop/repository/AppRepository.dart';
+import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 

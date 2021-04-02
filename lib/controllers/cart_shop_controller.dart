@@ -2,7 +2,7 @@
 
 import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:flutter_booki_shop/models/purches.dart';
-import 'package:flutter_booki_shop/repository/AppRepository.dart';
+import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shamsi_date/shamsi_date.dart';
