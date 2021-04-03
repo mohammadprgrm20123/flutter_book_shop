@@ -148,6 +148,7 @@ class CartShopPage extends StatelessWidget {
               children: [
                 Text("${cartShop.book.bookName}"),
                 Text("${S.of(Get.context).price} : ${cartShop.book.price}"),
+                Text("${S.of(Get.context).author_name}  : ${cartShop.book.authorName.substring(0,8)}..."),
               ],
             ),
           ],

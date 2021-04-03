@@ -30,7 +30,7 @@ class Book {
     releaseDate = json['releaseDate'];
     createdAt = json['createdAt'];
     url = json['url'];
-    authorName = json['authorName'];
+    authorName = json['autherName'];
     desc = json['desc'];
     tags = json['tags'] != null ? new Tags.fromJson(json['tags']) : null;
   }

@@ -25,10 +25,9 @@ void onChanged() => {};
 class StateAdder extends State<CustomAdder> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return MaterialApp(
-      home: Container(
 
+      return Container(
+        height: 50.0,
         child: Row(
           children: [
             Padding(
@@ -76,7 +75,6 @@ class StateAdder extends State<CustomAdder> {
             )
           ],
         ),
-      ),
     );
   }
 

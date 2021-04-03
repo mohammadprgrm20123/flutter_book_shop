@@ -10,10 +10,10 @@ import 'package:flutter_booki_shop/main.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('CustomAdder', (WidgetTester tester) async {
+ /* testWidgets('CustomAdder', (WidgetTester tester) async {
     await tester.pumpWidget(MyApp());
     await tester.pump(Duration(seconds: 3));
     //await tester.pumpWidget(Login());
 
-  });
+  });*/
 }

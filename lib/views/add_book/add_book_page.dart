@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/add_book_controller.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
+import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:get/get.dart';
 
 @immutable
@@ -64,7 +65,7 @@ class AddBookPage extends StatelessWidget {
     return ElevatedButton(onPressed: () {
             if (!checkEmpty()) {
               sendRequestAddBook();
-              Get.back();
+              Get.offAll(()=>AdminHome());
             }
           }, child: Obx(() {
             if (_addBookController.loading.value == true) {

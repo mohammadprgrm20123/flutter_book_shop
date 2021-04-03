@@ -35,6 +35,9 @@ class CartShopController extends GetxController{
     _loading(true);
     _appRepository.getAllItemsOfCartShops().then((value) {
       _loading(false);
+      value.forEach((element) {
+        print(element.book.authorName);
+      });
       _listCartShop = value;
       calcuteTotalPrice();
     }).onError((error, stackTrace) {
