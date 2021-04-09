@@ -99,7 +99,10 @@ class UserHome extends GetView<HomeController> {
           initialPage: _homeController.itemsAudioBook.length~/2,
           onPageChanged: (page) => {},
           onSelectedItem: (page)  {
-            Get.to(() => DetailsBook(_homeController.listAudioBook[page].id));
+            Get.to((){DetailsBook(_homeController.listAudioBook[page].id);}).then((value){
+            }).onError((error, stackTrace) {
+
+            });
           },
           items: _homeController.itemsAudioBook,
           // set ImageCardItem or IconTitleCardItem class
@@ -169,7 +172,9 @@ class UserHome extends GetView<HomeController> {
                 borderRadius: BorderRadius.circular(8.0),
                 child: GestureDetector(
                   onTap: (){
-                    Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id));
+                    Get.to(()=>DetailsBook(_homeController.listPopularBook[index].id)).then((value) {
+                      _homeController.getCountOfCartShop();
+                    });
                   },
                   child: FadeInImage.assetNetwork(
                     fadeInCurve: Curves.linearToEaseOut,
@@ -220,7 +225,9 @@ class UserHome extends GetView<HomeController> {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: (){
-                  Get.to(DetailsBook(_homeController.listBestBook[index].id));
+                  Get.to(DetailsBook(_homeController.listBestBook[index].id)).then((value) {
+                    _homeController.getCountOfCartShop();
+                  });
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),

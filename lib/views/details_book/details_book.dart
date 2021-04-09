@@ -18,6 +18,9 @@ class DetailsBook extends StatelessWidget {
     _detailController.getDeatilsBook(_bookId);
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

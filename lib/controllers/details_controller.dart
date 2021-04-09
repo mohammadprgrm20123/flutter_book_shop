@@ -6,7 +6,7 @@ import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
-class DetailController extends GetxController{
+class DetailController extends GetxController with StateMixin<Null>{
 
   RxBool _loading = false.obs;
   RxBool _loadingBtnClick = false.obs;
@@ -34,7 +34,7 @@ class DetailController extends GetxController{
           backgroundColor: Colors.red[200]);    });
   }
 
-  addBookToCartShop(Book book){
+ void addBookToCartShop(Book book){
     _loadingBtnClick(true);
     _appRepository.addBookToCartShop(book).then((value) {
       _loadingBtnClick(false);
