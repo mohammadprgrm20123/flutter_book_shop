@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 @immutable
 class Favorite extends StatelessWidget{
 
-  static const int CROSS_AXIS_COUNT =3;
+  static const int CROSS_AXIS_COUNT =2;
   FavoriteController _favoriteController = Get.put(FavoriteController());
 
   @override
@@ -48,16 +48,14 @@ class Favorite extends StatelessWidget{
   }
 
   Widget _gridView() {
-    return Container(
-          child: GridView.builder(
-            itemCount: _favoriteController.listFavorite.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: CROSS_AXIS_COUNT),
-            itemBuilder: (BuildContext context, int index) {
-              return _itemList(_favoriteController.listFavorite.elementAt(index));
-            },
-          ),
-        );
+    return GridView.builder(
+      itemCount: _favoriteController.listFavorite.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: CROSS_AXIS_COUNT),
+      itemBuilder: (BuildContext context, int index) {
+        return _itemList(_favoriteController.listFavorite.elementAt(index));
+      },
+    );
   }
 
   Widget _itemList(FavoriteItem listFavorite) {
@@ -69,19 +67,29 @@ class Favorite extends StatelessWidget{
           );
   }
 
-  Widget _card(FavoriteItem listFavorite) {
-    return Card(
-            elevation: 7.0,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  _imageBook(listFavorite),
-                  _textBookName(listFavorite),
-                ],
-              ),
-            ),
-          );
+  Widget _card(FavoriteItem item) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Card(
+        elevation: 10.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            _imageBook(item),
+            _textBookName(item),
+            Row(children:
+            [
+              Expanded(child: ElevatedButton(onPressed: (){
+                _favoriteController.listFavorite.remove(item);
+                _favoriteController.removeFavoriteItem(item.id);
+              }, child: Text("حذف",overflow: TextOverflow.fade,)))
+
+            ]),
+
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _textBookName(FavoriteItem listFavorite) {
@@ -99,7 +107,8 @@ class Favorite extends StatelessWidget{
                     borderRadius: new BorderRadius.circular(4.0),
                     child: Image.network(
                       listFavorite.book.url,
-                      fit: BoxFit.cover,
+                      height: 100,
+                      width: 100,
                     ),
                   ),
                 );

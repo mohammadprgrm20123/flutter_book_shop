@@ -1,3 +1,4 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,7 +8,11 @@ import 'package:flutter_booki_shop/custom_widgets/card_icon_favorite_icon.dart';
 import 'package:flutter_booki_shop/custom_widgets/custom_bottomNavigation.dart';
 import 'package:flutter_booki_shop/custom_widgets/horisental_card_pager.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
+import 'package:flutter_booki_shop/views/cart_shop/cart_shop_page.dart';
 import 'package:flutter_booki_shop/views/details_book/details_book.dart';
+import 'package:flutter_booki_shop/views/favorite/favorite.dart';
+import 'package:flutter_booki_shop/views/proflie/profile.dart';
+import 'package:flutter_booki_shop/views/search/search.dart';
 import 'package:get/get.dart';
 
 
@@ -23,7 +28,6 @@ class UserHome extends StatefulWidget{
 class StateUserHome extends State<UserHome> {
   HomeController _homeController = Get.put(HomeController());
 
-
   @override
   Widget build(BuildContext context) {
     _homeController.getListFavorite();
@@ -32,7 +36,7 @@ class StateUserHome extends State<UserHome> {
       body: _scrollView(context),
       floatingActionButton: CustomBtnNavigation().floatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: CustomBtnNavigation().bottomNavigationBar(),
+      bottomNavigationBar: bottomNavigationBar(),
     );
   }
 
@@ -524,6 +528,46 @@ class StateUserHome extends State<UserHome> {
       style:
       TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0),
     );
+  }
+  AnimatedBottomNavigationBar bottomNavigationBar() {
+    return AnimatedBottomNavigationBar(
+        activeIndex: null,
+        icons: [
+          Icons.shopping_bag_outlined,
+          Icons.favorite_border,
+          Icons.search,
+          Icons.account_circle_outlined,
+        ],
+        elevation: 20.0,
+        backgroundColor: Colors.white,
+        gapLocation: GapLocation.center,
+        notchSmoothness: NotchSmoothness.softEdge,
+        splashRadius: 10.0,
+        activeColor: Colors.blue,
+        onTap: (int index) {
+          switch(index){
+            case 0:{
+              Get.to(()=>CartShopPage());
+            }break;
+
+            case 1:{
+              Get.to(()=>Favorite()).then((value) {
+                _homeController.loading(true);
+                _homeController.getAllBooks();
+                _homeController.getListFavorite();
+              });
+            }break;
+
+            case 2:{
+              Get.to(()=>Search());
+            }break;
+
+            case 3:{
+              Get.to(()=>Profile());
+            }break;
+
+          }
+        });
   }
 
 }

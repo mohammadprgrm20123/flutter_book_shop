@@ -33,4 +33,10 @@ class FavoriteController extends GetxController{
   }
 
   Set<FavoriteItem> get listFavorite => _listFavorite;
+
+  removeFavoriteItem(int id){
+    _loading(true);
+    _appRepository.removeFromFavorite(id);
+    _loading(false);
+  }
 }
