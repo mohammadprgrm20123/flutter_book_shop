@@ -22,7 +22,6 @@ class AdminHomeController extends GetxController{
   getAllBooks(){
     _loading(true);
     _appRepository.getAllBooks().then((value) {
-      print(value.toString());
       _loading(false);
       listAllBooks = value;
     }).onError((error, stackTrace) {

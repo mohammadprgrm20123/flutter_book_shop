@@ -32,11 +32,7 @@ class AppRepository {
   Future<List<Book>> getAllBooks() async {
     List<Book> listBook = [];
     await _apiClient.dio.get(ApiClient.END_POINT_BOOKS).then((value) {
-      print('${value.toString()}--->getAllBooks Repo');
       listBook = Book().BookListFromJson(value.data);
-      listBook.forEach((element) {
-        print('${element.id}--->getAllBooks Repo');
-      });
     }).onError((error, stackTrace) {
       print(error.toString());
       throw S.of(Get.context).error;
@@ -186,11 +182,21 @@ class AppRepository {
     await _apiClient.dio
         .put("${ApiClient.END_POINT_BOOKS}/${book.id}", data: book.toJson())
         .then((value) {
-      Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).success_edit,
+      Get.snackbar(
+          S.of(Get.context).congratulation, S.of(Get.context).success_edit,
           backgroundColor: Colors.green[200]);
     }).onError((error, stackTrace) {
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
           backgroundColor: Colors.red[200]);
+    });
+  }
+
+  removeFromFavorite(int id) {
+    _apiClient.dio.delete("${ApiClient.END_POINT_FAVORITE}/$id").then((value) {
+      Get.snackbar(" حذف شد", "با موفقیت از لیست علاقه مندی حذف شد");
+    }).onError((error, stackTrace) {
+      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem);
+      return;
     });
   }
 }

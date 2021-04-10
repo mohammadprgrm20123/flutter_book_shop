@@ -25,7 +25,6 @@ class FavoriteController extends GetxController{
     _appRepository.getFavortieBooks(userId).then((value) {
       _loading(false);
       _listFavorite =value.toSet();
-      print(_listFavorite.length.toString());
     }).onError((error, stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,

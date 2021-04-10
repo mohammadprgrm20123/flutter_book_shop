@@ -2,7 +2,9 @@
 import 'package:flutter_booki_shop/custom_widgets/card_item.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
+import 'package:flutter_booki_shop/models/FavoriteItem.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
+import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController{
@@ -13,12 +15,23 @@ class HomeController extends GetxController{
   List<Book> listPopularBook=[];
   List<Book> listAudioBook=[];
   RxInt _countCartShop = 0.obs;
+  List<FavoriteItem> listFavorite=[];
+  RxBool _loadingOfAddFavoriteAndCartShop=false.obs;
+
+
+  RxBool get loadingOfAddFavorite =>
+      _loadingOfAddFavoriteAndCartShop;
+
+  set loadingOfAddFavorite(RxBool value) {
+    _loadingOfAddFavoriteAndCartShop = value;
+  }
+
   List<ImageCarditem> itemsAudioBook = [
   ];  RxDouble indexIndicator = 0.0.obs;
 
   AppRepository _appRepository;
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     _appRepository = AppRepository();
     getAllBooks();
@@ -32,9 +45,6 @@ class HomeController extends GetxController{
     _appRepository.getAllBooks().then((value) {
       _loading(false);
        listAllBook = value;
-      seprateBestBooks();
-      sepratePopularBook();
-      seprateAudioBook();
     }).onError((error, stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
@@ -80,4 +90,44 @@ class HomeController extends GetxController{
   }
 
   RxInt get countCartShop => _countCartShop;
+
+
+
+  addToFavorite(Book book){
+    _loadingOfAddFavoriteAndCartShop(true);
+    _appRepository.addToFavoriteList(book);
+    _loadingOfAddFavoriteAndCartShop(false);
+  }
+
+  removeFromFavorite(Book book){
+    _loadingOfAddFavoriteAndCartShop(true);
+    listFavorite.forEach((element) {
+      if(element.book.id==book.id){
+        _appRepository.removeFromFavorite(element.id);
+      }
+    });
+    _loadingOfAddFavoriteAndCartShop(false);
+  }
+
+  void getListFavorite() {
+    MySharePrefrence().getId().then((value) {
+      _appRepository.getFavortieBooks(value).then((value){
+        listFavorite = value;
+        setStatusOfFavorite();
+      });
+    });
+  }
+
+  void setStatusOfFavorite() {
+    for(int i=0;i<listFavorite.length;i++){
+      for(int j=0;j<listAllBook.length;j++){
+        if(listAllBook[j].id==listFavorite[i].book.id){
+          listAllBook[j].isFavorite=true;
+        }
+      }
+    }
+    seprateBestBooks();
+    sepratePopularBook();
+    seprateAudioBook();
+  }
 }

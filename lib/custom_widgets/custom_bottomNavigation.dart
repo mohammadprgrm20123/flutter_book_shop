@@ -14,9 +14,8 @@ class CustomBtnNavigation {
   FloatingActionButton floatingActionButton() {
     return FloatingActionButton(
       onPressed: (){
-      print(Get.currentRoute.toString());
       if(Get.currentRoute!="/UserHome")
-          Get.offAll(UserHome());
+          Get.to(UserHome());
       },
       child: Icon(Icons.home_outlined),
     );
@@ -43,11 +42,11 @@ class CustomBtnNavigation {
             }break;
 
             case 1:{
-              Get.offAll(()=>Favorite());
+              Get.to(()=>Favorite());
             }break;
 
             case 2:{
-              Get.offAll(()=>Search());
+              Get.to(()=>Search());
             }break;
 
             case 3:{

@@ -13,6 +13,8 @@ class Book {
   String url;
   String authorName;
   String desc;
+  bool isFavorite=false;
+
   Tags tags=new Tags();
 
   Book({this.price,this.bookName,this.publisherName,this.translator,this.score

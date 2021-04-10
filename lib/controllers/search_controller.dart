@@ -38,12 +38,7 @@ class SearchController extends GetxController {
     _loading(true);
     _appRepository.getAllBooks().then((value) {
       _loading(false);
-      value.forEach((element) {
-        print('${element.authorName}--->getAllBooks');
-      });
-
       _listAll = value;
-
     }).onError((error, stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
@@ -54,7 +49,6 @@ class SearchController extends GetxController {
   RxBool get loadingSeach => _loadingSeach;
 
   searchInList(String text) {
-    print("searchInList");
     _loadingSeach(true);
 
     _searchList = _listAll.where((book) => book.bookName.contains(text) ||
@@ -62,9 +56,7 @@ class SearchController extends GetxController {
         book.publisherName.contains(text) ||
         book.category.contains(text) ||
         book.desc.contains(text)).toList();
-    _searchList.forEach((element) {
-      print(element.authorName);
-    });
+
     _loadingSeach(false);
 
   }

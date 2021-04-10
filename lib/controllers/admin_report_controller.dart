@@ -23,7 +23,6 @@ class AdminReportController extends GetxController{
   getReportPurches(){
     _loading(true);
     _appRepository.getAllPerches().then((value){
-      print(value.toString());
       _loading(false);
       _listPurchase = value;
     }).onError((error, stackTrace) {
