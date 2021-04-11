@@ -26,7 +26,11 @@ class UserHome extends StatefulWidget{
 
 
 class StateUserHome extends State<UserHome> {
-  HomeController _homeController = Get.put(HomeController());
+  HomeController _homeController= Get.put(HomeController());
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,14 +101,14 @@ class StateUserHome extends State<UserHome> {
   }
 
   Widget _listAudioBooks() {
-    return ObxValue((data) {
+    return Obx(() {
       if (_homeController.loading.value == true) {
         return CircularProgressIndicator();
       }
       else {
         return _itemListAudioBooks();
       }
-    }, false.obs);
+    });
   }
 
   Padding _itemListAudioBooks() {
@@ -115,7 +119,7 @@ class StateUserHome extends State<UserHome> {
         onPageChanged: (page) => {},
         onSelectedItem: (page) {
           Get.to(() {
-            DetailsBook(_homeController.listAudioBook[page].id);
+            DetailsBook(_homeController.listAudioBook.value[page].id);
           }).then((value) {}).onError((error, stackTrace) {
 
           });
@@ -163,7 +167,7 @@ class StateUserHome extends State<UserHome> {
   }
 
   Widget _listPopularBooks() {
-    return ObxValue((data) {
+    return Obx(() {
       if (_homeController.loading.value == true) {
         return CircularProgressIndicator();
       }
@@ -174,12 +178,12 @@ class StateUserHome extends State<UserHome> {
             itemBuilder: (BuildContext _, int index) {
               return _itemListPopularBooks(index);
             },
-            itemCount: _homeController.listPopularBook.length,
+            itemCount: _homeController.listPopularBook.value.length,
             scrollDirection: Axis.horizontal,
           ),
         );
       }
-    }, false.obs);
+    });
   }
 
 
@@ -201,7 +205,7 @@ class StateUserHome extends State<UserHome> {
                   children: [
                     InkWell(
                       onTap: (){
-                        Get.to(DetailsBook(_homeController.listPopularBook[index].id))
+                        Get.to(DetailsBook(_homeController.listPopularBook.value[index].id))
                             .then((value) {
                           _homeController.getCountOfCartShop();
                         });
@@ -209,7 +213,7 @@ class StateUserHome extends State<UserHome> {
                       child: ClipRRect(
                         child: FadeInImage.assetNetwork(
                           fadeInCurve: Curves.linearToEaseOut,
-                          image: '${_homeController.listPopularBook[index].url}',
+                          image: '${_homeController.listPopularBook.value[index].url}',
                           placeholder: 'assets/images/noImage.png',
                           height: 200,
                           width: 150,
@@ -218,29 +222,30 @@ class StateUserHome extends State<UserHome> {
                     ),
                     Expanded(
                       child: Text(
-                        _homeController.listPopularBook[index].bookName,
+                        _homeController.listPopularBook.value[index].bookName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,
                       ),
                     ),
-                            AddFavortieAndCartShop(
-                            changeValueCartShop: (value){
-                            },
-                            changeValueFavorite: (value){
-                              if(value==true){
-                                _homeController.addToFavorite(_homeController.listPopularBook[index]);
-                                _homeController.listPopularBook[index].isFavorite=true;
-                              }
-                              else{
-                                _homeController.removeFromFavorite(_homeController.listPopularBook[index]);
-                                _homeController.listPopularBook[index].isFavorite=false;
-                              }
-                            },
-                            isCartShop: false,
-                            isFavorite: _homeController.listPopularBook[index].isFavorite,
-                        )
-
+                          Obx((){
+                            return AddFavortieAndCartShop(
+                              changeValueCartShop: (value){
+                              },
+                              changeValueFavorite: (value){
+                                if(value==true){
+                                  _homeController.addToFavorite(_homeController.listPopularBook.value[index]);
+                                  _homeController.listPopularBook.value[index].isFavorite=true;
+                                }
+                                else{
+                                  _homeController.removeFromFavorite(_homeController.listPopularBook.value[index]);
+                                  _homeController.listPopularBook.value[index].isFavorite=false;
+                                }
+                              },
+                              isCartShop: false,
+                              isFavorite: _homeController.listPopularBook.value[index].isFavorite,
+                            );
+                          })
                   ]
               ),
             ),
@@ -265,7 +270,8 @@ class StateUserHome extends State<UserHome> {
   }
 
   Widget _listBestBooks() {
-    return ObxValue((date) {
+    return Obx(() {
+      print("obx list book-->");
       if (_homeController.loading.value == true) {
         return CircularProgressIndicator();
       } else
@@ -275,12 +281,12 @@ class StateUserHome extends State<UserHome> {
             itemBuilder: (BuildContext _, int index) {
               return _itemListBestBooks(index);
             },
-            itemCount: _homeController.listBestBook.length,
+            itemCount: _homeController.listBestBook.value.length,
             scrollDirection: Axis.horizontal,
           ),
         );
     },
-        false.obs);
+        );
   }
 
   Widget _itemListBestBooks(int index) {
@@ -291,7 +297,7 @@ class StateUserHome extends State<UserHome> {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () {
-            Get.to(DetailsBook(_homeController.listBestBook[index].id)).then((
+            Get.to(DetailsBook(_homeController.listBestBook.value[index].id)).then((
                 value) {
               _homeController.getCountOfCartShop();
             });
@@ -306,7 +312,7 @@ class StateUserHome extends State<UserHome> {
                     ClipRRect(
                       child: FadeInImage.assetNetwork(
                         fadeInCurve: Curves.linearToEaseOut,
-                        image: '${_homeController.listBestBook[index].url}',
+                        image: '${_homeController.listBestBook.value[index].url}',
                         placeholder: 'assets/images/noImage.png',
                         height: 200,
                         width: 150,
@@ -314,17 +320,14 @@ class StateUserHome extends State<UserHome> {
                     ),
                     Expanded(
                       child: Text(
-                          _homeController.listBestBook[index].bookName,
+                          _homeController.listBestBook.value[index].bookName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,
                       ),
                     ),
                      Obx((){
-                       if(_homeController.loadingOfAddFavorite.value==true){
-                         return  Text("لطفا صبر کنید");
-                       }
-                       else
+                       print("_homeController.listBestBook[index].isFavorite==>${_homeController.listBestBook[index].isFavorite}");
                        return AddFavortieAndCartShop(
                          changeValueCartShop: (value){
                          },
@@ -552,8 +555,6 @@ class StateUserHome extends State<UserHome> {
 
             case 1:{
               Get.to(()=>Favorite()).then((value) {
-                _homeController.loading(true);
-                _homeController.getAllBooks();
                 _homeController.getListFavorite();
               });
             }break;

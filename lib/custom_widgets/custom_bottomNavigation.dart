@@ -15,7 +15,7 @@ class CustomBtnNavigation {
     return FloatingActionButton(
       onPressed: (){
       if(Get.currentRoute!="/UserHome")
-          Get.to(UserHome());
+          Get.offAll(UserHome());
       },
       child: Icon(Icons.home_outlined),
     );

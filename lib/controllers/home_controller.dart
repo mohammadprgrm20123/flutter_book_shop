@@ -10,10 +10,10 @@ import 'package:get/get.dart';
 class HomeController extends GetxController{
 
   RxBool _loading =false.obs;
-  List<Book> listAllBook=[] ;
-  List<Book> listBestBook=[];
-  List<Book> listPopularBook=[];
-  List<Book> listAudioBook=[];
+  RxList listAllBook=[].obs  ;
+  RxList listBestBook=[].obs  ;
+  RxList listPopularBook=[].obs ;
+  RxList listAudioBook=[].obs;
   RxInt _countCartShop = 0.obs;
   List<FavoriteItem> listFavorite=[];
   RxBool _loadingOfAddFavoriteAndCartShop=false.obs;
@@ -35,6 +35,7 @@ class HomeController extends GetxController{
     super.onInit();
     _appRepository = AppRepository();
     getAllBooks();
+    getListFavorite();
     getCountOfCartShop();
   }
 
@@ -44,7 +45,7 @@ class HomeController extends GetxController{
     _loading(true);
     _appRepository.getAllBooks().then((value) {
       _loading(false);
-       listAllBook = value;
+       listAllBook(value);
     }).onError((error, stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
@@ -57,24 +58,24 @@ class HomeController extends GetxController{
 
   void seprateBestBooks(){
     List<Book> listBest = [];
-    listAllBook.forEach((book) {
+    listAllBook.value.forEach((book) {
      if(book.score>=4.2 && book.category!="صوتی"){
        listBest.add(book);
      }
    });
-   listBestBook= listBest;
+   listBestBook.value=(listBest);
   }
 
   void sepratePopularBook() {
     listPopularBook=listBestBook;
-   listPopularBook= listPopularBook.reversed.toList();
+   listPopularBook(listPopularBook.reversed.toList());
   }
 
   void seprateAudioBook() {
-    List<Book> allBook = listAllBook;
+    List<Book> allBook = listAllBook.value;
     allBook.forEach((book) {
       if(book.category=="صوتی"){
-        listAudioBook.add(book);
+        listAudioBook.value.add(book);
         itemsAudioBook.add(ImageCarditem(
           image: Image.network(
               book.url)));
@@ -119,13 +120,28 @@ class HomeController extends GetxController{
   }
 
   void setStatusOfFavorite() {
-    for(int i=0;i<listFavorite.length;i++){
+
+    if(listFavorite.length==0){
       for(int j=0;j<listAllBook.length;j++){
-        if(listAllBook[j].id==listFavorite[i].book.id){
-          listAllBook[j].isFavorite=true;
+          listAllBook[j].isFavorite=false;
         }
       }
+    else{
+      for(int j=0;j<listAllBook.length;j++){
+        listAllBook[j].isFavorite=false;
+      }
     }
+
+
+      for(int i=0;i<listFavorite.length;i++){
+        for(int j=0;j<listAllBook.length;j++){
+          if(listAllBook[j].id==listFavorite[i].book.id){
+            print(listAllBook[j].id.toString()+"=id");
+            listAllBook[j].isFavorite=true;
+          }
+        }
+      }
+
     seprateBestBooks();
     sepratePopularBook();
     seprateAudioBook();
