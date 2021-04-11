@@ -492,12 +492,19 @@ class StateUserHome extends State<UserHome> {
   Padding _badgeShop() {
     return Padding(
       padding: const EdgeInsets.only(left: 25.0, top: 12.0),
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          _iconShop(),
-          _circleBadge(),
-        ],
+      child: InkWell(
+        onTap: (){
+          Get.to(()=>CartShopPage()).then((value) {
+            _homeController.getCountOfCartShop();
+          });
+        },
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            _iconShop(),
+            _circleBadge(),
+          ],
+        ),
       ),
     );
   }
@@ -550,7 +557,9 @@ class StateUserHome extends State<UserHome> {
         onTap: (int index) {
           switch(index){
             case 0:{
-              Get.to(()=>CartShopPage());
+              Get.to(()=>CartShopPage()).then((value) {
+                _homeController.getCountOfCartShop();
+              });
             }break;
 
             case 1:{
