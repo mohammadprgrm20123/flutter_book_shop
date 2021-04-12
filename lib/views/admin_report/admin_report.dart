@@ -55,7 +55,7 @@ class AdminReport extends StatelessWidget {
           children: [
             Text(S.of(Get.context).success_purchase),
             Text("${S.of(Get.context).date}     :  ${_getDate(purchase)}"),
-            Text(" ${S.of(Get.context).price}    :${purchase.price}"),
+            Text(" ${S.of(Get.context).price}    :${purchase}"),
           ],
         ),
       );

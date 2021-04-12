@@ -14,6 +14,7 @@ class Book {
   String authorName;
   String desc;
   bool isFavorite=false;
+  bool isInCartShop=false;
 
   Tags tags=new Tags();
 

@@ -37,10 +37,12 @@ class CartShopPage extends StatelessWidget {
     );
   }
 
-  Center _textNotExist() {
-    return Center(
-                child: Text(S.of(Get.context).not_exit_cases),
-              );
+  Widget _textNotExist() {
+    return Expanded(
+      child: Center(
+                  child: Text(S.of(Get.context).not_exit_cases),
+                ),
+    );
   }
 
   Container  _calcutePrice() {
@@ -180,6 +182,10 @@ class CartShopPage extends StatelessWidget {
             onChangedRemove: (count){
               _cartShopController.decresePrice(cartShop, count);
               _cartShopController.listCartShop[index].count=count;
+              if(count==0){
+                _cartShopController.listCartShop.remove(cartShop);
+                _removeItemLIst(cartShop);
+              }
             }
 
           ,

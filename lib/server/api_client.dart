@@ -10,7 +10,7 @@ class ApiClient {
   static const String END_POINT_BOOKS = 'books';
  static const String END_POINT_CARTSHOPS = 'cartShop';
  static const String END_POINT_FAVORITE = 'favorite';
- static const String END_POINT_PURCHASE = 'purchease';
+ static const String END_POINT_PURCHASE = 'purchase';
 
   ApiClient(){
     BaseOptions options = new BaseOptions(

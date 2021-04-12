@@ -2,6 +2,7 @@
 import 'package:flutter_booki_shop/custom_widgets/card_item.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
+import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:flutter_booki_shop/models/FavoriteItem.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
@@ -14,6 +15,7 @@ class HomeController extends GetxController{
   RxList listBestBook=[].obs  ;
   RxList listPopularBook=[].obs ;
   RxList listAudioBook=[].obs;
+  RxList listCartShop=[].obs;
   RxInt _countCartShop = 0.obs;
   List<FavoriteItem> listFavorite=[];
   RxBool _loadingOfAddFavoriteAndCartShop=false.obs;
@@ -67,8 +69,7 @@ class HomeController extends GetxController{
   }
 
   void sepratePopularBook() {
-    listPopularBook=listBestBook;
-   listPopularBook(listPopularBook.reversed.toList());
+   listPopularBook(listBestBook.reversed.toList());
   }
 
   void seprateAudioBook() {
@@ -119,7 +120,7 @@ class HomeController extends GetxController{
     });
   }
 
-  void setStatusOfFavorite() {
+  void setStatusOfFavorite() async {
 
     if(listFavorite.length==0){
       for(int j=0;j<listAllBook.length;j++){
@@ -140,9 +141,50 @@ class HomeController extends GetxController{
           }
         }
       }
-
-    seprateBestBooks();
-    sepratePopularBook();
-    seprateAudioBook();
+    await getAllCartShop();
+    await seprateBestBooks();
+    await sepratePopularBook();
+    await seprateAudioBook();
   }
+
+  addToCartShop(Book book){
+    _appRepository.addBookToCartShop(book);
+  }
+
+  removeFromCartShop(Book book){
+    CartShop _cartShop;
+    listCartShop.forEach((element) {
+      if(book.id==element.book.id)
+        {
+          _cartShop = element;
+        }
+    });
+    _appRepository.requedtForDelete(_cartShop);
+  }
+
+
+  getAllCartShop() async{
+   await _appRepository.getAllItemsOfCartShops().then((value) {
+      countCartShop.value=value.length;
+      listCartShop.value=value;
+      if(listCartShop.length==0){
+        for(int j=0;j<listAllBook.length;j++){
+          listAllBook[j].isInCartShop=false;
+        }
+      }
+      else{
+        for(int j=0;j<listAllBook.length;j++){
+          listAllBook[j].isInCartShop=false;
+        }
+      }
+      for(int i=0;i<listCartShop.length;i++){
+        for(int j=0;j<listAllBook.length;j++){
+          if(listAllBook[j].id==listCartShop[i].book.id){
+            listAllBook[j].isInCartShop=true;
+          }
+        }
+      }
+    });
+  }
+
 }

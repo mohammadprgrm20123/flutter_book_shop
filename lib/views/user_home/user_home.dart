@@ -11,6 +11,7 @@ import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/views/cart_shop/cart_shop_page.dart';
 import 'package:flutter_booki_shop/views/details_book/details_book.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
+import 'package:flutter_booki_shop/views/more_books/MorePage.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';
 import 'package:flutter_booki_shop/views/search/search.dart';
 import 'package:get/get.dart';
@@ -118,11 +119,7 @@ class StateUserHome extends State<UserHome> {
         initialPage: _homeController.itemsAudioBook.length ~/ 2,
         onPageChanged: (page) => {},
         onSelectedItem: (page) {
-          Get.to(() {
-            DetailsBook(_homeController.listAudioBook.value[page].id);
-          }).then((value) {}).onError((error, stackTrace) {
-
-          });
+            _goToDetailsPage(_homeController.listAudioBook[page].id);
         },
         items: _homeController.itemsAudioBook,
         // set ImageCardItem or IconTitleCardItem class
@@ -156,13 +153,21 @@ class StateUserHome extends State<UserHome> {
     );
   }
 
-  Row _titleOfList(BuildContext context, String text) {
-    return Row(
-      children: [
-        _textTitleList(context, text),
-        _textMore(context),
-        _iconArrow()
-      ],
+  Widget _titleOfList(BuildContext context, String text) {
+    return GestureDetector(
+      onTap: (){
+        Get.to(()=>MorePage()).then((value){
+          _homeController.getListFavorite();
+          _homeController.getCountOfCartShop();
+        });
+      },
+      child: Row(
+        children: [
+          _textTitleList(context, text),
+          _textMore(context),
+          _iconArrow()
+        ],
+      ),
     );
   }
 
@@ -205,15 +210,12 @@ class StateUserHome extends State<UserHome> {
                   children: [
                     InkWell(
                       onTap: (){
-                        Get.to(DetailsBook(_homeController.listPopularBook.value[index].id))
-                            .then((value) {
-                          _homeController.getCountOfCartShop();
-                        });
+                        _goToDetailsPage(_homeController.listPopularBook[index].id);
                       },
                       child: ClipRRect(
                         child: FadeInImage.assetNetwork(
                           fadeInCurve: Curves.linearToEaseOut,
-                          image: '${_homeController.listPopularBook.value[index].url}',
+                          image: '${_homeController.listPopularBook[index].url}',
                           placeholder: 'assets/images/noImage.png',
                           height: 200,
                           width: 150,
@@ -222,7 +224,7 @@ class StateUserHome extends State<UserHome> {
                     ),
                     Expanded(
                       child: Text(
-                        _homeController.listPopularBook.value[index].bookName,
+                        _homeController.listPopularBook[index].bookName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,
@@ -231,19 +233,30 @@ class StateUserHome extends State<UserHome> {
                           Obx((){
                             return AddFavortieAndCartShop(
                               changeValueCartShop: (value){
+                                if(value==true){
+                                  _homeController.addToCartShop(_homeController.listPopularBook[index]);
+                                  _homeController.listPopularBook[index].isInCartShop=true;
+                                  _homeController.countCartShop.value++;
+                                }
+                                else{
+                                  _homeController.removeFromCartShop(_homeController.listPopularBook[index]);
+                                  _homeController.listPopularBook[index].isInCartShop=false;
+                                  _homeController.countCartShop.value--;
+                                }
+
                               },
                               changeValueFavorite: (value){
                                 if(value==true){
-                                  _homeController.addToFavorite(_homeController.listPopularBook.value[index]);
-                                  _homeController.listPopularBook.value[index].isFavorite=true;
+                                  _homeController.addToFavorite(_homeController.listPopularBook[index]);
+                                  _homeController.listPopularBook[index].isFavorite=true;
                                 }
                                 else{
-                                  _homeController.removeFromFavorite(_homeController.listPopularBook.value[index]);
-                                  _homeController.listPopularBook.value[index].isFavorite=false;
+                                  _homeController.removeFromFavorite(_homeController.listPopularBook[index]);
+                                  _homeController.listPopularBook[index].isFavorite=false;
                                 }
                               },
-                              isCartShop: false,
-                              isFavorite: _homeController.listPopularBook.value[index].isFavorite,
+                              isCartShop: _homeController.listPopularBook[index].isInCartShop,
+                              isFavorite: _homeController.listPopularBook[index].isFavorite,
                             );
                           })
                   ]
@@ -280,7 +293,7 @@ class StateUserHome extends State<UserHome> {
             itemBuilder: (BuildContext _, int index) {
               return _itemListBestBooks(index);
             },
-            itemCount: _homeController.listBestBook.value.length,
+            itemCount: _homeController.listBestBook.length,
             scrollDirection: Axis.horizontal,
           ),
         );
@@ -296,10 +309,7 @@ class StateUserHome extends State<UserHome> {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () {
-            Get.to(DetailsBook(_homeController.listBestBook.value[index].id)).then((
-                value) {
-              _homeController.getCountOfCartShop();
-            });
+            _goToDetailsPage(_homeController.listBestBook[index].id);
           },
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
@@ -311,7 +321,7 @@ class StateUserHome extends State<UserHome> {
                     ClipRRect(
                       child: FadeInImage.assetNetwork(
                         fadeInCurve: Curves.linearToEaseOut,
-                        image: '${_homeController.listBestBook.value[index].url}',
+                        image: '${_homeController.listBestBook[index].url}',
                         placeholder: 'assets/images/noImage.png',
                         height: 200,
                         width: 150,
@@ -319,7 +329,7 @@ class StateUserHome extends State<UserHome> {
                     ),
                     Expanded(
                       child: Text(
-                          _homeController.listBestBook.value[index].bookName,
+                          _homeController.listBestBook[index].bookName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,
@@ -328,6 +338,17 @@ class StateUserHome extends State<UserHome> {
                      Obx((){
                        return AddFavortieAndCartShop(
                          changeValueCartShop: (value){
+                           if(value==true){
+                             _homeController.addToCartShop(_homeController.listBestBook[index]);
+                             _homeController.listBestBook[index].isInCartShop=true;
+                             _homeController.countCartShop.value++;
+                           }
+                           else{
+                             _homeController.removeFromCartShop(_homeController.listBestBook[index]);
+                             _homeController.listBestBook[index].isInCartShop=false;
+                             _homeController.countCartShop.value--;
+                           }
+
                          },
                          changeValueFavorite: (value){
                            if(value==true){
@@ -339,7 +360,7 @@ class StateUserHome extends State<UserHome> {
                              _homeController.listBestBook[index].isFavorite=false;
                            }
                          },
-                         isCartShop: false,
+                         isCartShop: _homeController.listBestBook[index].isInCartShop,
                          isFavorite: _homeController.listBestBook[index].isFavorite,
                        );
                      }
@@ -493,7 +514,7 @@ class StateUserHome extends State<UserHome> {
       child: InkWell(
         onTap: (){
           Get.to(()=>CartShopPage()).then((value) {
-            _homeController.getCountOfCartShop();
+            _homeController.getListFavorite();
           });
         },
         child: Stack(
@@ -517,7 +538,7 @@ class StateUserHome extends State<UserHome> {
             decoration: BoxDecoration(
                 shape: BoxShape.circle, color: Colors.red),
             child: Center(
-                child: Obx(() => Text('${_homeController.countCartShop}')))));
+                child: Obx(() => Text('${_homeController.countCartShop.value}')))));
   }
 
   Icon _iconShop() {
@@ -556,7 +577,7 @@ class StateUserHome extends State<UserHome> {
           switch(index){
             case 0:{
               Get.to(()=>CartShopPage()).then((value) {
-                _homeController.getCountOfCartShop();
+                _homeController.getListFavorite();
               });
             }break;
 
@@ -576,6 +597,13 @@ class StateUserHome extends State<UserHome> {
 
           }
         });
+  }
+
+  void _goToDetailsPage(id) {
+    Get.to(()=> DetailsBook(id)).then((value) {
+      _homeController.getCountOfCartShop();
+      _homeController.getListFavorite();
+    });
   }
 
 }

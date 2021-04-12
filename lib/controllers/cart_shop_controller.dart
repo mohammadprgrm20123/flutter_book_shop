@@ -77,13 +77,11 @@ class CartShopController extends GetxController{
     }
     else{
       MySharePrefrence().getId().then((userId) {
-
         Purchase purches=new Purchase();
-        purches.price =price.toString();
         purches.userId =userId;
-
         Gregorian gNow = Gregorian.now();
         purches.date =gNow.toString();
+        purches.cartShop = listCartShop;
         _appRepository.requestForPurches(purches);
       });
     }
