@@ -14,7 +14,6 @@ class AdminReport extends StatelessWidget {
     return Scaffold(
       appBar: _appBar(context),
       body: Obx(() {
-        print(_adminReportController.loading.value.toString());
         if (_adminReportController.loading.value == true) {
           return Center(child: CircularProgressIndicator());
         } else {

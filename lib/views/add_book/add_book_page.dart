@@ -126,7 +126,6 @@ class AddBookPage extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: TextField(
           onChanged: (tag1) {
-            print(tag1);
             _addBookController.tag1 = tag1;
             _addBookController.tag0 = tag1;
           },
@@ -192,7 +191,6 @@ class AddBookPage extends StatelessWidget {
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Obx(() {
-          print(_addBookController.category.value);
           return _dropdownButton();
         }),
       ),

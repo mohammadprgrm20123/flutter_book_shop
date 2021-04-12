@@ -136,7 +136,6 @@ class HomeController extends GetxController{
       for(int i=0;i<listFavorite.length;i++){
         for(int j=0;j<listAllBook.length;j++){
           if(listAllBook[j].id==listFavorite[i].book.id){
-            print(listAllBook[j].id.toString()+"=id");
             listAllBook[j].isFavorite=true;
           }
         }

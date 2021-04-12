@@ -271,7 +271,6 @@ class StateUserHome extends State<UserHome> {
 
   Widget _listBestBooks() {
     return Obx(() {
-      print("obx list book-->");
       if (_homeController.loading.value == true) {
         return CircularProgressIndicator();
       } else
@@ -327,7 +326,6 @@ class StateUserHome extends State<UserHome> {
                       ),
                     ),
                      Obx((){
-                       print("_homeController.listBestBook[index].isFavorite==>${_homeController.listBestBook[index].isFavorite}");
                        return AddFavortieAndCartShop(
                          changeValueCartShop: (value){
                          },

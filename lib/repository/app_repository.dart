@@ -34,7 +34,6 @@ class AppRepository {
     await _apiClient.dio.get(ApiClient.END_POINT_BOOKS).then((value) {
       listBook = Book().BookListFromJson(value.data);
     }).onError((error, stackTrace) {
-      print(error.toString());
       throw S.of(Get.context).error;
     });
     return listBook;
@@ -95,7 +94,6 @@ class AppRepository {
     await _apiClient.dio.get(ApiClient.END_POINT_FAVORITE,queryParameters: {
       "userId" : userId
     }).then((value) {
-      print(value.data.toString());
       listfavoriteBooks = FavoriteItem().BookListFromJson(value.data);
     }).onError((error, stackTrace) {
       throw S.of(Get.context).error;
@@ -119,11 +117,9 @@ class AppRepository {
 
 
   updateUserData(User user) async {
-    print(user.toJson().toString());
     await _apiClient.dio
         .put("${ApiClient.END_POINT_USERS}/${user.id}", data: user.toJson())
         .then((value) {
-      print(value.data.toString());
     }).onError((error, stackTrace) {
       throw S.of(Get.context).error;
     });
@@ -158,7 +154,6 @@ class AppRepository {
   Future<List<Purchase>> getAllPerches() async{
     List<Purchase> purchaseList=[];
     await _apiClient.dio.get(ApiClient.END_POINT_PURCHASE).then((value) {
-      print(value.data.toString());
       purchaseList = Purchase().purchesListFromJson(value.data);
     }).onError((error, stackTrace) {
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem);

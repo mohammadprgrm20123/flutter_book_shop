@@ -196,7 +196,6 @@ class Search extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: ElevatedButton(
             onPressed: () {
-              print("sdsdssd");
               _searchController.filterInList(_currentRangeValues.value);
               Get.back();
             },
@@ -247,7 +246,6 @@ class Search extends StatelessWidget {
               S.of(Get.context).toman,
         ),
         onChanged: (value) {
-          print(value.start.toString() + "    " + value.end.toString());
           _currentRangeValues(value);
         },
       );
@@ -277,7 +275,6 @@ class Search extends StatelessWidget {
             child: GestureDetector(
                 onTap: () {
                   changeColorChips(5);
-                  print(_searchController.mapColor[5]);
                 },
                 child: Chip(
                   label: Text(S.of(Get.context).epic),
@@ -293,7 +290,6 @@ class Search extends StatelessWidget {
             child: GestureDetector(
                 onTap: () {
                   changeColorChips(4);
-                  print(_searchController.mapColor[4]);
                 },
                 child: Chip(
                   label: Text(S.of(Get.context).psychology),
@@ -309,7 +305,6 @@ class Search extends StatelessWidget {
             child: GestureDetector(
                 onTap: () {
                   changeColorChips(3);
-                  print(_searchController.mapColor[3]);
                 },
                 child: Chip(
                   label: Text(S.of(Get.context).philosophy),
@@ -325,7 +320,6 @@ class Search extends StatelessWidget {
             child: GestureDetector(
                 onTap: () {
                   changeColorChips(2);
-                  print(_searchController.mapColor[2]);
                 },
                 child: Chip(
                   label: Text(S.of(Get.context).novel),
@@ -341,7 +335,6 @@ class Search extends StatelessWidget {
             child: GestureDetector(
                 onTap: () {
                   changeColorChips(1);
-                  print(_searchController.mapColor[1]);
                 },
                 child: Chip(
                   label: Text(S.of(Get.context).category_stoy),
