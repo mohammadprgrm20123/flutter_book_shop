@@ -1,37 +1,47 @@
-
-
-
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-class AddBookController extends GetxController{
-
+class AddBookController extends GetxController {
   AppRepository _appRepository;
-  RxBool _loading =false.obs;
-  Book book=new Book();
-  RxString _errorTextOfBookName="".obs;
-  RxString _errorTextBookPrice=''.obs;
-  RxString _errorTextBookAutherName=' '.obs;
-  RxString _errorTextBookScore=''.obs;
-  RxString _errorTextBookPages=''.obs;
-  RxString _errorTextBookPublisher=''.obs;
-  bool _validatorBookName=false;
-  bool _validatorBookPrice=false;
-  bool _validatorBookAutherName=false;
-  bool _validatorBookScore=false;
-  bool _validatorBookPages=false;
-  bool _validatorBookPublisher=false;
-  List<String> _listTags=[];
-  bool get validatorBookAutherName => _validatorBookAutherName;
+  RxBool _loading = false.obs;
+  Book book = new Book();
+  RxString _errorTextOfBookName = "".obs;
+  RxString _errorTextBookPrice = ''.obs;
+  RxString _errorTextBookAuthorName = ' '.obs;
+  RxString _errorTextBookScore = ''.obs;
+  RxString _errorTextBookPages = ''.obs;
+  RxString _errorTextBookPublisher = ''.obs;
+  bool _validatorBookName = false;
+  bool _validatorBookPrice = false;
+  bool _validatorBookAuthorName = false;
+  bool _validatorBookScore = false;
+  bool _validatorBookPages = false;
+  bool _validatorBookPublisher = false;
+  List<String> _listTags = [];
+  RxString category = "${S.of(Get.context).category_stoy}".obs;
 
-  set validatorBookAutherName(bool value) {
-    _validatorBookAutherName = value;
+  @override
+  void onInit() {
+    super.onInit();
+    _appRepository = new AppRepository();
   }
 
+  RxBool get loading => _loading;
 
+  requestForAddBook(Book book) {
+    _loading(true);
+    _appRepository.addBook(book);
+    _loading(false);
+  }
+
+  bool get validatorBookAuthorName => _validatorBookAuthorName;
+
+  set validatorBookAuthorName(bool value) {
+    _validatorBookAuthorName = value;
+  }
 
   bool get validatorBookName => _validatorBookName;
 
@@ -57,76 +67,22 @@ class AddBookController extends GetxController{
     _errorTextBookPages = value;
   }
 
-  RxString category = "${S.of(Get.context).category_stoy}".obs;
-  String _tag0;
-  String _tag1;
-
-
   RxString get errorTextBookScore => _errorTextBookScore;
 
   set errorTextBookScore(RxString value) {
     _errorTextBookScore = value;
   }
 
-  RxString get errorBookAutherName => _errorTextBookAutherName;
+  RxString get errorBookAutherName => _errorTextBookAuthorName;
 
   set errorBookAutherName(RxString value) {
-    _errorTextBookAutherName = value;
+    _errorTextBookAuthorName = value;
   }
 
   RxString get errorOfBookName => _errorTextOfBookName;
 
   set errorOfBookName(RxString value) {
     _errorTextOfBookName = value;
-  }
-
-  String _tag2;
-  String _tag3;
-  String _tag4;
-  @override
-  void onInit() {
-    super.onInit();
-    _appRepository =new AppRepository();
-  }
-
-
-  set tag0(String value) {
-    _tag0 = value;
-  }
-
-  String get tag1 => _tag1;
-
-  RxBool get loading => _loading;
-
-  requestForAddBook(Book book) {
-    _loading(true);
-    _appRepository.addBook(book);
-    _loading(false);
-
-  }
-
-  String get tag2 => _tag2;
-
-  String get tag3 => _tag3;
-
-  String get tag4 => _tag4;
-
-  String get tag0 => _tag0;
-
-  set tag1(String value) {
-    _tag1 = value;
-  }
-
-  set tag2(String value) {
-    _tag2 = value;
-  }
-
-  set tag3(String value) {
-    _tag3 = value;
-  }
-
-  set tag4(String value) {
-    _tag4 = value;
   }
 
   RxString get errorBookPrice => _errorTextBookPrice;
@@ -140,8 +96,6 @@ class AddBookController extends GetxController{
   set validatorBookPrice(bool value) {
     _validatorBookPrice = value;
   }
-
-
 
   bool get validatorBookScore => _validatorBookScore;
 
@@ -161,8 +115,7 @@ class AddBookController extends GetxController{
     _validatorBookPublisher = value;
   }
 
-
-  void requestForEditBook(Book book) {
+  void editBook(Book book) {
     _loading(true);
     _appRepository.editBook(book);
     _loading(false);

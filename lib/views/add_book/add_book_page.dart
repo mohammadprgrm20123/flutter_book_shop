@@ -301,7 +301,7 @@ class AddBookPage extends StatelessWidget {
   bool validateParameters() {
     if (_addBookController.validatorBookScore &&
         _addBookController.validatorBookPages &&
-        _addBookController.validatorBookAutherName &&
+        _addBookController.validatorBookAuthorName &&
         _addBookController.validatorBookPrice &&
         _addBookController.validatorBookName &&
         _addBookController.validatorBookPublisher
@@ -353,10 +353,10 @@ class AddBookPage extends StatelessWidget {
     if (authorName.isEmpty) {
       _addBookController.errorBookAutherName.value =
           "نام نویسنده نمیتواند خالی باشد";
-      _addBookController.validatorBookAutherName=false;
+      _addBookController.validatorBookAuthorName=false;
     } else {
       _addBookController.errorBookAutherName.value = null;
-      _addBookController.validatorBookAutherName=true;
+      _addBookController.validatorBookAuthorName=true;
     }
   }
 

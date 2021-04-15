@@ -291,7 +291,7 @@ class EditBookPage extends StatelessWidget {
 
   bool validateParameters() {
     if (_editBookController.validatorBookName &&
-        _editBookController.validatorBookAutherName &&
+        _editBookController.validatorBookAuthorName &&
         _editBookController.validatorBookPublisher &&
         _editBookController.validatorBookPrice &&
         _editBookController.validatorBookPages&&
@@ -311,7 +311,7 @@ class EditBookPage extends StatelessWidget {
     _editBookController.listTags.forEach((element) {
       _editBookController.book.tags.add(Tags(tag:element));
     });
-    _editBookController.requestForEditBook(_editBookController.book);
+    _editBookController.editBook(_editBookController.book);
   }
   void _initFirstValues(Book book) {
     _editBookController.book = book;
@@ -357,10 +357,10 @@ class EditBookPage extends StatelessWidget {
     if (authorName.isEmpty) {
       _editBookController.errorBookAutherName.value =
       "نام نویسنده نمیتواند خالی باشد";
-      _editBookController.validatorBookAutherName=false;
+      _editBookController.validatorBookAuthorName=false;
     } else {
       _editBookController.errorBookAutherName.value = null;
-      _editBookController.validatorBookAutherName=true;
+      _editBookController.validatorBookAuthorName=true;
     }
   }
 
