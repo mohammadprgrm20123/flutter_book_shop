@@ -6,37 +6,33 @@ import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shamsi_date/shamsi_date.dart';
+
 import '../shareprefrence.dart';
 
 class CartShopController extends GetxController{
 
   AppRepository _appRepository;
   RxBool _loading = false.obs;
-  RxBool _loadingCalcute = false.obs;
+  RxBool _loadingCalculate = false.obs;
   List<CartShop> _listCartShop;
-
-  RxBool get loadingCalcute => _loadingCalcute;
-
-  RxBool get loading => _loading;
-  RxDouble totalPrice = 0.0.obs;
 
   @override
   void onInit() {
     super.onInit();
     _appRepository = AppRepository();
-    getCartShopList();
+    getShoppingCartList();
   }
 
+  RxBool get loadingCalculate => _loadingCalculate;
+  RxBool get loading => _loading;
+  RxDouble totalPrice = 0.0.obs;
 
-
-
-  getCartShopList(){
-
+  getShoppingCartList() {
     _loading(true);
     _appRepository.getShoppingListCart().then((value) {
       _loading(false);
       _listCartShop = value;
-      calcuteTotalPrice();
+      calculateTotalPrice();
     }).onError((error, stackTrace) {
       _loading(false);
     });
@@ -44,7 +40,7 @@ class CartShopController extends GetxController{
 
   List<CartShop> get listCartShop => _listCartShop;
 
-  double calcuteTotalPrice(){
+  double calculateTotalPrice(){
     if(_listCartShop!=null){
       _listCartShop.forEach((element) {
         totalPrice +=double.parse(element.book.price);
@@ -54,7 +50,6 @@ class CartShopController extends GetxController{
       {
         return 0.0;
       }
-
     return totalPrice.value;
   }
 
@@ -62,7 +57,7 @@ class CartShopController extends GetxController{
     totalPrice.value = totalPrice.value+(double.parse(cartShop.book.price));
   }
 
-  decresePrice(CartShop cartShop,int count){
+  reducePrice(CartShop cartShop,int count){
     if(count==0){
       totalPrice.value = totalPrice.value-(double.parse(cartShop.book.price));
     }else{
@@ -71,7 +66,7 @@ class CartShopController extends GetxController{
     }
   }
 
-  purchaseRequest(double price){
+  registerUserPurchase(double price){
     if(price==0){
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).count_of_cart_shops_zero);
     }
@@ -88,11 +83,11 @@ class CartShopController extends GetxController{
   }
 
 
-  requestForDeleteCartShopItem(CartShop cartShop){
+  removeItemOfShoppingCart(CartShop cartShop){
     _appRepository.removeItemOfShoppingCart(cartShop);
   }
 
-  void decreseListPrice(CartShop cartShop, int count) {
+  void reduceListPrice(CartShop cartShop, int count) {
     totalPrice.value = totalPrice.value-((count)*double.parse(cartShop.book.price));
 
   }

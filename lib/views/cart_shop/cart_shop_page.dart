@@ -67,7 +67,7 @@ class CartShopPage extends StatelessWidget {
     return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(onPressed: (){
-              _cartShopController.purchaseRequest(_cartShopController.totalPrice.value);
+              _cartShopController.registerUserPurchase(_cartShopController.totalPrice.value);
             }, child: Text(S.of(Get.context).continue1)),
           );
   }
@@ -132,7 +132,7 @@ class CartShopPage extends StatelessWidget {
      _cartShopController.loading(true);
      _cartShopController.listCartShop.remove(cartShop);
      if(cartShop.count!=0){
-       _cartShopController.decreseListPrice(cartShop,cartShop.count);
+       _cartShopController.reduceListPrice(cartShop,cartShop.count);
      }
     _cartShopController.loading(false);
      requestForDelete(cartShop);
@@ -179,7 +179,7 @@ class CartShopPage extends StatelessWidget {
             _cartShopController.increasePrice(cartShop);
           },
             onChangedRemove: (count){
-              _cartShopController.decresePrice(cartShop, count);
+              _cartShopController.reducePrice(cartShop, count);
               _cartShopController.listCartShop[index].count=count;
               if(count==0){
                 _cartShopController.listCartShop.remove(cartShop);
@@ -218,6 +218,6 @@ class CartShopPage extends StatelessWidget {
   }
 
   void requestForDelete(CartShop cartShop) {
-    _cartShopController.requestForDeleteCartShopItem(cartShop);
+    _cartShopController.removeItemOfShoppingCart(cartShop);
   }
 }
