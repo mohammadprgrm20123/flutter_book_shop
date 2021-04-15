@@ -72,7 +72,7 @@ class StateLogin extends State<Login> {
   void _checkParameters() {
      if (!checkEmpty()) {
       _loginController
-          .requestValidateUser(_usernameCtr.text, _passwordCtr.text)
+          .checkUserInfo(_usernameCtr.text, _passwordCtr.text)
           .then((value) {
             saveValues(value);
             goTo(value.role);
@@ -83,7 +83,7 @@ class StateLogin extends State<Login> {
   Padding _password() {
     return Padding(padding: const EdgeInsets.all(20.0),
             child: ObxValue((data) {
-                bool data =_loginController.validatePasswrod.value;
+                bool data =_loginController.validatePassword.value;
                 bool obscureText = _loginController.obscureText.value;
              return _textFieldPassword(obscureText, data);
               },
@@ -186,15 +186,15 @@ class StateLogin extends State<Login> {
 
   bool checkEmpty() {
     if(_passwordCtr.text.isEmpty || _usernameCtr.text.isEmpty){
-      if(_passwordCtr.text.isEmpty) _loginController.validatePasswrod(true);
+      if(_passwordCtr.text.isEmpty) _loginController.validatePassword(true);
 
-      else _loginController.validatePasswrod(false);
+      else _loginController.validatePassword(false);
       if(_usernameCtr.text.isEmpty) _loginController.validateUsername(true);
 
       else _loginController.validateUsername(false);
     return true;
     }
-    _loginController.validatePasswrod(false);
+    _loginController.validatePassword(false);
     _loginController.validateUsername(false);
     return false;
   }

@@ -29,7 +29,7 @@ class CartShopPage extends StatelessWidget {
               }
             }
           }),
-          _calcutePrice()
+          _calculatePrice()
         ],
       )
       ,
@@ -44,7 +44,7 @@ class CartShopPage extends StatelessWidget {
     );
   }
 
-  Container  _calcutePrice() {
+  Container  _calculatePrice() {
     return Container(
       child: Card(
         elevation: 5.0,

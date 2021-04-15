@@ -32,7 +32,7 @@ class Search extends StatelessWidget {
           children: [
             _serachView(context),
             Obx(() {
-              if (_searchController.loadingSeach.value == true) {
+              if (_searchController.loadingSearch.value == true) {
                 return Center(child: CircularProgressIndicator());
               } else {
                 if (_searchController.searchList.length == 0) {

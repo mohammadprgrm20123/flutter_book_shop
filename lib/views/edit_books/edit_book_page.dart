@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/add_book_controller.dart';
-import 'package:flutter_booki_shop/controllers/edit_book_controller.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
@@ -27,26 +26,15 @@ class EditBookPage extends StatelessWidget {
   TextEditingController _categoryCtr;
   TextEditingController _pagesCtr;
   TextEditingController _publisherCtr;
-  TextEditingController _descBookCtr ;
+  TextEditingController _descBookCtr;
 
   EditBookPage(this.book);
 
-
-
   @override
   Widget build(BuildContext context) {
-     _bookNameCtr =new TextEditingController();
-     _priceCtr =new TextEditingController();
-     _authorNameCtr =new TextEditingController();
-     _translatorNameCtr =new TextEditingController();
-     _scoreCtr =new TextEditingController();
-     _categoryCtr =new TextEditingController();
-     _pagesCtr =new TextEditingController();
-     _publisherCtr =new TextEditingController();
-     _descBookCtr =new TextEditingController();
-     _initFirstValues(book);
+    initTextController();
 
-     return Scaffold(
+    return Scaffold(
       appBar: _appBar(context),
       body: SingleChildScrollView(
         child: Column(
@@ -54,6 +42,19 @@ class EditBookPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void initTextController() {
+    _bookNameCtr = new TextEditingController();
+    _priceCtr = new TextEditingController();
+    _authorNameCtr = new TextEditingController();
+    _translatorNameCtr = new TextEditingController();
+    _scoreCtr = new TextEditingController();
+    _categoryCtr = new TextEditingController();
+    _pagesCtr = new TextEditingController();
+    _publisherCtr = new TextEditingController();
+    _descBookCtr = new TextEditingController();
+    _initFirstValues(book);
   }
 
   List<Widget> _listWidget(BuildContext context) {
@@ -309,25 +310,34 @@ class EditBookPage extends StatelessWidget {
   void sendRequestAddBook() {
     _editBookController.book.tags.clear();
     _editBookController.listTags.forEach((element) {
-      _editBookController.book.tags.add(Tags(tag:element));
+      _editBookController.book.tags.add(Tags(tag: element));
     });
     _editBookController.editBook(_editBookController.book);
   }
+
   void _initFirstValues(Book book) {
+    _fillBookValues(book);
+    _firstValidate(book);
+  }
+
+  void _fillBookValues(Book book) {
     _editBookController.book = book;
-    _bookNameCtr.text =book.bookName;
-    _priceCtr.text =book.price;
-    _authorNameCtr.text =book.autherName;
-    _translatorNameCtr.text =book.translator;
-    _scoreCtr.text =book.score.toString();
-    _categoryCtr.text =book.category;
-    _pagesCtr.text =book.pages;
-    _publisherCtr.text =book.publisherName;
-    _descBookCtr.text =book.desc;
+    _bookNameCtr.text = book.bookName;
+    _priceCtr.text = book.price;
+    _authorNameCtr.text = book.autherName;
+    _translatorNameCtr.text = book.translator;
+    _scoreCtr.text = book.score.toString();
+    _categoryCtr.text = book.category;
+    _pagesCtr.text = book.pages;
+    _publisherCtr.text = book.publisherName;
+    _descBookCtr.text = book.desc;
     book.tags.forEach((element) {
       _editBookController.listTags.add(element.tag);
     });
     _editBookController.category.value = book.category;
+  }
+
+  void _firstValidate(Book book) {
     _validatePublisher(book.publisherName);
     _validateCountPages(book.pages);
     _validateScore(book.score.toString());
@@ -335,17 +345,18 @@ class EditBookPage extends StatelessWidget {
     _validatePrice(book.price);
     _validateBookName(book.bookName);
   }
+
   _validatePrice(String price) {
     if (price.isEmpty) {
-      _editBookController.errorBookPrice.value = "این مقدار نباید خالی باشد";
-      _editBookController.validatorBookPrice=false;
+      _editBookController.errorBookPrice.value =
+          S.of(Get.context).should_not_empty;
+      _editBookController.validatorBookPrice = false;
     } else {
       double priceDouble = double.parse(price).toPrecision(1);
       if (priceDouble < 5000 || priceDouble > 100000) {
-        _editBookController.validatorBookPrice=false;
+        _editBookController.validatorBookPrice = false;
         return _editBookController.errorBookPrice.value =
-        "قیمت باید از 5000 بیشتر و از 100000 کم تر باشد ";
-
+            S.of(Get.context).price_100000until_5000;
       } else {
         _editBookController.errorBookPrice.value = null;
         _editBookController.validatorBookPrice=true;
@@ -356,8 +367,8 @@ class EditBookPage extends StatelessWidget {
   _validatorAutherName(String authorName) {
     if (authorName.isEmpty) {
       _editBookController.errorBookAutherName.value =
-      "نام نویسنده نمیتواند خالی باشد";
-      _editBookController.validatorBookAuthorName=false;
+          S.of(Get.context).authername_not_empty;
+      _editBookController.validatorBookAuthorName = false;
     } else {
       _editBookController.errorBookAutherName.value = null;
       _editBookController.validatorBookAuthorName=true;
@@ -366,14 +377,15 @@ class EditBookPage extends StatelessWidget {
 
   _validateScore(String score) {
     if (score.isEmpty) {
-      _editBookController.errorTextBookScore.value = "امتیاز نباید خالی باشد";
-      _editBookController.validatorBookScore=false;
+      _editBookController.errorTextBookScore.value =
+          S.of(Get.context).score_not_empty;
+      _editBookController.validatorBookScore = false;
     } else {
       double scoreDouble = double.parse(score).toPrecision(1);
       if (scoreDouble > 5 || scoreDouble == 0) {
         _editBookController.errorTextBookScore.value =
-        "امتیاز باید بین 1 تا 5 باشد ";
-        _editBookController.validatorBookScore=false;
+            S.of(Get.context).score_betwwen_1_5;
+        _editBookController.validatorBookScore = false;
       } else {
         _editBookController.errorTextBookScore.value = null;
         _editBookController.validatorBookScore=true;
@@ -384,8 +396,9 @@ class EditBookPage extends StatelessWidget {
 
   void _validateBookName(String bookName) {
     if (bookName.isEmpty) {
-      _editBookController.errorOfBookName.value = "نام کتاب نباید خالی باشد";
-      _editBookController.validatorBookName=false;
+      _editBookController.errorOfBookName.value =
+          S.of(Get.context).bookname_not_empty;
+      _editBookController.validatorBookName = false;
     } else {
       _editBookController.errorOfBookName.value = null;
       _editBookController.validatorBookName=true;
@@ -394,8 +407,9 @@ class EditBookPage extends StatelessWidget {
 
   void _validateCountPages(String pages) {
     if (pages.isEmpty) {
-      _editBookController.errorTextBookPages.value = "این فیلد نباید خالی باشد ";
-      _editBookController.validatorBookPages=false;
+      _editBookController.errorTextBookPages.value =
+          S.of(Get.context).should_not_empty;
+      _editBookController.validatorBookPages = false;
     } else {
       _editBookController.errorTextBookPages.value = null;
       _editBookController.validatorBookPages=true;
@@ -405,8 +419,9 @@ class EditBookPage extends StatelessWidget {
   void _validatePublisher(String publisher) {
     if (publisher.isEmpty) {
       _editBookController.errorTextBookPublisher.value =
-      "این فیلد نباید خالی باشد ";
-      _editBookController.validatorBookPublisher=false;
+          S.of(Get.context).should_not_empty;
+      ;
+      _editBookController.validatorBookPublisher = false;
     } else {
       _editBookController.errorTextBookPublisher.value = null;
       _editBookController.validatorBookPublisher=true;

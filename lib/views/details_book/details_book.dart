@@ -18,9 +18,6 @@ class DetailsBook extends StatelessWidget {
     _detailController.getDetailsBook(_bookId);
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,8 +43,6 @@ class DetailsBook extends StatelessWidget {
           );
         }
       });
-
-
       }
 
   List<Widget> _children(BuildContext context) {
@@ -61,9 +56,9 @@ class DetailsBook extends StatelessWidget {
             _divider(),
             _introduction(context),
             _description(context,_detailController.book.desc),
-            _dividerThikness10(),
+            _dividerHeight10(),
             _otherPropertiesOfBook(_detailController.book),
-            _dividerThikness10(),
+            _dividerHeight10(),
             _listTags(_detailController.book.tags)
           ];
   }
@@ -71,7 +66,6 @@ class DetailsBook extends StatelessWidget {
 
 
   Widget _listTags(List<Tags> tags) {
-
     return Wrap(
               direction: Axis.horizontal,
               children:listTag()
@@ -93,8 +87,6 @@ class DetailsBook extends StatelessWidget {
      );
     }).toList();
   }
-
-
 
   Widget _otherPropertiesOfBook(Book book) {
     return SingleChildScrollView(
@@ -178,7 +170,7 @@ class DetailsBook extends StatelessWidget {
                 );
   }
 
-  Widget _dividerThikness10() {
+  Widget _dividerHeight10() {
     return Divider(
               height: 10.0,
               thickness: 1.0,

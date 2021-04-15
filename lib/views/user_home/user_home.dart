@@ -227,18 +227,21 @@ class StateUserHome extends State<UserHome> {
                       ),
                     ),
                           Obx((){
-                            return AddFavortieAndCartShop(
-                              changeValueCartShop: (value){
-                                if(value==true){
-                                  _homeController.addToCartShop(_homeController.listPopularBook[index]);
-                                  _homeController.listPopularBook[index].isInCartShop=true;
-                                  _homeController.countCartShop.value++;
-                                }
-                                else{
-                                  _homeController.removeItemFromCartShop(_homeController.listPopularBook[index]);
-                                  _homeController.listPopularBook[index].isInCartShop=false;
-                                  _homeController.countCartShop.value--;
-                                }
+                            return AddFavoriteAndCartShop(
+                    changeValueCartShop: (value) {
+                      if (value == true) {
+                        _homeController.addToCartShop(
+                            _homeController.listPopularBook[index]);
+                        _homeController.listPopularBook[index].isInCartShop =
+                            true;
+                        _homeController.countCartShop.value++;
+                      } else {
+                        _homeController.removeItemFromCartShop(
+                            _homeController.listPopularBook[index]);
+                        _homeController.listPopularBook[index].isInCartShop =
+                            false;
+                        _homeController.countCartShop.value--;
+                      }
 
                               },
                               changeValueFavorite: (value){
@@ -332,18 +335,21 @@ class StateUserHome extends State<UserHome> {
                       ),
                     ),
                      Obx((){
-                       return AddFavortieAndCartShop(
-                         changeValueCartShop: (value){
-                           if(value==true){
-                             _homeController.addToCartShop(_homeController.listBestBook[index]);
-                             _homeController.listBestBook[index].isInCartShop=true;
-                             _homeController.countCartShop.value++;
-                           }
-                           else{
-                             _homeController.removeItemFromCartShop(_homeController.listBestBook[index]);
-                             _homeController.listBestBook[index].isInCartShop=false;
-                             _homeController.countCartShop.value--;
-                           }
+                       return AddFavoriteAndCartShop(
+                        changeValueCartShop: (value) {
+                          if (value == true) {
+                            _homeController.addToCartShop(
+                                _homeController.listBestBook[index]);
+                            _homeController.listBestBook[index].isInCartShop =
+                                true;
+                            _homeController.countCartShop.value++;
+                          } else {
+                            _homeController.removeItemFromCartShop(
+                                _homeController.listBestBook[index]);
+                            _homeController.listBestBook[index].isInCartShop =
+                                false;
+                            _homeController.countCartShop.value--;
+                          }
 
                          },
                          changeValueFavorite: (value){

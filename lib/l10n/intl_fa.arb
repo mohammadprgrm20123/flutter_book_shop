@@ -61,5 +61,13 @@
   "check_network": "لطفا اینترنت خود را چک کنید",
   "count_of_cart_shops_zero": "تعداد کالای شما صفر است",
   "psychology": "روانشناسی",
-  "book_add_cart_shop": "با موفقیت به سبد خرید اضافه شد"
+  "book_add_cart_shop": "با موفقیت به سبد خرید اضافه شد",
+  "not_filled": "موارد به طور کامل پر نشده اند",
+  "has_problem_wher_enter_the_info": "در وارد کردن اطلاعات مشکلی پیش آمده است",
+  "should_not_empty": "این مقدار نباید خالی باشد",
+  "price_100000until_5000": "قیمت باید از 5000 بیشتر و از 100000 کم تر باشد",
+  "authername_not_empty": "نام نویسنده نمیتواند خالی باشد",
+  "score_not_empty": "امتیاز نباید خالی باشد",
+  "score_betwwen_1_5": "امتیاز باید بین 1 تا 5 باشد",
+  "bookname_not_empty": "نام کتاب نباید خالی باشد"
 }

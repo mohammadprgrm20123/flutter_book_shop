@@ -10,11 +10,14 @@ class LoginController extends GetxController{
 
   AppRepository _appRepository;
   RxBool _validateUsername = false.obs;
-  RxBool _validatePasswrod = false.obs;
-  RxBool _obscureText = true.obs;
-  RxBool _loading= false.obs;
+  RxBool _validatePassword = false.obs;
+  RxBool _obscureTextPassword = true.obs;
+  RxBool _loading = false.obs;
+
   RxBool get loading => _loading;
-  RxBool get obscureText => _obscureText;
+
+  RxBool get obscureText => _obscureTextPassword;
+
   @override
   void onInit() {
     super.onInit();
@@ -23,12 +26,12 @@ class LoginController extends GetxController{
 
   RxBool get validateUsername => _validateUsername;
 
-  Future<User> requestValidateUser(String userName,String password) async{
+  Future<User> checkUserInfo(String userName, String password) async {
     _loading(true);
     User user;
-   await _appRepository.checkUserInfo(userName, password).then((value) {
-     _loading(false);
-     user =value;
+    await _appRepository.checkUserInfo(userName, password).then((value) {
+      _loading(false);
+      user = value;
     }).onError((error, stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).Error, S.of(Get.context).details_error);
@@ -37,9 +40,5 @@ class LoginController extends GetxController{
     return user;
   }
 
-  RxBool get validatePasswrod => _validatePasswrod;
-
-
-
-
+  RxBool get validatePassword => _validatePassword;
 }

@@ -754,6 +754,86 @@ class S {
       args: [],
     );
   }
+
+  /// `موارد به طور کامل پر نشده اند`
+  String get not_filled {
+    return Intl.message(
+      'موارد به طور کامل پر نشده اند',
+      name: 'not_filled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `در وارد کردن اطلاعات مشکلی پیش آمده است`
+  String get has_problem_wher_enter_the_info {
+    return Intl.message(
+      'در وارد کردن اطلاعات مشکلی پیش آمده است',
+      name: 'has_problem_wher_enter_the_info',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `این مقدار نباید خالی باشد`
+  String get should_not_empty {
+    return Intl.message(
+      'این مقدار نباید خالی باشد',
+      name: 'should_not_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `قیمت باید از 5000 بیشتر و از 100000 کم تر باشد`
+  String get price_100000until_5000 {
+    return Intl.message(
+      'قیمت باید از 5000 بیشتر و از 100000 کم تر باشد',
+      name: 'price_100000until_5000',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نام نویسنده نمیتواند خالی باشد`
+  String get authername_not_empty {
+    return Intl.message(
+      'نام نویسنده نمیتواند خالی باشد',
+      name: 'authername_not_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `امتیاز نباید خالی باشد`
+  String get score_not_empty {
+    return Intl.message(
+      'امتیاز نباید خالی باشد',
+      name: 'score_not_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `امتیاز باید بین 1 تا 5 باشد`
+  String get score_betwwen_1_5 {
+    return Intl.message(
+      'امتیاز باید بین 1 تا 5 باشد',
+      name: 'score_betwwen_1_5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نام کتاب نباید خالی باشد`
+  String get bookname_not_empty {
+    return Intl.message(
+      'نام کتاب نباید خالی باشد',
+      name: 'bookname_not_empty',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

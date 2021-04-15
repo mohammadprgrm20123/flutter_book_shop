@@ -9,7 +9,6 @@ import 'package:flutter_booki_shop/views/details_book/details_book.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 
-// ignore: must_be_immutable
 class MorePage extends StatelessWidget{
 
   MorePageController _morePageController=Get.put(MorePageController());
@@ -80,18 +79,20 @@ class MorePage extends StatelessWidget{
                       ),
                       SizedBox(
                         width: 120.0,
-                        child: AddFavortieAndCartShop(
-                          changeValueCartShop: (value){
-                              if(value==true){
-                                _morePageController.addToCartShop(_morePageController.allBooks[index]);
-                                _morePageController.allBooks[index].isInCartShop=true;
-                              }
-                              else{
-                                _morePageController.removeFromCartShop(_morePageController.allBooks[index]);
-                                _morePageController.allBooks[index].isInCartShop=false;
-                              }
-                          },
-                          changeValueFavorite: (value){
+                        child: AddFavoriteAndCartShop(
+                    changeValueCartShop: (value) {
+                      if (value == true) {
+                        _morePageController
+                            .addToCartShop(_morePageController.allBooks[index]);
+                        _morePageController.allBooks[index].isInCartShop = true;
+                      } else {
+                        _morePageController.removeFromCartShop(
+                            _morePageController.allBooks[index]);
+                        _morePageController.allBooks[index].isInCartShop =
+                            false;
+                      }
+                    },
+                    changeValueFavorite: (value){
                             if(value==true){
                               _morePageController.addToFavorite(_morePageController.allBooks[index]);
                               _morePageController.allBooks[index].isFavorite=true;

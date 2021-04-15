@@ -6,14 +6,12 @@ import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/FavoriteItem.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:flutter_booki_shop/views/details_book/details_book.dart';
-import 'package:flutter_booki_shop/views/user_home/user_home.dart';
 import 'package:get/get.dart';
 @immutable
 class Favorite extends StatelessWidget{
 
   static const int CROSS_AXIS_COUNT =2;
   FavoriteController _favoriteController = Get.put(FavoriteController());
-
   @override
   Widget build(BuildContext context) {
 

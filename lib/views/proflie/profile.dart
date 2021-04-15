@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/profile_controller.dart';
@@ -99,15 +100,20 @@ class StateProfile extends State<Profile> {
                   return CircularProgressIndicator();
                 }
                 else{
-                  if(_profileController.imageUint8!=null){
-                    return ClipRRect(
-                        borderRadius: BorderRadius.circular(100.0),
-                        child: Image.memory(_profileController.imageUint8,));
-                  }
-                  else{
-                    return CircleAvatar(child: Icon(Icons.camera_alt,size: 45.0,));
-                  }
-                }
+                  if (_profileController.imageUnit8 != null) {
+          return ClipRRect(
+              borderRadius: BorderRadius.circular(100.0),
+              child: Image.memory(
+                _profileController.imageUnit8,
+              ));
+        } else {
+          return CircleAvatar(
+              child: Icon(
+            Icons.camera_alt,
+            size: 45.0,
+          ));
+        }
+      }
               });
   }
 
@@ -256,15 +262,21 @@ class StateProfile extends State<Profile> {
   }
 
   User _getUserData() {
-     User user = User();
-    if(_userNameCtr.text.isEmpty)  user.userName = _profileController.user.userName;
-    else user.userName = _userNameCtr.text;
-    if(_passwordCtr.text.isEmpty) user.password = _profileController.user.password;
-    else user.password = _passwordCtr.text;
-    if(_phoneCtr.text.isEmpty) user.phone = _profileController.user.phone;
-    else user.phone=_phoneCtr.text;
+    User user = User();
+    if (_userNameCtr.text.isEmpty)
+      user.userName = _profileController.user.userName;
+    else
+      user.userName = _userNameCtr.text;
+    if (_passwordCtr.text.isEmpty)
+      user.password = _profileController.user.password;
+    else
+      user.password = _passwordCtr.text;
+    if (_phoneCtr.text.isEmpty)
+      user.phone = _profileController.user.phone;
+    else
+      user.phone = _phoneCtr.text;
     user.id = _profileController.user.id;
-    user.image =base64Encode(_profileController.imageUint8);
+    user.image = base64Encode(_profileController.imageUnit8);
     user.email = _profileController.user.email;
     user.role = _profileController.user.role;
     return user;

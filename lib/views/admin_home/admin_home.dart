@@ -88,7 +88,7 @@ class AdminHome extends StatelessWidget{
           child: Row(
             children: [
               Expanded(
-                child: _columnDetails(book),
+                child: _bookDetails(book),
               ),
             ],
           ),
@@ -97,7 +97,7 @@ class AdminHome extends StatelessWidget{
     );
   }
 
-  Widget _columnDetails(Book book) {
+  Widget _bookDetails(Book book) {
     return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -159,16 +159,15 @@ class AdminHome extends StatelessWidget{
   AppBar _appBar(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      title: _titile(context),
+      title: _title(context),
       centerTitle: true,
       iconTheme: IconThemeData(color: Colors.black),
     );
   }
 
-  Widget _titile(BuildContext context) {
+  Widget _title(BuildContext context) {
     return Text(S.of(Get.context).managment,
-        style:
-            TextStyle(fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
+        style: TextStyle(fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
   }
 
   FloatingActionButton _floatingActionButton() {

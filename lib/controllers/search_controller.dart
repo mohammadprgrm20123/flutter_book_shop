@@ -8,7 +8,7 @@ import 'package:get/state_manager.dart';
 
 class SearchController extends GetxController {
   RxBool _loading = false.obs;
-  RxBool _loadingSeach = false.obs;
+  RxBool _loadingSearch = false.obs;
   AppRepository _appRepository;
   List<Book> _listAll=[];
   List<Book> _searchList=[];
@@ -46,33 +46,29 @@ class SearchController extends GetxController {
     });
   }
 
-  RxBool get loadingSeach => _loadingSeach;
+  RxBool get loadingSearch => _loadingSearch;
 
   searchInList(String text) {
-    _loadingSeach(true);
-
+    _loadingSearch(true);
     _searchList = _listAll.where((book) => book.bookName.contains(text) ||
-
         book.publisherName.contains(text) ||
         book.category.contains(text) ||
         book.desc.contains(text)).toList();
-
-    _loadingSeach(false);
+    _loadingSearch(false);
 
   }
 
-
   filterInList(RangeValues rangeValues){
-    String catagury = findCategurySelected();
+    String category = findCategorySelected();
     _loading(true);
     _searchList = _listAll.where((book) =>double.parse(book.price.toString())>=rangeValues.start.roundToDouble()
         && double.parse(book.price.toString())<=rangeValues.end.roundToDouble()
         ).toList();
-    filterCateguryInList(catagury);
+    filterCategoryInList(category);
     _loading(false);
   }
 
-  String findCategurySelected() {
+  String findCategorySelected() {
     int selected = 0;
     for(int i=1;i<=mapColor.length;i++){
       if(mapColor[i]==Colors.blue){
@@ -80,12 +76,11 @@ class SearchController extends GetxController {
         break;
       }
     }
-   return checkCategury(selected);
+   return checkCategory(selected);
   }
 
-  String checkCategury(int selected) {
+  String checkCategory(int selected) {
     switch(selected){
-
       case 1: return S.of(Get.context).category_stoy ;break;
       case 2: return S.of(Get.context).novel ;break;
       case 3: return S.of(Get.context).philosophy ; break;
@@ -93,11 +88,10 @@ class SearchController extends GetxController {
       case 5: return S.of(Get.context).epic ;break;
     }
     return S.of(Get.context).category_stoy;
-
   }
 
-  void filterCateguryInList(String catagury) {
-    _searchList = _listAll.where((book) =>book.category==catagury
+  void filterCategoryInList(String catagory) {
+    _searchList = _listAll.where((book) =>book.category==catagory
     ).toList();
   }
 

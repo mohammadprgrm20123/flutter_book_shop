@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/FavoriteItem.dart';
@@ -7,25 +6,24 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-class FavoriteController extends GetxController{
-
-  RxBool _loading =false.obs;
+class FavoriteController extends GetxController {
+  RxBool _loading = false.obs;
   AppRepository _appRepository;
-  Set<FavoriteItem> _listFavorite=Set<FavoriteItem>();
+  Set<FavoriteItem> _listFavorite = Set<FavoriteItem>();
+
   RxBool get loading => _loading;
+
   @override
   void onInit() {
     super.onInit();
     _appRepository = AppRepository();
   }
 
-
-
-  getFavoriteBooks(int userId){
+  getFavoriteBooks(int userId) {
     _loading(true);
     _appRepository.getFavoritesBooks(userId).then((value) {
       _loading(false);
-      _listFavorite =value.toSet();
+      _listFavorite = value.toSet();
     }).onError((error, stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
@@ -35,7 +33,7 @@ class FavoriteController extends GetxController{
 
   Set<FavoriteItem> get listFavorite => _listFavorite;
 
-  removeFavoriteItem(int id){
+  removeFavoriteItem(int id) {
     _loading(true);
     _appRepository.removeItemOfFavoriteList(id);
     _loading(false);

@@ -16,8 +16,6 @@ class AddBookPage extends StatelessWidget {
     S.of(Get.context).psychology,
   ];
   
-
-
   AddBookController _addBookController = Get.put(AddBookController());
 
   @override
@@ -45,16 +43,20 @@ class AddBookPage extends StatelessWidget {
       _countPages(),
       _publisher(),
       _summeryOfBook(),
-      TagEditor(
-        addTags: (tag) {
-          _addBookController.listTags.add(tag);
-        },
-        removeTags: (tag){
-          _addBookController.listTags.remove(tag);
-        },
-      ),
+      _tags(),
       _btnAddProduct(context)
     ];
+  }
+
+  TagEditor _tags() {
+    return TagEditor(
+      addTags: (tag) {
+        _addBookController.listTags.add(tag);
+      },
+      removeTags: (tag){
+        _addBookController.listTags.remove(tag);
+      },
+    );
   }
 
   SizedBox _btnAddProduct(BuildContext context) {
@@ -72,7 +74,7 @@ class AddBookPage extends StatelessWidget {
               Get.offAll(()=>AdminHome());
             }
             else{
-              Get.snackbar("خطا", "موارد به طور کامل پر نشده اند");
+              Get.snackbar(S.of(Get.context).error, S.of(Get.context).not_filled);
             }
           }, child: Obx(() {
             if (_addBookController.loading.value == true) {
@@ -309,7 +311,7 @@ class AddBookPage extends StatelessWidget {
     {
       return false;
     }
-    Get.snackbar(S.of(Get.context).error,"در وارد کردن اطلاعات مشکلی پیش آمده است");
+    Get.snackbar(S.of(Get.context).error,S.of(Get.context).has_problem_wher_enter_the_info);
     return true;
   }
 
@@ -333,14 +335,14 @@ class AddBookPage extends StatelessWidget {
 
   _validatePrice(String price) {
     if (price.isEmpty) {
-      _addBookController.errorBookPrice.value = "این مقدار نباید خالی باشد";
+      _addBookController.errorBookPrice.value = S.of(Get.context).should_not_empty;
       _addBookController.validatorBookPrice=false;
     } else {
       double priceDouble = double.parse(price).toPrecision(1);
       if (priceDouble < 5000 || priceDouble > 100000) {
         _addBookController.validatorBookPrice=false;
         return _addBookController.errorBookPrice.value =
-            "قیمت باید از 5000 بیشتر و از 100000 کم تر باشد ";
+            S.of(Get.context).price_100000until_5000;
 
       } else {
         _addBookController.errorBookPrice.value = null;
@@ -352,7 +354,7 @@ class AddBookPage extends StatelessWidget {
   _validatorAutherName(String authorName) {
     if (authorName.isEmpty) {
       _addBookController.errorBookAutherName.value =
-          "نام نویسنده نمیتواند خالی باشد";
+          S.of(Get.context).authername_not_empty;
       _addBookController.validatorBookAuthorName=false;
     } else {
       _addBookController.errorBookAutherName.value = null;
@@ -362,13 +364,13 @@ class AddBookPage extends StatelessWidget {
 
   _validateScore(String score) {
     if (score.isEmpty) {
-      _addBookController.errorTextBookScore.value = "امتیاز نباید خالی باشد";
+      _addBookController.errorTextBookScore.value = S.of(Get.context).score_not_empty;
       _addBookController.validatorBookScore=false;
     } else {
       double scoreDouble = double.parse(score).toPrecision(1);
       if (scoreDouble > 5 || scoreDouble == 0) {
         _addBookController.errorTextBookScore.value =
-            "امتیاز باید بین 1 تا 5 باشد ";
+            S.of(Get.context).score_betwwen_1_5;
         _addBookController.validatorBookScore=false;
       } else {
         _addBookController.errorTextBookScore.value = null;
@@ -379,7 +381,7 @@ class AddBookPage extends StatelessWidget {
 
   void _validateBookName(String bookName) {
     if (bookName.isEmpty) {
-      _addBookController.errorOfBookName.value = "نام کتاب نباید خالی باشد";
+      _addBookController.errorOfBookName.value = S.of(Get.context).bookname_not_empty;
       _addBookController.validatorBookName=false;
     } else {
       _addBookController.errorOfBookName.value = null;
@@ -389,7 +391,7 @@ class AddBookPage extends StatelessWidget {
 
   void _validateCountPages(String pages) {
     if (pages.isEmpty) {
-      _addBookController.errorTextBookPages.value = "این فیلد نباید خالی باشد ";
+      _addBookController.errorTextBookPages.value = S.of(Get.context).should_not_empty;
       _addBookController.validatorBookPages=false;
     } else {
       _addBookController.errorTextBookPages.value = null;
@@ -400,7 +402,7 @@ class AddBookPage extends StatelessWidget {
   void _validatePublisher(String publisher) {
     if (publisher.isEmpty) {
       _addBookController.errorTextBookPublisher.value =
-          "این فیلد نباید خالی باشد ";
+          S.of(Get.context).should_not_empty;
       _addBookController.validatorBookPublisher=false;
     } else {
       _addBookController.errorTextBookPublisher.value = null;

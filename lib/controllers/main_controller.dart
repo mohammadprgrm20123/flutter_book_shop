@@ -1,18 +1,12 @@
 
 import 'package:get/get.dart';
+
 import '../shareprefrence.dart';
 
 class MainController extends GetxController{
   RxBool _loading = false.obs;
   RxInt _indexStartPage = 0.obs;
-
   RxBool get loading => _loading;
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
 
   Rx<int> get indexStartPage => _indexStartPage;
 
