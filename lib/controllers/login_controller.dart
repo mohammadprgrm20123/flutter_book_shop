@@ -26,7 +26,7 @@ class LoginController extends GetxController{
   Future<User> requestValidateUser(String userName,String password) async{
     _loading(true);
     User user;
-   await _appRepository.validateUser(userName, password).then((value) {
+   await _appRepository.checkUserInfo(userName, password).then((value) {
      _loading(false);
      user =value;
     }).onError((error, stackTrace) {

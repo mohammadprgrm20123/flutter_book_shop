@@ -33,7 +33,7 @@ class CartShopController extends GetxController{
   getCartShopList(){
 
     _loading(true);
-    _appRepository.getAllItemsOfCartShops().then((value) {
+    _appRepository.getShoppingListCart().then((value) {
       _loading(false);
       _listCartShop = value;
       calcuteTotalPrice();
@@ -82,14 +82,14 @@ class CartShopController extends GetxController{
         Gregorian gNow = Gregorian.now();
         purches.date =gNow.toString();
         purches.cartShop = listCartShop;
-        _appRepository.requestForPurches(purches);
+        _appRepository.registerUserPurchase(purches);
       });
     }
   }
 
 
   requestForDeleteCartShopItem(CartShop cartShop){
-    _appRepository.requedtForDelete(cartShop);
+    _appRepository.removeItemOfShoppingCart(cartShop);
   }
 
   void decreseListPrice(CartShop cartShop, int count) {

@@ -23,7 +23,7 @@ class EditBookController extends GetxController{
 
   void requestForEditBook(Book book) {
     _loading(true);
-    _appRepository.requestForEditBook(book);
+    _appRepository.editBook(book);
     _loading(false);
   }
 

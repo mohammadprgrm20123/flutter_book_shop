@@ -22,7 +22,7 @@ class AdminReportController extends GetxController{
 
   getReportPurches(){
     _loading(true);
-    _appRepository.getAllPurchase().then((value){
+    _appRepository.receivePurchaseInformation().then((value){
       _loading(false);
       _listPurchase = value;
     }).onError((error, stackTrace) {

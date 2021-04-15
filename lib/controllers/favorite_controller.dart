@@ -22,7 +22,7 @@ class FavoriteController extends GetxController{
 
   getFavoriteBooks(int userId){
     _loading(true);
-    _appRepository.getFavortieBooks(userId).then((value) {
+    _appRepository.getFavoritesBooks(userId).then((value) {
       _loading(false);
       _listFavorite =value.toSet();
     }).onError((error, stackTrace) {
@@ -36,7 +36,7 @@ class FavoriteController extends GetxController{
 
   removeFavoriteItem(int id){
     _loading(true);
-    _appRepository.removeFromFavorite(id);
+    _appRepository.removeItemOfFavoriteList(id);
     _loading(false);
   }
 }

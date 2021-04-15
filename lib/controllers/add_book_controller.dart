@@ -100,7 +100,7 @@ class AddBookController extends GetxController{
 
   requestForAddBook(Book book) {
     _loading(true);
-    _appRepository.requestAddBook(book);
+    _appRepository.addBook(book);
     _loading(false);
 
   }
@@ -164,7 +164,7 @@ class AddBookController extends GetxController{
 
   void requestForEditBook(Book book) {
     _loading(true);
-    _appRepository.requestForEditBook(book);
+    _appRepository.editBook(book);
     _loading(false);
   }
 }

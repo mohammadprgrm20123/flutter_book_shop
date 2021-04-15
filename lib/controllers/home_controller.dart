@@ -86,7 +86,7 @@ class HomeController extends GetxController{
   }
 
   void getCountOfCartShop() async {
-    _appRepository.getAllItemsOfCartShops().then((value) {
+    _appRepository.getShoppingListCart().then((value) {
       _countCartShop.value = value.length;
     });
   }
@@ -97,7 +97,7 @@ class HomeController extends GetxController{
 
   addToFavorite(Book book){
     _loadingOfAddFavoriteAndCartShop(true);
-    _appRepository.addToFavoriteList(book);
+    _appRepository.addBookToFavoriteList(book);
     _loadingOfAddFavoriteAndCartShop(false);
   }
 
@@ -105,7 +105,7 @@ class HomeController extends GetxController{
     _loadingOfAddFavoriteAndCartShop(true);
     listFavorite.forEach((element) {
       if(element.book.id==book.id){
-        _appRepository.removeFromFavorite(element.id);
+        _appRepository.removeItemOfFavoriteList(element.id);
       }
     });
     _loadingOfAddFavoriteAndCartShop(false);
@@ -113,7 +113,7 @@ class HomeController extends GetxController{
 
   void getListFavorite() {
     MySharePrefrence().getId().then((value) {
-      _appRepository.getFavortieBooks(value).then((value){
+      _appRepository.getFavoritesBooks(value).then((value){
         listFavorite = value;
         setStatusOfFavorite();
       });
@@ -148,7 +148,7 @@ class HomeController extends GetxController{
   }
 
   addToCartShop(Book book){
-    _appRepository.addBookToCartShop(book);
+    _appRepository.addBookToCart(book);
   }
 
   removeFromCartShop(Book book){
@@ -159,12 +159,12 @@ class HomeController extends GetxController{
           _cartShop = element;
         }
     });
-    _appRepository.requedtForDelete(_cartShop);
+    _appRepository.removeItemOfShoppingCart(_cartShop);
   }
 
 
   getAllCartShop() async{
-   await _appRepository.getAllItemsOfCartShops().then((value) {
+   await _appRepository.getShoppingListCart().then((value) {
       countCartShop.value=value.length;
       listCartShop.value=value;
       if(listCartShop.length==0){

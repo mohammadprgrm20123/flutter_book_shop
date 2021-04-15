@@ -41,20 +41,20 @@ class MorePageController extends GetxController{
     });
   }
   addToFavorite(Book book){
-    _appRepository.addToFavoriteList(book);
+    _appRepository.addBookToFavoriteList(book);
   }
 
   removeFromFavorite(Book book){
     listFavorite.forEach((element) {
       if(element.book.id==book.id){
-        _appRepository.removeFromFavorite(element.id);
+        _appRepository.removeItemOfFavoriteList(element.id);
       }
     });
   }
 
   void getListFavorite() {
     MySharePrefrence().getId().then((value) {
-      _appRepository.getFavortieBooks(value).then((value){
+      _appRepository.getFavoritesBooks(value).then((value){
         loading(true);
         listFavorite=(value);
         setStatusOfFavorite();
@@ -87,7 +87,7 @@ class MorePageController extends GetxController{
   }
 
   getAllCartShop() async{
-    await _appRepository.getAllItemsOfCartShops().then((value) {
+    await _appRepository.getShoppingListCart().then((value) {
       listCartShop=value;
 
       if(listCartShop.length==0){
@@ -113,7 +113,7 @@ class MorePageController extends GetxController{
   }
 
   addToCartShop(Book book){
-    _appRepository.addBookToCartShop(book);
+    _appRepository.addBookToCart(book);
   }
 
   removeFromCartShop(Book book){
@@ -124,6 +124,6 @@ class MorePageController extends GetxController{
         _cartShop = element;
       }
     });
-    _appRepository.requedtForDelete(_cartShop);
+    _appRepository.removeItemOfShoppingCart(_cartShop);
   }
 }

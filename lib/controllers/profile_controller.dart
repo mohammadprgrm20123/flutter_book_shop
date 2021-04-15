@@ -33,7 +33,7 @@ class ProfileController extends GetxController{
   getUserProfile() async{
     _loading(true);
     MySharePrefrence().getId().then((value) {
-      _appRepository.getUserProfile(value).then((value) {
+      _appRepository.getProfileInfo(value).then((value) {
         _loading(false);
         _user = value;
         _imageUint8 = base64Decode(_user.image);
@@ -61,6 +61,6 @@ class ProfileController extends GetxController{
   File get imgeFile => _imageFile;
 
   sendUserData(User user){
-     _appRepository.updateUserData(user);
+     _appRepository.updateUserInfo(user);
    }
 }

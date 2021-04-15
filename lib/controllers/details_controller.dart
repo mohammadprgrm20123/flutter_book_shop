@@ -36,7 +36,7 @@ class DetailController extends GetxController with StateMixin<Null>{
 
  void addBookToCartShop(Book book){
     _loadingBtnClick(true);
-    _appRepository.addBookToCartShop(book).then((value) {
+    _appRepository.addBookToCart(book).then((value) {
       _loadingBtnClick(false);
     }).onError((error, stackTrace) {
       _loadingBtnClick(false);
@@ -46,7 +46,7 @@ class DetailController extends GetxController with StateMixin<Null>{
 
   addBookToFavoriteList(Book book){
     _loadingBtnClick(true);
-    _appRepository.addToFavoriteList(book).then((value) {
+    _appRepository.addBookToFavoriteList(book).then((value) {
       _loadingBtnClick(false);
     }).onError((error, stackTrace) {
       _loadingBtnClick(false);
