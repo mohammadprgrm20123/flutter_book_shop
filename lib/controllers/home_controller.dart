@@ -21,6 +21,16 @@ class HomeController extends GetxController{
   RxBool _loadingOfAddFavoriteAndCartShop=false.obs;
 
 
+  AppRepository _appRepository;
+  @override
+  void onInit() async {
+    super.onInit();
+    _appRepository = AppRepository();
+    getAllBooks();
+    getFavoriteList();
+    getNumberOfShoppingCart();
+  }
+
   RxBool get loadingOfAddFavorite =>
       _loadingOfAddFavoriteAndCartShop;
 
@@ -30,16 +40,6 @@ class HomeController extends GetxController{
 
   List<ImageCarditem> itemsAudioBook = [
   ];  RxDouble indexIndicator = 0.0.obs;
-
-  AppRepository _appRepository;
-  @override
-  void onInit() async {
-    super.onInit();
-    _appRepository = AppRepository();
-    getAllBooks();
-    getListFavorite();
-    getCountOfCartShop();
-  }
 
   RxBool get loading => _loading;
 
@@ -58,7 +58,7 @@ class HomeController extends GetxController{
   }
 
 
-  void seprateBestBooks(){
+  void separateBestBooks(){
     List<Book> listBest = [];
     listAllBook.value.forEach((book) {
      if(book.score>=4.2 && book.category!="صوتی"){
@@ -68,24 +68,23 @@ class HomeController extends GetxController{
    listBestBook.value=(listBest);
   }
 
-  void sepratePopularBook() {
+  void separatePopularBook() {
    listPopularBook(listBestBook.reversed.toList());
   }
 
-  void seprateAudioBook() {
+  void separateAudioBook() {
     List<Book> allBook = listAllBook.value;
     allBook.forEach((book) {
       if(book.category=="صوتی"){
         listAudioBook.value.add(book);
         itemsAudioBook.add(ImageCarditem(
-          image: Image.network(
-              book.url)));
+          image: Image.network(book.url)));
       }
     });
 
   }
 
-  void getCountOfCartShop() async {
+  void getNumberOfShoppingCart() async {
     _appRepository.getShoppingListCart().then((value) {
       _countCartShop.value = value.length;
     });
@@ -111,7 +110,7 @@ class HomeController extends GetxController{
     _loadingOfAddFavoriteAndCartShop(false);
   }
 
-  void getListFavorite() {
+  void getFavoriteList() {
     MySharePrefrence().getId().then((value) {
       _appRepository.getFavoritesBooks(value).then((value){
         listFavorite = value;
@@ -121,8 +120,22 @@ class HomeController extends GetxController{
   }
 
   void setStatusOfFavorite() async {
+    checkListFavoriteLength();
+      for(int i=0;i<listFavorite.length;i++){
+        for(int j=0;j<listAllBook.length;j++){
+          if(listAllBook[j].id==listFavorite[i].book.id){
+            listAllBook[j].isFavorite=true;
+          }
+        }
+      }
+    await getAllCartShop();
+    separateBestBooks();
+    separatePopularBook();
+    separateAudioBook();
+  }
 
-    if(listFavorite.length==0){
+  void checkListFavoriteLength() {
+       if(listFavorite.length==0){
       for(int j=0;j<listAllBook.length;j++){
           listAllBook[j].isFavorite=false;
         }
@@ -132,26 +145,13 @@ class HomeController extends GetxController{
         listAllBook[j].isFavorite=false;
       }
     }
-
-
-      for(int i=0;i<listFavorite.length;i++){
-        for(int j=0;j<listAllBook.length;j++){
-          if(listAllBook[j].id==listFavorite[i].book.id){
-            listAllBook[j].isFavorite=true;
-          }
-        }
-      }
-    await getAllCartShop();
-    await seprateBestBooks();
-    await sepratePopularBook();
-    await seprateAudioBook();
   }
 
   addToCartShop(Book book){
     _appRepository.addBookToCart(book);
   }
 
-  removeFromCartShop(Book book){
+  removeItemFromCartShop(Book book){
     CartShop _cartShop;
     listCartShop.forEach((element) {
       if(book.id==element.book.id)
@@ -167,16 +167,7 @@ class HomeController extends GetxController{
    await _appRepository.getShoppingListCart().then((value) {
       countCartShop.value=value.length;
       listCartShop.value=value;
-      if(listCartShop.length==0){
-        for(int j=0;j<listAllBook.length;j++){
-          listAllBook[j].isInCartShop=false;
-        }
-      }
-      else{
-        for(int j=0;j<listAllBook.length;j++){
-          listAllBook[j].isInCartShop=false;
-        }
-      }
+      checkLengthListCartShop();
       for(int i=0;i<listCartShop.length;i++){
         for(int j=0;j<listAllBook.length;j++){
           if(listAllBook[j].id==listCartShop[i].book.id){
@@ -185,6 +176,19 @@ class HomeController extends GetxController{
         }
       }
     });
+  }
+
+  void checkLengthListCartShop() {
+    if(listCartShop.length==0){
+      for(int j=0;j<listAllBook.length;j++){
+        listAllBook[j].isInCartShop=false;
+      }
+    }
+    else{
+      for(int j=0;j<listAllBook.length;j++){
+        listAllBook[j].isInCartShop=false;
+      }
+    }
   }
 
 }

@@ -31,7 +31,7 @@ class StateUserHome extends State<UserHome> {
 
   @override
   Widget build(BuildContext context) {
-    _homeController.getListFavorite();
+    _homeController.getFavoriteList();
     return Scaffold(
       appBar: _appBar(context),
       body: _scrollView(context),
@@ -153,8 +153,8 @@ class StateUserHome extends State<UserHome> {
     return GestureDetector(
       onTap: (){
         Get.to(()=>MorePage()).then((value){
-          _homeController.getListFavorite();
-          _homeController.getCountOfCartShop();
+          _homeController.getFavoriteList();
+          _homeController.getNumberOfShoppingCart();
         });
       },
       child: Row(
@@ -235,7 +235,7 @@ class StateUserHome extends State<UserHome> {
                                   _homeController.countCartShop.value++;
                                 }
                                 else{
-                                  _homeController.removeFromCartShop(_homeController.listPopularBook[index]);
+                                  _homeController.removeItemFromCartShop(_homeController.listPopularBook[index]);
                                   _homeController.listPopularBook[index].isInCartShop=false;
                                   _homeController.countCartShop.value--;
                                 }
@@ -340,7 +340,7 @@ class StateUserHome extends State<UserHome> {
                              _homeController.countCartShop.value++;
                            }
                            else{
-                             _homeController.removeFromCartShop(_homeController.listBestBook[index]);
+                             _homeController.removeItemFromCartShop(_homeController.listBestBook[index]);
                              _homeController.listBestBook[index].isInCartShop=false;
                              _homeController.countCartShop.value--;
                            }
@@ -510,7 +510,7 @@ class StateUserHome extends State<UserHome> {
       child: InkWell(
         onTap: (){
           Get.to(()=>CartShopPage()).then((value) {
-            _homeController.getListFavorite();
+            _homeController.getFavoriteList();
           });
         },
         child: Stack(
@@ -573,13 +573,13 @@ class StateUserHome extends State<UserHome> {
           switch(index){
             case 0:{
               Get.to(()=>CartShopPage()).then((value) {
-                _homeController.getListFavorite();
+                _homeController.getFavoriteList();
               });
             }break;
 
             case 1:{
               Get.to(()=>Favorite()).then((value) {
-                _homeController.getListFavorite();
+                _homeController.getFavoriteList();
               });
             }break;
 
@@ -597,8 +597,8 @@ class StateUserHome extends State<UserHome> {
 
   void _goToDetailsPage(id) {
     Get.to(()=> DetailsBook(id)).then((value) {
-      _homeController.getCountOfCartShop();
-      _homeController.getListFavorite();
+      _homeController.getNumberOfShoppingCart();
+      _homeController.getFavoriteList();
     });
   }
 
