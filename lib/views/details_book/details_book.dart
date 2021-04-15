@@ -15,7 +15,7 @@ class DetailsBook extends StatelessWidget {
   DetailController _detailController = Get.put(DetailController());
 
   DetailsBook(this._bookId) {
-    _detailController.getDeatilsBook(_bookId);
+    _detailController.getDetailsBook(_bookId);
   }
 
 

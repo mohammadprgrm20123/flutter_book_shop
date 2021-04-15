@@ -22,19 +22,20 @@ class DetailController extends GetxController with StateMixin<Null>{
   }
 
 
-  getDeatilsBook(int id){
+  getDetailsBook(int id) {
     _loading(true);
     _appRepository.getDetailsBook(id).then((value) {
       _loading(false);
       print(value.toString());
-      _book =value;
-    }).onError((error, stackTrace){
+      _book = value;
+    }).onError((error, stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
-          backgroundColor: Colors.red[200]);    });
+          backgroundColor: Colors.red[200]);
+    });
   }
 
- void addBookToCartShop(Book book){
+  void addBookToCartShop(Book book){
     _loadingBtnClick(true);
     _appRepository.addBookToCart(book).then((value) {
       _loadingBtnClick(false);
