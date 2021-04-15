@@ -12,11 +12,9 @@ class Purchase {
     id = json['id'];
     userId = json['userId'];
     date = json['date'];
+
     if (json['cartShop'] != null) {
-      cartShop = new List<CartShop>();
-      json['cartShop'].forEach((v) {
-        cartShop.add(new CartShop.fromJson(v));
-      });
+      cartShop = CartShop().CartShopListFromJson(json['cartShop']);
     }
   }
 

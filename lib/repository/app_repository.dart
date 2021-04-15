@@ -151,7 +151,7 @@ class AppRepository {
   }
 
 
-  Future<List<Purchase>> getAllPerches() async{
+  Future<List<Purchase>> getAllPurchase() async{
     List<Purchase> purchaseList=[];
     await _apiClient.dio.get(ApiClient.END_POINT_PURCHASE).then((value) {
       purchaseList = Purchase().purchesListFromJson(value.data);

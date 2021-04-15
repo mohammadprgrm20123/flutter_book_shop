@@ -14,7 +14,8 @@ class Book {
   String _desc;
   List<Tags> _tags;
   int _id;
-
+  bool isFavorite;
+  bool isInCartShop;
   Book(
       {String price,
         String bookName,
@@ -88,11 +89,8 @@ class Book {
     _url = json['url'];
     _autherName = json['autherName'];
     _desc = json['desc'];
-    print(json['tags'].toString());
      _tags = Tags().TagListFromJson(json['tags']);
-    print(_tags.length.toString());
     _id = json['id'];
-    print(json.toString());
   }
 
   Map<String, dynamic> toJson() {

@@ -17,7 +17,6 @@ class TagEditor extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    print("State<StatefulWidget>");
     if(state==0)
       {
         state++;
@@ -44,7 +43,6 @@ class StateTagEditor extends State<TagEditor> {
 
   @override
   Widget build(BuildContext context) {
-    print(listTag.length.toString());
 
     return Container(
         child: Column(
@@ -70,7 +68,6 @@ class StateTagEditor extends State<TagEditor> {
               padding: const EdgeInsets.only(left:20.0),
               child: ElevatedButton(onPressed: (){
                 if(tagCtr.isNotEmpty){
-                  print(tagCtr);
                   widget.addTags.call(tagCtr);
                   listTag.add(tagCtr);
                   setState(() {

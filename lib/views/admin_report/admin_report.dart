@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/admin_report_controller.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
+import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:flutter_booki_shop/models/purches.dart';
 import 'package:get/get.dart';
-@immutable
 class AdminReport extends StatelessWidget {
   AdminReportController _adminReportController = Get.put(AdminReportController());
 
@@ -55,10 +55,17 @@ class AdminReport extends StatelessWidget {
           children: [
             Text(S.of(Get.context).success_purchase),
             Text("${S.of(Get.context).date}     :  ${_getDate(purchase)}"),
-            Text(" ${S.of(Get.context).price}    :${purchase}"),
+            expanded(purchase),
+            Text("مجموع هزینه   ${calcutePrice(purchase) }   تومان"),
           ],
         ),
       );
+  }
+
+  Widget expanded(Purchase purchase) {
+    return Column(
+      children:listBooks(purchase),
+    );
   }
 
   BoxDecoration _decorationItems() {
@@ -85,5 +92,34 @@ class AdminReport extends StatelessWidget {
     return Text(S.of(Get.context).report_purchase,
         style:
             TextStyle(fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
+  }
+
+ List<Widget> listBooks(Purchase purchase) {
+    if(purchase.cartShop==null){
+      return [];
+    }
+    else{
+      return purchase.cartShop.map((CartShop e) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(" تعداد : ${e.count.toString()}"),
+
+            Text("نام کتاب : ${e.book.bookName}"),
+          ],
+        );
+      }).toList();
+    }
+
+  }
+
+  String calcutePrice(Purchase purchase) {
+
+    double price =0;
+    purchase.cartShop.forEach((element) {
+    price+=element.count*double.parse(element.book.price);
+    });
+    return price.toString();
   }
 }

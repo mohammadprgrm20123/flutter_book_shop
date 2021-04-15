@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/more_page_controller.dart';
 import 'package:flutter_booki_shop/custom_widgets/card_icon_favorite_icon.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
+import 'package:flutter_booki_shop/views/details_book/details_book.dart';
 import 'package:get/get.dart';
 import 'package:get/instance_manager.dart';
 
@@ -55,12 +56,11 @@ class MorePage extends StatelessWidget{
     );
   }
   Widget _itemListBestBooks(int index) {
-    return Obx((){
       return Card(
         elevation: 10.0,
         child: InkWell(
           onTap: () {
-            // _goToDetailsPage(_homeController.listBestBook[index].id);
+             _goToDetailsPage(_morePageController.allBooks[index].id);
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -114,7 +114,7 @@ class MorePage extends StatelessWidget{
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(" نام کتاب : ${_morePageController.allBooks[index].bookName}"),
-                        Text("نام نویسنده :${_morePageController.allBooks[index].authorName}  "),
+                        Text("نام نویسنده :${_morePageController.allBooks[index].autherName}  "),
                         Text("${_morePageController.allBooks[index].price} تومان "),
                       ],
                     ),
@@ -125,6 +125,12 @@ class MorePage extends StatelessWidget{
           ),
         ),
       );
+  }
+
+  void _goToDetailsPage(int id) {
+    Get.to(()=>DetailsBook(id)).then((value) {
+      _morePageController.getListFavorite();
+      _morePageController.getAllCartShop();
     });
   }
 }

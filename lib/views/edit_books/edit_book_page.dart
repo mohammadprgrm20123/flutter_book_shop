@@ -70,9 +70,7 @@ class EditBookPage extends StatelessWidget {
           _editBookController.listTags.add(tag);
       },
         removeTags: (tag){
-          print("tag --->>>${tag}");
           _editBookController.listTags.remove(tag);
-          print("listTags size --->>>${_editBookController.listTags.length}");
         },
         firstValueListTag:  _editBookController.listTags,
       ),

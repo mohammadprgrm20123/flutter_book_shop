@@ -22,14 +22,13 @@ class AdminReportController extends GetxController{
 
   getReportPurches(){
     _loading(true);
-    _appRepository.getAllPerches().then((value){
+    _appRepository.getAllPurchase().then((value){
       _loading(false);
       _listPurchase = value;
     }).onError((error, stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
           backgroundColor: Colors.red[200]);
-
     });
   }
 

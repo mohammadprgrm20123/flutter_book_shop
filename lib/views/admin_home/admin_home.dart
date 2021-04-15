@@ -198,7 +198,9 @@ class AdminHome extends StatelessWidget{
         onTap: (int index) {
           switch(index){
             case 0:{
-              Get.to(()=>AdminReport());
+              Get.to(()=>AdminReport()).then((value) {
+                _adminHomeController.getAllBooks();
+              });
             }break;
 
             case 1:{

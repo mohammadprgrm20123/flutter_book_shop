@@ -7,8 +7,19 @@ import 'package:flutter_booki_shop/models/User.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:get/get.dart';
+
+
+class Profile extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+   return StateProfile();
+  }
+
+}
+
+
 @immutable
-class Profile extends StatelessWidget {
+class StateProfile extends State<Profile> {
   List<String> _spinnerItems = [S.of(Get.context).persion, S.of(Get.context).English];
 
   ProfileController _profileController = Get.put(ProfileController());
@@ -177,6 +188,9 @@ class Profile extends StatelessWidget {
         leading: const Icon(Icons.lock),
         title: new TextField(
           controller: _passwordCtr,
+          decoration: new InputDecoration(
+            hintText: '${_profileController.user.password}',
+          ),
         ),
       ),
     );

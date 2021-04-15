@@ -1,6 +1,7 @@
 
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/models/CartShop.dart';
+import 'package:flutter_booki_shop/models/FavoriteItem.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
@@ -11,9 +12,11 @@ class MorePageController extends GetxController{
 
   RxBool _loading=false.obs;
   AppRepository _appRepository;
-  RxList allBooks =[].obs;
-  RxList listFavorite=[].obs;
-  RxList listCartShop=[].obs;
+  List<Book> allBooks =[];
+  List<FavoriteItem> listFavorite=[];
+  List<CartShop> listCartShop=[];
+
+
   RxBool get loading => _loading;
 
   set loading(RxBool value) {
@@ -31,7 +34,7 @@ class MorePageController extends GetxController{
   getAllBooks(){
     _loading(true);
     _appRepository.getAllBooks().then((value){
-      allBooks(value);
+      allBooks=(value);
       _loading(false);
     }).onError((error, stackTrace) {
       _loading(false);
@@ -53,7 +56,7 @@ class MorePageController extends GetxController{
     MySharePrefrence().getId().then((value) {
       _appRepository.getFavortieBooks(value).then((value){
         loading(true);
-        listFavorite(value);
+        listFavorite=(value);
         setStatusOfFavorite();
       });
     });
@@ -85,7 +88,7 @@ class MorePageController extends GetxController{
 
   getAllCartShop() async{
     await _appRepository.getAllItemsOfCartShops().then((value) {
-      listCartShop.value=value;
+      listCartShop=value;
 
       if(listCartShop.length==0){
         for(int j=0;j<allBooks.length;j++){

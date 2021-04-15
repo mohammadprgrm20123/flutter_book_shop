@@ -26,6 +26,7 @@ class DetailController extends GetxController with StateMixin<Null>{
     _loading(true);
     _appRepository.getDetailsBook(id).then((value) {
       _loading(false);
+      print(value.toString());
       _book =value;
     }).onError((error, stackTrace){
       _loading(false);

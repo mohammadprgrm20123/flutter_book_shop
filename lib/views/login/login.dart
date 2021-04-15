@@ -9,16 +9,25 @@ import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:flutter_booki_shop/views/user_home/user_home.dart';
 import 'package:get/get.dart';
-class Login extends StatelessWidget {
-  TextEditingController _usernameCtr;
-  TextEditingController _passwordCtr;
 
+class Login extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return StateLogin();
+  }
+}
+
+
+
+
+class StateLogin extends State<Login> {
+  TextEditingController _usernameCtr=new TextEditingController();
+  TextEditingController _passwordCtr=new TextEditingController();
   LoginController _loginController =Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
-    _usernameCtr = new TextEditingController();
-    _passwordCtr = new TextEditingController();
+
     return SafeArea(
       top: true,
       child: Scaffold(

@@ -74,29 +74,27 @@ class DetailsBook extends StatelessWidget {
 
     return Wrap(
               direction: Axis.horizontal,
-              children:[
-               /*  _itemTag(tags.tag0),
-                 _itemTag(tags.tag1),
-                 _itemTag(tags.tag2),
-                 _itemTag(tags.tag3),
-                 _itemTag(tags.tag4)*/
-                 ]
+              children:listTag()
             );
   }
 
-  Widget _itemTag(String tag) {
-    return Container(
-                margin: const EdgeInsets.only(right: 8.0, bottom: 15.0),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(tag,style: TextStyle(color: Colors.white),),
-                ),
-              );
+  List<Widget> listTag() {
+    return _detailController.book.tags.map((e){
+     return Container(
+       margin: const EdgeInsets.only(right: 8.0, bottom: 15.0),
+       decoration: BoxDecoration(
+         color: Colors.blue,
+         borderRadius: BorderRadius.circular(50),
+       ),
+       child: Padding(
+         padding: const EdgeInsets.all(5.0),
+         child: Text(e.tag,style: TextStyle(color: Colors.white),),
+       ),
+     );
+    }).toList();
   }
+
+
 
   Widget _otherPropertiesOfBook(Book book) {
     return SingleChildScrollView(
@@ -327,8 +325,7 @@ class DetailsBook extends StatelessWidget {
   Widget _bookName(String bookName) {
     return Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: Text(
-                bookName,
+              child: Text("$bookName",
                 style:
                     TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
               ),

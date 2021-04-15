@@ -29,10 +29,6 @@ class UserHome extends StatefulWidget{
 class StateUserHome extends State<UserHome> {
   HomeController _homeController= Get.put(HomeController());
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     _homeController.getListFavorite();
