@@ -66,11 +66,13 @@ class EditBookPage extends StatelessWidget {
       _countPages(),
       _publisher(),
       _descOfBook(),
-      TagEditor(addTags: (list){
-          _editBookController.listTags.add(list);
+      TagEditor(addTags: (tag){
+          _editBookController.listTags.add(tag);
       },
         removeTags: (tag){
+          print("tag --->>>${tag}");
           _editBookController.listTags.remove(tag);
+          print("listTags size --->>>${_editBookController.listTags.length}");
         },
         firstValueListTag:  _editBookController.listTags,
       ),
@@ -290,14 +292,6 @@ class EditBookPage extends StatelessWidget {
   }
 
   bool validateParameters() {
-
-    print("_editBookController.validatorBookName ${_editBookController.validatorBookName}");
-    print("_editBookController.validatorBookAutherName ${_editBookController.validatorBookAutherName}");
-    print("_editBookController.validatorBookPublisher ${_editBookController.validatorBookPublisher}");
-    print("__editBookController.validatorBookPrice ${_editBookController.validatorBookPrice}");
-    print("_editBookController.validatorBookPages ${_editBookController.validatorBookPages}");
-    print("_editBookController.validatorBookScore ${_editBookController.validatorBookScore}");
-
     if (_editBookController.validatorBookName &&
         _editBookController.validatorBookAutherName &&
         _editBookController.validatorBookPublisher &&
@@ -315,6 +309,7 @@ class EditBookPage extends StatelessWidget {
   }
 
   void sendRequestAddBook() {
+    _editBookController.book.tags.clear();
     _editBookController.listTags.forEach((element) {
       _editBookController.book.tags.add(Tags(tag:element));
     });

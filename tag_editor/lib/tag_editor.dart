@@ -104,8 +104,8 @@ class StateTagEditor extends State<TagEditor> {
               Text("${e.toString()}"),
               GestureDetector(
                   onTap: () {
-                    widget.removeTags.call(tagCtr);
                     listTag.remove(e);
+                    widget.removeTags.call(e);
                     setState(() {});
                   },
                   child: Icon(Icons.remove_circle_sharp,color: Colors.white,))
