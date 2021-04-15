@@ -24,6 +24,8 @@ class AdminHomeController extends GetxController{
     _appRepository.getAllBooks().then((value) {
       _loading(false);
       listAllBooks = value;
+      listAllBooks.elementAt(listAllBooks.length-1);
+
     }).onError((error, stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error,S.of(Get.context).check_network);

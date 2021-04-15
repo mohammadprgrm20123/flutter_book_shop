@@ -68,7 +68,11 @@ class EditBookPage extends StatelessWidget {
       _descOfBook(),
       TagEditor(addTags: (list){
           _editBookController.listTags.add(list);
-      }
+      },
+        removeTags: (tag){
+          _editBookController.listTags.remove(tag);
+        },
+        firstValueListTag:  _editBookController.listTags,
       ),
       _btnAddProduct(context)
     ];
@@ -80,7 +84,7 @@ class EditBookPage extends StatelessWidget {
         child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: ElevatedButton(onPressed: () {
-              if (!checkEmpty()) {
+              if (!validateParameters()) {
                 sendRequestAddBook();
                 Get.offAll(()=>AdminHome());
               }
@@ -130,6 +134,7 @@ class EditBookPage extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.all(20.0),
         child: TextField(
+            keyboardType: TextInputType.number,
             controller: _pagesCtr,
             onChanged: (countPages) {
               _editBookController.book.pages = countPages;
@@ -154,9 +159,10 @@ class EditBookPage extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.all(20.0),
         child: TextField(
+            keyboardType: TextInputType.number,
             controller: _scoreCtr,
             onChanged: (score) {
-              _editBookController.book.score = double.parse(score).roundToDouble();
+              _editBookController.book.score = double.parse(score).toPrecision(1);
               _validateScore(score);
             },
             decoration: _decorationScore(_editBookController.errorTextBookScore.value)),
@@ -221,6 +227,7 @@ class EditBookPage extends StatelessWidget {
         return  Padding(
           padding: const EdgeInsets.all(20.0),
           child: TextField(
+              keyboardType: TextInputType.number,
               controller: _priceCtr,
               onChanged: (price) {
                 _editBookController.book.price = price;
@@ -282,19 +289,35 @@ class EditBookPage extends StatelessWidget {
         TextStyle(fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
   }
 
-  bool checkEmpty() {
-    if (_editBookController.book.bookName.isEmpty ||
-        _editBookController.book.autherName.isEmpty ||
-        _editBookController.book.translator.isEmpty ||
-        _editBookController.book.pages.isEmpty ||
-        _editBookController.book.desc.isEmpty) {
-      Get.snackbar(S.of(Get.context).error, S.of(Get.context).please_fill_parameters);
-      return true;
+  bool validateParameters() {
+
+    print("_editBookController.validatorBookName ${_editBookController.validatorBookName}");
+    print("_editBookController.validatorBookAutherName ${_editBookController.validatorBookAutherName}");
+    print("_editBookController.validatorBookPublisher ${_editBookController.validatorBookPublisher}");
+    print("__editBookController.validatorBookPrice ${_editBookController.validatorBookPrice}");
+    print("_editBookController.validatorBookPages ${_editBookController.validatorBookPages}");
+    print("_editBookController.validatorBookScore ${_editBookController.validatorBookScore}");
+
+    if (_editBookController.validatorBookName &&
+        _editBookController.validatorBookAutherName &&
+        _editBookController.validatorBookPublisher &&
+        _editBookController.validatorBookPrice &&
+        _editBookController.validatorBookPages&&
+        _editBookController.validatorBookScore
+    ) {
+      return false;
     }
-    return false;
+    else
+      {
+        Get.snackbar(S.of(Get.context).error, S.of(Get.context).please_fill_parameters);
+        return true;
+      }
   }
 
   void sendRequestAddBook() {
+    _editBookController.listTags.forEach((element) {
+      _editBookController.book.tags.add(Tags(tag:element));
+    });
     _editBookController.requestForEditBook(_editBookController.book);
   }
   void _initFirstValues(Book book) {
@@ -312,13 +335,19 @@ class EditBookPage extends StatelessWidget {
       _editBookController.listTags.add(element.tag);
     });
     _editBookController.category.value = book.category;
+    _validatePublisher(book.publisherName);
+    _validateCountPages(book.pages);
+    _validateScore(book.score.toString());
+    _validatorAutherName(book.autherName);
+    _validatePrice(book.price);
+    _validateBookName(book.bookName);
   }
   _validatePrice(String price) {
     if (price.isEmpty) {
       _editBookController.errorBookPrice.value = "این مقدار نباید خالی باشد";
       _editBookController.validatorBookPrice=false;
     } else {
-      double priceDouble = double.parse(price);
+      double priceDouble = double.parse(price).toPrecision(1);
       if (priceDouble < 5000 || priceDouble > 100000) {
         _editBookController.validatorBookPrice=false;
         return _editBookController.errorBookPrice.value =
@@ -347,7 +376,7 @@ class EditBookPage extends StatelessWidget {
       _editBookController.errorTextBookScore.value = "امتیاز نباید خالی باشد";
       _editBookController.validatorBookScore=false;
     } else {
-      double scoreDouble = double.parse(score);
+      double scoreDouble = double.parse(score).toPrecision(1);
       if (scoreDouble > 5 || scoreDouble == 0) {
         _editBookController.errorTextBookScore.value =
         "امتیاز باید بین 1 تا 5 باشد ";
@@ -355,6 +384,7 @@ class EditBookPage extends StatelessWidget {
       } else {
         _editBookController.errorTextBookScore.value = null;
         _editBookController.validatorBookScore=true;
+        _editBookController.book.score=scoreDouble;
       }
     }
   }

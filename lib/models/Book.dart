@@ -80,7 +80,7 @@ class Book {
     _bookName = json['bookName'];
     _publisherName = json['publisherName'];
     _translator = json['translator'];
-    _score = json['score'];
+    _score = json['score']+0.0;
     _category = json['category'];
     _pages = json['pages'];
     _releaseDate = json['releaseDate'];

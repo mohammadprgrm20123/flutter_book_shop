@@ -183,7 +183,7 @@ class AddBookPage extends StatelessWidget {
           return TextField(
               keyboardType: TextInputType.number,
               onChanged: (score) {
-                _addBookController.book.score = double.parse(score) ;
+                _addBookController.book.score = double.parse(score).toPrecision(1);
                 _validateScore(score);
               },
               decoration: InputDecoration(
@@ -336,7 +336,7 @@ class AddBookPage extends StatelessWidget {
       _addBookController.errorBookPrice.value = "این مقدار نباید خالی باشد";
       _addBookController.validatorBookPrice=false;
     } else {
-      double priceDouble = double.parse(price);
+      double priceDouble = double.parse(price).toPrecision(1);
       if (priceDouble < 5000 || priceDouble > 100000) {
         _addBookController.validatorBookPrice=false;
         return _addBookController.errorBookPrice.value =
@@ -365,7 +365,7 @@ class AddBookPage extends StatelessWidget {
       _addBookController.errorTextBookScore.value = "امتیاز نباید خالی باشد";
       _addBookController.validatorBookScore=false;
     } else {
-      double scoreDouble = double.parse(score);
+      double scoreDouble = double.parse(score).toPrecision(1);
       if (scoreDouble > 5 || scoreDouble == 0) {
         _addBookController.errorTextBookScore.value =
             "امتیاز باید بین 1 تا 5 باشد ";

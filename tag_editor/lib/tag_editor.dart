@@ -10,20 +10,35 @@ class TagEditor extends StatefulWidget {
   final ValueChanged<String> removeTags;
    List<String> firstValueListTag=[];
 
+   int state=0;
+
+
+
+
   @override
   State<StatefulWidget> createState() {
     print("State<StatefulWidget>");
-    return StateTagEditor(listTag: firstValueListTag);
+    if(state==0)
+      {
+        state++;
+        return StateTagEditor(firstValueListTag);
+      }
+
   }
+
 }
 
 class StateTagEditor extends State<TagEditor> {
   String tagCtr;
   List<String> listTag=[];
 
-  StateTagEditor({this.listTag}){
-    if(listTag==null){
+  StateTagEditor(List<String> listFirst){
+    if(listFirst==null){
       this.listTag=[];
+    }
+    else{
+      this.listTag.clear();
+      this.listTag.addAll(listFirst);
     }
   }
 
@@ -89,8 +104,8 @@ class StateTagEditor extends State<TagEditor> {
               Text("${e.toString()}"),
               GestureDetector(
                   onTap: () {
-                    listTag.remove(e);
                     widget.removeTags.call(tagCtr);
+                    listTag.remove(e);
                     setState(() {});
                   },
                   child: Icon(Icons.remove_circle_sharp,color: Colors.white,))
