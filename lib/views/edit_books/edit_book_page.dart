@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/controllers/add_book_controller.dart';
 import 'package:flutter_booki_shop/controllers/edit_book_controller.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/Book.dart';
 import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:get/get.dart';
+import 'package:tag_editor/tag_editor.dart';
 
 @immutable
 class EditBookPage extends StatelessWidget {
@@ -15,48 +17,36 @@ class EditBookPage extends StatelessWidget {
     S.of(Get.context).epic,
     S.of(Get.context).psychology,
   ];
-  EditBookController _editBookController = Get.put(EditBookController());
+  AddBookController _editBookController = Get.put(AddBookController());
+  Book book;
+  TextEditingController _bookNameCtr;
+  TextEditingController _priceCtr;
+  TextEditingController _authorNameCtr;
+  TextEditingController _translatorNameCtr;
+  TextEditingController _scoreCtr;
+  TextEditingController _categoryCtr;
+  TextEditingController _pagesCtr;
+  TextEditingController _publisherCtr;
+  TextEditingController _descBookCtr ;
 
-  TextEditingController _bookNameCtr =new TextEditingController();
-  TextEditingController _priceCtr =new TextEditingController();
-  TextEditingController _authorNameCtr =new TextEditingController();
-  TextEditingController _translatorNameCtr =new TextEditingController();
-  TextEditingController _scoreCtr =new TextEditingController();
-  TextEditingController _categoryCtr =new TextEditingController();
-  TextEditingController _pagesCtr =new TextEditingController();
-  TextEditingController _publisherCtr =new TextEditingController();
-  TextEditingController _descBookCtr =new TextEditingController();
-  TextEditingController _tag1BookCtr =new TextEditingController();
-  TextEditingController _tag2BookCtr =new TextEditingController();
-  TextEditingController _tag3BookCtr =new TextEditingController();
-  TextEditingController _tag4BookCtr =new TextEditingController();
+  EditBookPage(this.book);
 
-  EditBookPage(Book book){
-    _initFirstValues(book);
-  }
 
-  void _initFirstValues(Book book) {
-    _editBookController.book = book;
-    _bookNameCtr.text =book.bookName;
-    _priceCtr.text =book.price;
-    _authorNameCtr.text =book.authorName;
-    _translatorNameCtr.text =book.translator;
-    _scoreCtr.text =book.score.toString();
-    _categoryCtr.text =book.category;
-    _pagesCtr.text =book.pages;
-    _publisherCtr.text =book.publisherName;
-    _descBookCtr.text =book.desc;
-    _tag1BookCtr.text =book.tags.tag1;
-    _tag2BookCtr.text =book.tags.tag2;
-    _tag3BookCtr.text =book.tags.tag3;
-    _tag4BookCtr.text =book.tags.tag4;
-    _editBookController.category.value = book.category;
-  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
+     _bookNameCtr =new TextEditingController();
+     _priceCtr =new TextEditingController();
+     _authorNameCtr =new TextEditingController();
+     _translatorNameCtr =new TextEditingController();
+     _scoreCtr =new TextEditingController();
+     _categoryCtr =new TextEditingController();
+     _pagesCtr =new TextEditingController();
+     _publisherCtr =new TextEditingController();
+     _descBookCtr =new TextEditingController();
+     _initFirstValues(book);
+
+     return Scaffold(
       appBar: _appBar(context),
       body: SingleChildScrollView(
         child: Column(
@@ -76,10 +66,10 @@ class EditBookPage extends StatelessWidget {
       _countPages(),
       _publisher(),
       _descOfBook(),
-      _firstTag(),
-      _secondTag(),
-      _thirdTag(),
-      _forthTag(),
+      TagEditor(addTags: (list){
+          _editBookController.listTags.add(list);
+      }
+      ),
       _btnAddProduct(context)
     ];
   }
@@ -96,86 +86,6 @@ class EditBookPage extends StatelessWidget {
               }
             }, child: Text(S.of(context).record)
             )));
-  }
-
-  Widget _forthTag() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextField(
-        controller: _tag4BookCtr,
-          onChanged: (tag4) {
-            _editBookController.book.tags.tag4=tag4;
-          },
-          decoration: _decorationForthTag()),
-    );
-  }
-
-  InputDecoration _decorationForthTag() {
-    return InputDecoration(
-            prefixIcon: Icon(Icons.tag),
-            border: OutlineInputBorder(),
-            labelText: S.of(Get.context).forth_tag,
-            hintText: S.of(Get.context).forth_tag);
-  }
-
-  Widget _thirdTag() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextField(
-          controller: _tag3BookCtr,
-          onChanged: (tag3) {
-            _editBookController.book.tags.tag3=tag3;
-          },
-          decoration: _decorationThirdTag()),
-    );
-  }
-
-  InputDecoration _decorationThirdTag() {
-    return InputDecoration(
-            prefixIcon: Icon(Icons.tag),
-            border: OutlineInputBorder(),
-            labelText: S.of(Get.context).third_tag,
-            hintText: S.of(Get.context).third_tag);
-  }
-
-  Widget _secondTag() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextField(
-          controller: _tag2BookCtr,
-          onChanged: (tag2) {
-            _editBookController.book.tags.tag2=tag2;
-          },
-          decoration: _decorationSecondTag()),
-    );
-  }
-
-  InputDecoration _decorationSecondTag() {
-    return InputDecoration(
-            prefixIcon: Icon(Icons.tag),
-            border: OutlineInputBorder(),
-            labelText: S.of(Get.context).second_tag,
-            hintText: S.of(Get.context).second_tag);
-  }
-
-  Widget _firstTag() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextField(
-          controller: _tag1BookCtr,
-          onChanged: (tag1) {
-            _editBookController.book.tags.tag1=tag1;
-          },
-          decoration: _decorationFirstTag()),
-    );
-  }
-
-  InputDecoration _decorationFirstTag() {
-    return InputDecoration(
-            prefixIcon: Icon(Icons.tag),
-            border: OutlineInputBorder(),
-            labelText: S.of(Get.context).firstTag,
-            hintText: S.of(Get.context).firstTag);
   }
 
   Widget _descOfBook() {
@@ -196,58 +106,70 @@ class EditBookPage extends StatelessWidget {
   }
 
   Widget _publisher() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextField(
-        controller: _publisherCtr,
-          onChanged: (publisher) {
-            _editBookController.book.publisherName = publisher;
-          },
-          decoration: InputDecoration(
-              prefixIcon: Icon(Icons.account_circle),
-              border: OutlineInputBorder(),
-              labelText: S.of(Get.context).publisher,
-              hintText: S.of(Get.context).publisher)),
-    );
+    return Obx((){
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: TextField(
+            controller: _publisherCtr,
+            onChanged: (publisher) {
+              _editBookController.book.publisherName = publisher;
+              _validatePublisher(publisher);
+            },
+            decoration: InputDecoration(
+                prefixIcon: Icon(Icons.account_circle),
+                border: OutlineInputBorder(),
+                errorText: _editBookController.errorTextBookPublisher.value,
+                labelText: S.of(Get.context).publisher,
+                hintText: S.of(Get.context).publisher)),
+      );
+    });
   }
 
   Widget _countPages() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextField(
-          controller: _pagesCtr,
-          onChanged: (countPages) {
-            _editBookController.book.pages = countPages;
-          },
-          decoration: _decorationCountPages()),
-    );
+    return Obx((){
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: TextField(
+            controller: _pagesCtr,
+            onChanged: (countPages) {
+              _editBookController.book.pages = countPages;
+              _validateCountPages(countPages);
+            },
+            decoration: _decorationCountPages(_editBookController.errorTextBookPages.value)),
+      );
+    });
   }
 
-  InputDecoration _decorationCountPages() {
+  InputDecoration _decorationCountPages(String errorText) {
     return InputDecoration(
             prefixIcon: Icon(Icons.pages),
             border: OutlineInputBorder(),
             labelText: S.of(Get.context).count_pages,
+            errorText: errorText,
             hintText: S.of(Get.context).count_pages);
   }
 
   Widget _score() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextField(
-          controller: _scoreCtr,
-          onChanged: (score) {
-            _editBookController.book.score = double.parse(score).roundToDouble();
-          },
-          decoration: _decorationScore()),
-    );
+    return Obx((){
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: TextField(
+            controller: _scoreCtr,
+            onChanged: (score) {
+              _editBookController.book.score = double.parse(score).roundToDouble();
+              _validateScore(score);
+            },
+            decoration: _decorationScore(_editBookController.errorTextBookScore.value)),
+      );
+    });
   }
 
-  InputDecoration _decorationScore() {
+  InputDecoration _decorationScore(String errorText) {
     return InputDecoration(
           //   errorText: _scoreCtr.isEmpty?"لظفا فیلد مورد نظر را پر کنید":null,
             prefixIcon: Icon(Icons.score),
             border: OutlineInputBorder(),
+            errorText: errorText,
             labelText: 'امتیاز',
             hintText: 'امتیاز');
   }
@@ -278,58 +200,69 @@ class EditBookPage extends StatelessWidget {
       child: TextField(
           controller: _authorNameCtr,
           onChanged: (authorName) {
-            _editBookController.book.authorName = authorName;
+            _editBookController.book.autherName = authorName;
+            _validatorAutherName(authorName);
           },
-          decoration: _authorDecoration()),
+          decoration: _authorDecoration(_editBookController.errorBookAutherName.value)),
     );
   }
 
-  InputDecoration _authorDecoration() {
+  InputDecoration _authorDecoration(String errorText) {
     return InputDecoration(
             prefixIcon: Icon(Icons.account_circle),
             border: OutlineInputBorder(),
             labelText: S.of(Get.context).author_name,
+            errorText: errorText,
             hintText: S.of(Get.context).author_name);
   }
 
   Widget _price() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextField(
-        controller: _priceCtr,
-          onChanged: (price) {
-            _editBookController.book.price = price;
-          },
-          decoration: _decorationPrice()),
-    );
+    return Obx((){
+        return  Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: TextField(
+              controller: _priceCtr,
+              onChanged: (price) {
+                _editBookController.book.price = price;
+                _validatePrice(price);
+              },
+              decoration: _decorationPrice(_editBookController.errorBookPrice.value)),
+        );
+      });
+
   }
 
-  InputDecoration _decorationPrice() {
+  InputDecoration _decorationPrice(String errorText) {
     return InputDecoration(
             prefixIcon: Icon(Icons.account_circle),
             border: OutlineInputBorder(),
             labelText: S.of(Get.context).price,
+            errorText: errorText,
             hintText: S.of(Get.context).price);
   }
 
 
   Widget _bookName() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: TextField(
-        controller: _bookNameCtr,
-          onChanged: (bookName) {
-            _editBookController.book.bookName = bookName;
-          },
-          decoration: _decorationBookName()),
-    );
+    return Obx((){
+     return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: TextField(
+            controller: _bookNameCtr,
+            onChanged: (bookName) {
+              _editBookController.book.bookName = bookName;
+              _validateBookName(bookName);
+            },
+            decoration: _decorationBookName(_editBookController.errorOfBookName.value)),
+      );
+    });
   }
 
-  InputDecoration _decorationBookName() {
+  InputDecoration _decorationBookName(String errorText) {
     return InputDecoration(
             prefixIcon: Icon(Icons.account_circle),
             border: OutlineInputBorder(),
             labelText: S.of(Get.context).book_name,
+            errorText: errorText,
             hintText: S.of(Get.context).book_name);
   }
 
@@ -351,7 +284,7 @@ class EditBookPage extends StatelessWidget {
 
   bool checkEmpty() {
     if (_editBookController.book.bookName.isEmpty ||
-        _editBookController.book.authorName.isEmpty ||
+        _editBookController.book.autherName.isEmpty ||
         _editBookController.book.translator.isEmpty ||
         _editBookController.book.pages.isEmpty ||
         _editBookController.book.desc.isEmpty) {
@@ -364,5 +297,96 @@ class EditBookPage extends StatelessWidget {
   void sendRequestAddBook() {
     _editBookController.requestForEditBook(_editBookController.book);
   }
-  
+  void _initFirstValues(Book book) {
+    _editBookController.book = book;
+    _bookNameCtr.text =book.bookName;
+    _priceCtr.text =book.price;
+    _authorNameCtr.text =book.autherName;
+    _translatorNameCtr.text =book.translator;
+    _scoreCtr.text =book.score.toString();
+    _categoryCtr.text =book.category;
+    _pagesCtr.text =book.pages;
+    _publisherCtr.text =book.publisherName;
+    _descBookCtr.text =book.desc;
+    book.tags.forEach((element) {
+      _editBookController.listTags.add(element.tag);
+    });
+    _editBookController.category.value = book.category;
+  }
+  _validatePrice(String price) {
+    if (price.isEmpty) {
+      _editBookController.errorBookPrice.value = "این مقدار نباید خالی باشد";
+      _editBookController.validatorBookPrice=false;
+    } else {
+      double priceDouble = double.parse(price);
+      if (priceDouble < 5000 || priceDouble > 100000) {
+        _editBookController.validatorBookPrice=false;
+        return _editBookController.errorBookPrice.value =
+        "قیمت باید از 5000 بیشتر و از 100000 کم تر باشد ";
+
+      } else {
+        _editBookController.errorBookPrice.value = null;
+        _editBookController.validatorBookPrice=true;
+      }
+    }
+  }
+
+  _validatorAutherName(String authorName) {
+    if (authorName.isEmpty) {
+      _editBookController.errorBookAutherName.value =
+      "نام نویسنده نمیتواند خالی باشد";
+      _editBookController.validatorBookAutherName=false;
+    } else {
+      _editBookController.errorBookAutherName.value = null;
+      _editBookController.validatorBookAutherName=true;
+    }
+  }
+
+  _validateScore(String score) {
+    if (score.isEmpty) {
+      _editBookController.errorTextBookScore.value = "امتیاز نباید خالی باشد";
+      _editBookController.validatorBookScore=false;
+    } else {
+      double scoreDouble = double.parse(score);
+      if (scoreDouble > 5 || scoreDouble == 0) {
+        _editBookController.errorTextBookScore.value =
+        "امتیاز باید بین 1 تا 5 باشد ";
+        _editBookController.validatorBookScore=false;
+      } else {
+        _editBookController.errorTextBookScore.value = null;
+        _editBookController.validatorBookScore=true;
+      }
+    }
+  }
+
+  void _validateBookName(String bookName) {
+    if (bookName.isEmpty) {
+      _editBookController.errorOfBookName.value = "نام کتاب نباید خالی باشد";
+      _editBookController.validatorBookName=false;
+    } else {
+      _editBookController.errorOfBookName.value = null;
+      _editBookController.validatorBookName=true;
+    }
+  }
+
+  void _validateCountPages(String pages) {
+    if (pages.isEmpty) {
+      _editBookController.errorTextBookPages.value = "این فیلد نباید خالی باشد ";
+      _editBookController.validatorBookPages=false;
+    } else {
+      _editBookController.errorTextBookPages.value = null;
+      _editBookController.validatorBookPages=true;
+    }
+  }
+
+  void _validatePublisher(String publisher) {
+    if (publisher.isEmpty) {
+      _editBookController.errorTextBookPublisher.value =
+      "این فیلد نباید خالی باشد ";
+      _editBookController.validatorBookPublisher=false;
+    } else {
+      _editBookController.errorTextBookPublisher.value = null;
+      _editBookController.validatorBookPublisher=true;
+    }
+  }
 }

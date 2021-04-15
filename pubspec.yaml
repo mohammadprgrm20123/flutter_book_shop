@@ -42,6 +42,8 @@ dependencies:
   adder_cart_shop:
     path: adder_cart_shop
   shamsi_date: ^0.12.0
+  tag_editor:
+    path: tag_editor
   flutter_localizations:
     sdk: flutter
 

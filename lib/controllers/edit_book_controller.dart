@@ -11,6 +11,7 @@ class EditBookController extends GetxController{
   AppRepository _appRepository;
   RxBool _loading =false.obs;
   Book book=new Book();
+  List<String> tags=[];
   RxString category = "${S.of(Get.context).category_stoy}".obs;
 
   @override

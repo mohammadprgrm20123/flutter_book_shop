@@ -12,7 +12,6 @@ import 'package:flutter_booki_shop/views/edit_books/edit_book_page.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';
 import 'package:get/get.dart';
 
-@immutable
 class AdminHome extends StatelessWidget{
 
 
@@ -112,7 +111,7 @@ class AdminHome extends StatelessWidget{
   }
 
   String _getBookName(Book book) {
-  return book.authorName;
+  return book.autherName;
   }
 
   Widget _image(Book book) {
@@ -149,7 +148,9 @@ class AdminHome extends StatelessWidget{
       children: [
         ElevatedButton.icon(
             onPressed: () {
-              Get.to(()=>EditBookPage(book));
+              Get.to(()=>EditBookPage(book)).then((value) {
+                _adminHomeController.getAllBooks();
+              });
             }, icon: Icon(Icons.edit),label: Text(S.of(Get.context).edit))
       ],
     );
@@ -173,7 +174,9 @@ class AdminHome extends StatelessWidget{
   FloatingActionButton _floatingActionButton() {
     return FloatingActionButton(
       onPressed: (){
-        Get.to(()=>AddBookPage());
+        Get.to(()=>AddBookPage()).then((value) {
+          _adminHomeController.getAllBooks();
+        });
       },
       child: Icon(Icons.add),
     );

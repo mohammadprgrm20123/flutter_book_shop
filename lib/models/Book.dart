@@ -1,119 +1,155 @@
 
 class Book {
-  int id;
-  String price;
-  String bookName;
-  String publisherName;
-  String translator;
-  double score;
-  String category;
-  String pages;
-  String releaseDate;
-  String createdAt;
-  String url;
-  String authorName;
-  String desc;
-  bool isFavorite=false;
-  bool isInCartShop=false;
+  String _price;
+  String _bookName;
+  String _publisherName;
+  String _translator;
+  double _score;
+  String _category;
+  String _pages;
+  String _releaseDate;
+  String _createdAt;
+  String _url;
+  String _autherName;
+  String _desc;
+  List<Tags> _tags;
+  int _id;
 
-  Tags tags=new Tags();
+  Book(
+      {String price,
+        String bookName,
+        String publisherName,
+        String translator,
+        double score,
+        String category,
+        String pages,
+        String releaseDate,
+        String createdAt,
+        String url,
+        String autherName,
+        String desc,
+        List<Tags> tags,
+        int id}) {
+    this._price = price;
+    this._bookName = bookName;
+    this._publisherName = publisherName;
+    this._translator = translator;
+    this._score = score;
+    this._category = category;
+    this._pages = pages;
+    this._releaseDate = releaseDate;
+    this._createdAt = createdAt;
+    this._url = url;
+    this._autherName = autherName;
+    this._desc = desc;
+    this._tags = tags;
+    this._id = id;
+  }
 
-  Book({this.price,this.bookName,this.publisherName,this.translator,this.score
-    ,this.category,this.pages,this.releaseDate,this.createdAt,this.url
-    ,this.authorName,this.desc,this.tags});
+  String get price => _price;
+  set price(String price) => _price = price;
+  String get bookName => _bookName;
+  set bookName(String bookName) => _bookName = bookName;
+  String get publisherName => _publisherName;
+  set publisherName(String publisherName) => _publisherName = publisherName;
+  String get translator => _translator;
+  set translator(String translator) => _translator = translator;
+  double get score => _score;
+  set score(double score) => _score = score;
+  String get category => _category;
+  set category(String category) => _category = category;
+  String get pages => _pages;
+  set pages(String pages) => _pages = pages;
+  String get releaseDate => _releaseDate;
+  set releaseDate(String releaseDate) => _releaseDate = releaseDate;
+  String get createdAt => _createdAt;
+  set createdAt(String createdAt) => _createdAt = createdAt;
+  String get url => _url;
+  set url(String url) => _url = url;
+  String get autherName => _autherName;
+  set autherName(String autherName) => _autherName = autherName;
+  String get desc => _desc;
+  set desc(String desc) => _desc = desc;
+  List<Tags> get tags => _tags;
+  set tags(List<Tags> tags) => _tags = tags;
+  int get id => _id;
+  set id(int id) => _id = id;
+
   Book.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    price = json['price'];
-    bookName = json['bookName'];
-    publisherName = json['publisherName'];
-    translator = json['translator'];
-    score = json['score'];
-    category = json['category'];
-    pages = json['pages'];
-    releaseDate = json['releaseDate'];
-    createdAt = json['createdAt'];
-    url = json['url'];
-    authorName = json['autherName'];
-    desc = json['desc'];
-    tags = json['tags'] != null ? new Tags.fromJson(json['tags']) : null;
+    _price = json['price'];
+    _bookName = json['bookName'];
+    _publisherName = json['publisherName'];
+    _translator = json['translator'];
+    _score = json['score'];
+    _category = json['category'];
+    _pages = json['pages'];
+    _releaseDate = json['releaseDate'];
+    _createdAt = json['createdAt'];
+    _url = json['url'];
+    _autherName = json['autherName'];
+    _desc = json['desc'];
+    print(json['tags'].toString());
+     _tags = Tags().TagListFromJson(json['tags']);
+    print(_tags.length.toString());
+    _id = json['id'];
+    print(json.toString());
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['price'] = this.price;
-    data['bookName'] = this.bookName;
-    data['publisherName'] = this.publisherName;
-    data['translator'] = this.translator;
-    data['score'] = this.score;
-    data['category'] = this.category;
-    data['pages'] = this.pages;
-    data['releaseDate'] = this.releaseDate;
-    data['createdAt'] = this.createdAt;
-    data['url'] = this.url;
-    data['autherName'] = this.authorName;
-    data['desc'] = this.desc;
-    if (this.tags != null) {
-      data['tags'] = this.tags.toJson();
+    data['price'] = this._price;
+    data['bookName'] = this._bookName;
+    data['publisherName'] = this._publisherName;
+    data['translator'] = this._translator;
+    data['score'] = this._score;
+    data['category'] = this._category;
+    data['pages'] = this._pages;
+    data['releaseDate'] = this._releaseDate;
+    data['createdAt'] = this._createdAt;
+    data['url'] = this._url;
+    data['autherName'] = this._autherName;
+    data['desc'] = this._desc;
+    if (this._tags != null) {
+      data['tags'] = this._tags.map((v) => v.toJson()).toList();
     }
+    data['id'] = this._id;
     return data;
   }
-  Map<String, dynamic> toJsonWithoutId() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['price'] = this.price;
-    data['bookName'] = this.bookName;
-    data['publisherName'] = this.publisherName;
-    data['translator'] = this.translator;
-    data['score'] = this.score;
-    data['category'] = this.category;
-    data['pages'] = this.pages;
-    data['releaseDate'] = this.releaseDate;
-    data['createdAt'] = this.createdAt;
-    data['url'] = this.url;
-    data['autherName'] = this.authorName;
-    data['desc'] = this.desc;
-    if (this.tags != null) {
-      data['tags'] = this.tags.toJson();
-    }
-    return data;
-  }
-
   List<Book> BookListFromJson(List<dynamic> dynamicList){
-    List<Book> listBook = [];
+    List<Book> p = [];
     dynamicList.forEach((element) {
-      listBook.add(Book.fromJson(element));
+      p.add(Book.fromJson(element));
     });
-   return listBook;
+    return p;
+  }
+}
+class Tags {
+  String _tag;
+
+  Tags({String tag}) {
+    this._tag = tag;
   }
 
-}
-
-class Tags {
-  String tag0="";
-  String tag1="";
-  String tag2="";
-  String tag3="";
-  String tag4="";
-
-  Tags({this.tag0, this.tag1, this.tag2, this.tag3, this.tag4});
+  String get tag => _tag;
+  set tag(String tag) => _tag = tag;
 
   Tags.fromJson(Map<String, dynamic> json) {
-    tag0 = json['tag0'];
-    tag1 = json['tag1'];
-    tag2 = json['tag2'];
-    tag3 = json['tag3'];
-    tag4 = json['tag4'];
+    _tag = json['tag'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['tag0'] = this.tag0;
-    data['tag1'] = this.tag1;
-    data['tag2'] = this.tag2;
-    data['tag3'] = this.tag3;
-    data['tag4'] = this.tag4;
+    data['tag'] = this._tag;
     return data;
   }
 
+
+  List<Tags> TagListFromJson(List<dynamic> dynamicList){
+    List<Tags> p = [];
+    dynamicList.forEach((element) {
+      p.add(Tags.fromJson(element));
+    });
+    return p;
+  }
 
 }

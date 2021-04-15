@@ -163,7 +163,7 @@ class AppRepository {
 
   requestAddBook(Book book) async {
     await _apiClient.dio
-        .post(ApiClient.END_POINT_BOOKS, data: book.toJsonWithoutId())
+        .post(ApiClient.END_POINT_BOOKS, data: book.toJson())
         .then((value) {
       Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).record_product,
           backgroundColor: Colors.green[200]);

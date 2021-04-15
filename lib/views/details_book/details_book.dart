@@ -54,7 +54,7 @@ class DetailsBook extends StatelessWidget {
     return [
             _image(_detailController.book.url),
             _bookName(_detailController.book.bookName),
-            _authorName(_detailController.book.authorName,_detailController.book.translator),
+            _authorName(_detailController.book.autherName,_detailController.book.translator),
             _score(_detailController.book.score),
             _btnAddToShop(context,_detailController.book.price),
             _btnAddFavorite(context),
@@ -70,16 +70,16 @@ class DetailsBook extends StatelessWidget {
 
 
 
-  Widget _listTags(Tags tags) {
+  Widget _listTags(List<Tags> tags) {
 
     return Wrap(
               direction: Axis.horizontal,
               children:[
-                 _itemTag(tags.tag0),
+               /*  _itemTag(tags.tag0),
                  _itemTag(tags.tag1),
                  _itemTag(tags.tag2),
                  _itemTag(tags.tag3),
-                 _itemTag(tags.tag4)
+                 _itemTag(tags.tag4)*/
                  ]
             );
   }

@@ -6,7 +6,6 @@ import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:get/get.dart';
 
-// ignore: must_be_immutable
 class CartShopPage extends StatelessWidget {
   CartShopController _cartShopController = Get.put(CartShopController());
 
@@ -150,7 +149,7 @@ class CartShopPage extends StatelessWidget {
               children: [
                 Text("${cartShop.book.bookName}"),
                 Text("${S.of(Get.context).price} : ${cartShop.book.price}"),
-                Text("${S.of(Get.context).author_name}  : ${cartShop.book.authorName.substring(0,8)}..."),
+                Text("${S.of(Get.context).author_name}  : ${cartShop.book.autherName.substring(0,8)}..."),
               ],
             ),
           ],
