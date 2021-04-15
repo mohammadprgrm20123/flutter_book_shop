@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_booki_shop/controllers/profile_controller.dart';
@@ -28,9 +27,13 @@ class StateProfile extends State<Profile> {
   TextEditingController _userNameCtr =new TextEditingController();
   TextEditingController _passwordCtr =new TextEditingController();
 
+  StateProfile(){
+    setFirstValues();
+  }
+
   @override
   Widget build(BuildContext context) {
-    setFirstValues();
+
     return Scaffold(
       appBar: _appBar(context),
       body: _scrollView(context),

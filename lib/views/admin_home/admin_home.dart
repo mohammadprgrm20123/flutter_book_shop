@@ -131,7 +131,7 @@ class AdminHome extends StatelessWidget{
             FadeInImage.assetNetwork(
               fadeInCurve: Curves.linearToEaseOut,
               image: "${book.url}",
-              placeholder: "assets/images/noImage.jpg",
+              placeholder: 'assets/images/noImage.jpg',
               height: 120.0,
               width: 80.0,
             ),

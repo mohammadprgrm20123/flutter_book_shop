@@ -129,9 +129,12 @@ class HomeController extends GetxController{
         }
       }
     await getAllCartShop();
-    separateBestBooks();
-    separatePopularBook();
-    separateAudioBook();
+    await separateBestBooks();
+    await separatePopularBook();
+    await separateAudioBook();
+    listAudioBook.forEach((element) {
+      print(element.bookName);
+    });
   }
 
   void checkListFavoriteLength() {
