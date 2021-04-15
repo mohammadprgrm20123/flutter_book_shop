@@ -14,13 +14,11 @@ class AdminReportController extends GetxController{
   void onInit() {
     super.onInit();
     _appRepository = AppRepository();
-    getReportPurches();
+    getPurchaseInfo();
   }
 
 
-  RxBool get loading => _loading;
-
-  getReportPurches(){
+  getPurchaseInfo(){
     _loading(true);
     _appRepository.receivePurchaseInformation().then((value){
       _loading(false);
@@ -31,6 +29,7 @@ class AdminReportController extends GetxController{
           backgroundColor: Colors.red[200]);
     });
   }
+  RxBool get loading => _loading;
 
-  List<Purchase> get listPurches => _listPurchase;
+  List<Purchase> get listPurchase => _listPurchase;
 }

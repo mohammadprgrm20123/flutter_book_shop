@@ -17,7 +17,7 @@ class AdminReport extends StatelessWidget {
         if (_adminReportController.loading.value == true) {
           return Center(child: CircularProgressIndicator());
         } else {
-          if (_adminReportController.listPurches.length == 0) {
+          if (_adminReportController.listPurchase.length == 0) {
             return Center(child: Text(S.of(Get.context).not_exit_cases));
           } else {
             return _lisPurchase();
@@ -30,9 +30,9 @@ class AdminReport extends StatelessWidget {
   Widget _lisPurchase() {
     return ListView.builder(
             itemBuilder: ( _ ,int index) {
-              return _itemList(_adminReportController.listPurches[index]);
+              return _itemList(_adminReportController.listPurchase[index]);
             },
-            itemCount: _adminReportController.listPurches.length,
+            itemCount: _adminReportController.listPurchase.length,
           );
   }
 
