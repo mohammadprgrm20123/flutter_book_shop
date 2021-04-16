@@ -1,8 +1,19 @@
-# flutter_booki_shop
+# Flutter Book Shop 
 
 A new Flutter application.
 
 ## Getting Started
+## Items used and observed in this project
+
+
+## . Clean code
+## . MVC architecture
+## . Work with the Dave package for server-side requests
+## . Widget test
+## . Use of Get package for Estate Management
+## . Use Jason Server to send requests
+
+
 
 This project is a starting point for a Flutter application.
 
