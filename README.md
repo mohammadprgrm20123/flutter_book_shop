@@ -23,7 +23,9 @@ Developed by [https://github.com/mohammadprgrm20123]
 
 ## Guide for run server 
 First install node js and then install Json Server ,
-And then find the (db.json) into file and run it with this command ---> json-server --watch db.json
+And then find the (db.json) into file and run it with this command ---> 
+
+**json-server --watch db.json** *italic
 
 
 This project is a starting point for a Flutter application.
