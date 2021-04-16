@@ -6,12 +6,11 @@ A new Flutter application.
 ## Items used and observed in this project
 
 - [x] Clean code
- 
- . MVC architecture
- . Work with the Dave package for server-side requests
- . Widget test
- . Use of Get package for Estate Management
- . Use Jason Server to send requests
+- [x] MVC architecture
+- [x] Work with the Dave package for server-side requests
+- [x] Widget test
+- [x] Use of Get package for Estate Management
+- [x] Use Jason Server to send requests
 
 
 
