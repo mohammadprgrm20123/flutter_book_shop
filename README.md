@@ -17,7 +17,7 @@ Developed by [https://github.com/mohammadprgrm20123]
 - [x] MVC architecture
 - [x] Work with the Dio package for server-side requests
 - [x] Widget test
-- [x] Use of Get package for State Management
+- [x] Use of Getx package for State Management
 - [x] Use Json Server to send requests
 
 
