@@ -3,14 +3,21 @@
 A new Flutter application.
 
 ## Getting Started
+
+Developed by [https://github.com/mohammadprgrm20123]
+
+
+
+
+
 ## Items used and observed in this project
 
 - [x] Clean code
 - [x] MVC architecture
-- [x] Work with the Dave package for server-side requests
+- [x] Work with the Dio package for server-side requests
 - [x] Widget test
-- [x] Use of Get package for Estate Management
-- [x] Use Jason Server to send requests
+- [x] Use of Get package for State Management
+- [x] Use Json Server to send requests
 
 
 
