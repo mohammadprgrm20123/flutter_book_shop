@@ -67,9 +67,9 @@ class StateTagEditor extends State<TagEditor> {
             Padding(
               padding: const EdgeInsets.only(left:20.0),
               child: ElevatedButton(onPressed: (){
-                if(tagCtr.isNotEmpty){
-                  widget.addTags.call(tagCtr);
+                if(tagCtr!=null){
                   listTag.add(tagCtr);
+                  widget.addTags.call(tagCtr);
                   setState(() {
                   });
                 }}, child: Icon(Icons.add)),

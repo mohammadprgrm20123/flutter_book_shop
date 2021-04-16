@@ -57,6 +57,9 @@ class StateUserHome extends State<UserHome> {
 
 
   Container _audioBooksList(BuildContext context) {
+    _homeController.listAudioBook.forEach((element) {
+      print(element.bookName);
+    });
     return Container(
       decoration: _backgroundBoxDecoration(),
       child: Column(

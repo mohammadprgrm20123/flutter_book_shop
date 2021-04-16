@@ -152,6 +152,7 @@ class StateLogin extends State<Login> {
 
   TextField _textFieldUserName(bool data) {
     return TextField(
+      key: Key("textFieldUserName"),
         controller: _usernameCtr,
         decoration: _usernameDecoration(data),
       );

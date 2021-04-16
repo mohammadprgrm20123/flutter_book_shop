@@ -14,7 +14,7 @@ class HomeController extends GetxController{
   RxList listAllBook=[].obs  ;
   RxList listBestBook=[].obs  ;
   RxList listPopularBook=[].obs ;
-  RxList listAudioBook=[].obs;
+  List<Book> listAudioBook=[];
   RxList listCartShop=[].obs;
   RxInt _countCartShop = 0.obs;
   List<FavoriteItem> listFavorite=[];
@@ -76,7 +76,7 @@ class HomeController extends GetxController{
     List<Book> allBook = listAllBook.value;
     allBook.forEach((book) {
       if(book.category=="صوتی"){
-        listAudioBook.value.add(book);
+        listAudioBook.add(book);
         itemsAudioBook.add(ImageCarditem(
           image: Image.network(book.url)));
       }
