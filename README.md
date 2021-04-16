@@ -4,15 +4,18 @@ A new Flutter application.
 
 ## Getting Started
 ## Items used and observed in this project
+ . Clean code
+ . MVC architecture
+ . Work with the Dave package for server-side requests
+ . Widget test
+ . Use of Get package for Estate Management
+ . Use Jason Server to send requests
 
 
-## . Clean code
-## . MVC architecture
-## . Work with the Dave package for server-side requests
-## . Widget test
-## . Use of Get package for Estate Management
-## . Use Jason Server to send requests
 
+## Guide for run server 
+First install node js and then install Json Server ,
+And then find the (db.json) into file and run it with this command ---> json-server --watch db.json
 
 
 This project is a starting point for a Flutter application.
