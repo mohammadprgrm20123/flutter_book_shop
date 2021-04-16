@@ -4,7 +4,7 @@ A new Flutter application.
 
 ## Getting Started
 ## Items used and observed in this project
- . Clean code
+ . Clean code /n
  . MVC architecture
  . Work with the Dave package for server-side requests
  . Widget test
