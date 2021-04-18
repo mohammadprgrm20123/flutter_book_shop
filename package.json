@@ -1,0 +1,21 @@
+{
+  "name": "flutter_book_shop1",
+  "version": "1.0.0",
+  "description": "Server for this repo",
+  "scripts": {
+    "start": "json-server --watch db.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohammadprgrm20123/Flutter_book_Shop1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohammadprgrm20123/Flutter_book_Shop1/issues"
+  },
+  "homepage": "https://github.com/mohammadprgrm20123/Flutter_book_Shop1#readme",
+  "devDependencies": {
+    "json-server": "^0.16.3"
+  }
+}

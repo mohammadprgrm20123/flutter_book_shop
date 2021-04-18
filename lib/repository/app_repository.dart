@@ -39,8 +39,7 @@ class AppRepository {
     return listBook;
   }
 
-
-  Future<Book> getDetailsBook(int bookId) async{
+  Future<Book> getDetailsBook(int bookId) async {
     Book book;
     await _apiClient.dio.get(ApiClient.END_POINT_BOOKS, queryParameters: {
       "id": bookId,
@@ -52,48 +51,52 @@ class AppRepository {
     return book;
   }
 
-   addBookToCart(Book book) async {
+  addBookToCart(Book book) async {
     CartShop cartShop = await fillCartValues(book);
-    await _apiClient.dio.post(ApiClient.END_POINT_CARTSHOPS, data: cartShop.toJson()).then((value) {
-      Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).book_add_cart_shop);
+    await _apiClient.dio
+        .post(ApiClient.END_POINT_CARTSHOPS, data: cartShop.toJson())
+        .then((value) {
+      Get.snackbar(S.of(Get.context).congratulation,
+          S.of(Get.context).book_add_cart_shop);
       return value;
     });
   }
 
-   addBookToFavoriteList(Book book) async{
+  addBookToFavoriteList(Book book) async {
     FavoriteItem favoriteItem = await fillFavoriteValues(book);
-    await _apiClient.dio.post(ApiClient.END_POINT_FAVORITE, data: favoriteItem.toJson()).then((value) {
-      Get.snackbar(S.of(Get.context).record_done, S.of(Get.context).book_add_to_favortie);
+    await _apiClient.dio
+        .post(ApiClient.END_POINT_FAVORITE, data: favoriteItem.toJson())
+        .then((value) {
+      Get.snackbar(S.of(Get.context).record_done,
+          S.of(Get.context).book_add_to_favortie);
       return value;
     });
   }
 
   Future<CartShop> fillCartValues(Book book) async {
-    CartShop cartShop=new CartShop();
-    cartShop.book=book;
+    CartShop cartShop = new CartShop();
+    cartShop.book = book;
     await MySharePrefrence().getId().then((value) {
-      cartShop.userid =value;
+      cartShop.userid = value;
     });
     cartShop.count = 1;
     return cartShop;
   }
 
   fillFavoriteValues(Book book) async {
-    FavoriteItem favoriteItem=new FavoriteItem();
-    favoriteItem.book=book;
+    FavoriteItem favoriteItem = new FavoriteItem();
+    favoriteItem.book = book;
     await MySharePrefrence().getId().then((value) {
-      favoriteItem.userId =value;
+      favoriteItem.userId = value;
     });
 
     return favoriteItem;
   }
 
-
-  Future<List<FavoriteItem>> getFavoritesBooks(int userId) async{
+  Future<List<FavoriteItem>> getFavoritesBooks(int userId) async {
     List<FavoriteItem> listFavoritesBooks = [];
-    await _apiClient.dio.get(ApiClient.END_POINT_FAVORITE,queryParameters: {
-      "userId" : userId
-    }).then((value) {
+    await _apiClient.dio.get(ApiClient.END_POINT_FAVORITE,
+        queryParameters: {"userId": userId}).then((value) {
       listFavoritesBooks = FavoriteItem().BookListFromJson(value.data);
     }).onError((error, stackTrace) {
       throw S.of(Get.context).error;
@@ -101,13 +104,11 @@ class AppRepository {
     return listFavoritesBooks;
   }
 
-
-  Future<User> getProfileInfo(int userId) async{
+  Future<User> getProfileInfo(int userId) async {
     User user;
 
-    await _apiClient.dio.get(ApiClient.END_POINT_USERS,queryParameters: {
-      "id" : userId
-    }).then((value) {
+    await _apiClient.dio.get(ApiClient.END_POINT_USERS,
+        queryParameters: {"id": userId}).then((value) {
       user = User.fromJson(value.data[0]);
     }).onError((error, stackTrace) {
       throw S.of(Get.context).error;
@@ -115,20 +116,18 @@ class AppRepository {
     return user;
   }
 
-
   updateUserInfo(User user) async {
     await _apiClient.dio
         .put("${ApiClient.END_POINT_USERS}/${user.id}", data: user.toJson())
-        .then((value) {
-    }).onError((error, stackTrace) {
+        .then((value) {})
+        .onError((error, stackTrace) {
       throw S.of(Get.context).error;
     });
     return user;
   }
 
-
-  Future<List<CartShop>> getShoppingListCart() async{
-    List<CartShop> list =[];
+  Future<List<CartShop>> getShoppingListCart() async {
+    List<CartShop> list = [];
     await _apiClient.dio.get(ApiClient.END_POINT_CARTSHOPS).then((value) {
       list = CartShop().CartShopListFromJson(value.data);
     }).onError((error, stackTrace) {
@@ -138,21 +137,23 @@ class AppRepository {
     return list;
   }
 
-  registerUserPurchase(Purchase purchase){
-    _apiClient.dio.post(ApiClient.END_POINT_PURCHASE,data: purchase.toJson()).then((value) {
-      Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).success_purchase);
-    }).onError((error, stackTrace){
+  registerUserPurchase(Purchase purchase) {
+    _apiClient.dio
+        .post(ApiClient.END_POINT_PURCHASE, data: purchase.toJson())
+        .then((value) {
+      Get.snackbar(
+          S.of(Get.context).congratulation, S.of(Get.context).success_purchase);
+    }).onError((error, stackTrace) {
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem);
     });
   }
 
-  removeItemOfShoppingCart(CartShop cartShop){
+  removeItemOfShoppingCart(CartShop cartShop) {
     _apiClient.dio.delete("${ApiClient.END_POINT_CARTSHOPS}/${cartShop.id}");
   }
 
-
-  Future<List<Purchase>> receivePurchaseInformation() async{
-    List<Purchase> purchaseList=[];
+  Future<List<Purchase>> receivePurchaseInformation() async {
+    List<Purchase> purchaseList = [];
     await _apiClient.dio.get(ApiClient.END_POINT_PURCHASE).then((value) {
       purchaseList = Purchase().purchesListFromJson(value.data);
     }).onError((error, stackTrace) {
@@ -165,7 +166,8 @@ class AppRepository {
     await _apiClient.dio
         .post(ApiClient.END_POINT_BOOKS, data: book.toJson())
         .then((value) {
-      Get.snackbar(S.of(Get.context).congratulation, S.of(Get.context).record_product,
+      Get.snackbar(
+          S.of(Get.context).congratulation, S.of(Get.context).record_product,
           backgroundColor: Colors.green[200]);
     }).onError((error, stackTrace) {
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,

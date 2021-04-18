@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_booki_shop">
+   <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="flutter_booki_shop"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

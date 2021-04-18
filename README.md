@@ -31,11 +31,12 @@ Developed by [https://github.com/mohammadprgrm20123]
 
 
 ## Guide for run server 
-First install node js and then install Json Server ,
-And then find the (db.json) into file and run it with this command ---> 
+First install nodejs, then run these commands in project root: 
 
-**json-server --watch db.json** 
-
+```sh
+npm install
+npm start
+```
 
 **User:**
 
