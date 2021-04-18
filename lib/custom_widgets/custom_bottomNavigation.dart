@@ -5,7 +5,7 @@ import 'package:flutter_booki_shop/views/cart_shop/cart_shop_page.dart';
 import 'package:flutter_booki_shop/views/favorite/favorite.dart';
 import 'package:flutter_booki_shop/views/proflie/profile.dart';
 import 'package:flutter_booki_shop/views/user_home/user_home.dart';
-import 'file:///D:/flutter_booki_shop/flutter_booki_shop/lib/views/search/search.dart';
+import 'package:flutter_booki_shop/views/search/search.dart';
 import 'package:get/get.dart';
 
 class CustomBtnNavigation {

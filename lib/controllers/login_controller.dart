@@ -1,13 +1,10 @@
-
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter_booki_shop/generated/l10n.dart';
 import 'package:flutter_booki_shop/models/User.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
-class LoginController extends GetxController{
-
-
+class LoginController extends GetxController {
   AppRepository _appRepository;
   RxBool _validateUsername = false.obs;
   RxBool _validatePassword = false.obs;
