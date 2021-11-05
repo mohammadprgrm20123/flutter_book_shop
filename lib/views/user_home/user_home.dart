@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_booki_shop/controllers/home_controller.dart';
 import 'package:flutter_booki_shop/custom_widgets/card_icon_favorite_icon.dart';
 import 'package:flutter_booki_shop/custom_widgets/custom_bottomNavigation.dart';
@@ -16,24 +17,21 @@ import 'package:flutter_booki_shop/views/proflie/profile.dart';
 import 'package:flutter_booki_shop/views/search/search.dart';
 import 'package:get/get.dart';
 
-
-class UserHome extends StatefulWidget{
+class UserHome extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return StateUserHome();
   }
-
 }
 
-
 class StateUserHome extends State<UserHome> {
-  HomeController _homeController= Get.put(HomeController());
+  HomeController _homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     _homeController.getFavoriteList();
     return Scaffold(
-      appBar: _appBar(context),
+      //appBar: _appBar(context),
       body: _scrollView(context),
       floatingActionButton: CustomBtnNavigation().floatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -41,20 +39,22 @@ class StateUserHome extends State<UserHome> {
     );
   }
 
-  SingleChildScrollView _scrollView(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          _bannerList(context),
-          _circleIndicator(),
-          _theBestBooksList(context),
-          _theMostPopularBooksList(context),
-          _audioBooksList(context),
-        ],
+  Widget _scrollView(BuildContext context) {
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            backGround(),
+
+            // _circleIndicator(),
+            _theBestBooksList(context),
+            _theMostPopularBooksList(context),
+            _audioBooksList(context),
+          ],
+        ),
       ),
     );
   }
-
 
   Container _audioBooksList(BuildContext context) {
     _homeController.listAudioBook.forEach((element) {
@@ -64,9 +64,7 @@ class StateUserHome extends State<UserHome> {
       decoration: _backgroundBoxDecoration(),
       child: Column(
         children: [
-          _titleOfList(context, S
-              .of(context)
-              .audio_books),
+          _titleOfList(context, S.of(context).audio_books),
           _listAudioBooks(),
         ],
       ),
@@ -87,25 +85,21 @@ class StateUserHome extends State<UserHome> {
     );
   }
 
-  Text _textMore(BuildContext context) =>
-      Text(S
-          .of(context)
-          .more);
+  Text _textMore(BuildContext context) => Text(S.of(context).more);
 
   Expanded _textTitleList(BuildContext context, String popular) {
     return Expanded(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(popular),
-        ));
+      padding: const EdgeInsets.all(8.0),
+      child: Text(popular),
+    ));
   }
 
   Widget _listAudioBooks() {
     return Obx(() {
       if (_homeController.loading.value == true) {
         return CircularProgressIndicator();
-      }
-      else {
+      } else {
         return _itemListAudioBooks();
       }
     });
@@ -118,7 +112,7 @@ class StateUserHome extends State<UserHome> {
         initialPage: _homeController.itemsAudioBook.length ~/ 2,
         onPageChanged: (page) => {},
         onSelectedItem: (page) {
-            _goToDetailsPage(_homeController.listAudioBook[page].id);
+          _goToDetailsPage(_homeController.listAudioBook[page].id);
         },
         items: _homeController.itemsAudioBook,
         // set ImageCardItem or IconTitleCardItem class
@@ -143,9 +137,7 @@ class StateUserHome extends State<UserHome> {
       decoration: _backgroundBoxDecoration(),
       child: Column(
         children: [
-          _titleOfList(context, S
-              .of(context)
-              .popular),
+          _titleOfList(context, S.of(context).popular),
           _listPopularBooks()
         ],
       ),
@@ -154,8 +146,8 @@ class StateUserHome extends State<UserHome> {
 
   Widget _titleOfList(BuildContext context, String text) {
     return GestureDetector(
-      onTap: (){
-        Get.to(()=>MorePage()).then((value){
+      onTap: () {
+        Get.to(() => MorePage()).then((value) {
           _homeController.getFavoriteList();
           _homeController.getNumberOfShoppingCart();
         });
@@ -174,8 +166,7 @@ class StateUserHome extends State<UserHome> {
     return Obx(() {
       if (_homeController.loading.value == true) {
         return CircularProgressIndicator();
-      }
-      else {
+      } else {
         return Container(
           height: 280.0,
           child: ListView.builder(
@@ -190,47 +181,42 @@ class StateUserHome extends State<UserHome> {
     });
   }
 
-
   Widget _itemListPopularBooks(int index) {
     return Container(
       width: 150,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
-          onTap: () {
-
-          },
+          onTap: () {},
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Container(
               color: Colors.white,
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        _goToDetailsPage(_homeController.listPopularBook[index].id);
-                      },
-                      child: ClipRRect(
-                        child: FadeInImage.assetNetwork(
-                          fadeInCurve: Curves.linearToEaseOut,
-                          image: '${_homeController.listPopularBook[index].url}',
-                          placeholder: 'assets/images/noImage.png',
-                          height: 200,
-                          width: 150,
-                        ),
-                      ),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                InkWell(
+                  onTap: () {
+                    _goToDetailsPage(_homeController.listPopularBook[index].id);
+                  },
+                  child: ClipRRect(
+                    child: FadeInImage.assetNetwork(
+                      fadeInCurve: Curves.linearToEaseOut,
+                      image: '${_homeController.listPopularBook[index].url}',
+                      placeholder: 'assets/images/noImage.png',
+                      height: 200,
+                      width: 150,
                     ),
-                    Expanded(
-                      child: Text(
-                        _homeController.listPopularBook[index].bookName,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: false,
-                      ),
-                    ),
-                          Obx((){
-                            return AddFavoriteAndCartShop(
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    _homeController.listPopularBook[index].bookName,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
+                  ),
+                ),
+                Obx(() {
+                  return AddFavoriteAndCartShop(
                     changeValueCartShop: (value) {
                       if (value == true) {
                         _homeController.addToCartShop(
@@ -245,24 +231,27 @@ class StateUserHome extends State<UserHome> {
                             false;
                         _homeController.countCartShop.value--;
                       }
-
-                              },
-                              changeValueFavorite: (value){
-                                if(value==true){
-                                  _homeController.addToFavorite(_homeController.listPopularBook[index]);
-                                  _homeController.listPopularBook[index].isFavorite=true;
-                                }
-                                else{
-                                  _homeController.removeFromFavorite(_homeController.listPopularBook[index]);
-                                  _homeController.listPopularBook[index].isFavorite=false;
-                                }
-                              },
-                              isCartShop: _homeController.listPopularBook[index].isInCartShop,
-                              isFavorite: _homeController.listPopularBook[index].isFavorite,
-                            );
-                          })
-                  ]
-              ),
+                    },
+                    changeValueFavorite: (value) {
+                      if (value == true) {
+                        _homeController.addToFavorite(
+                            _homeController.listPopularBook[index]);
+                        _homeController.listPopularBook[index].isFavorite =
+                            true;
+                      } else {
+                        _homeController.removeFromFavorite(
+                            _homeController.listPopularBook[index]);
+                        _homeController.listPopularBook[index].isFavorite =
+                            false;
+                      }
+                    },
+                    isCartShop:
+                        _homeController.listPopularBook[index].isInCartShop,
+                    isFavorite:
+                        _homeController.listPopularBook[index].isFavorite,
+                  );
+                })
+              ]),
             ),
           ),
         ),
@@ -275,9 +264,7 @@ class StateUserHome extends State<UserHome> {
       decoration: _backgroundBoxDecoration(),
       child: Column(
         children: [
-          _titleOfList(context, S
-              .of(context)
-              .the_best),
+          _titleOfList(context, S.of(context).the_best),
           _listBestBooks()
         ],
       ),
@@ -285,60 +272,60 @@ class StateUserHome extends State<UserHome> {
   }
 
   Widget _listBestBooks() {
-    return Obx(() {
-      if (_homeController.loading.value == true) {
-        return CircularProgressIndicator();
-      } else
-        return Container(
-          height: 280,
-          child: ListView.builder(
-            itemBuilder: (BuildContext _, int index) {
-              return _itemListBestBooks(index);
-            },
-            itemCount: _homeController.listBestBook.length,
-            scrollDirection: Axis.horizontal,
-          ),
-        );
-    },
-        );
+    return Obx(
+      () {
+        if (_homeController.loading.value == true) {
+          return CircularProgressIndicator();
+        } else
+          return Container(
+            height: 280,
+            child: ListView.builder(
+              itemBuilder: (BuildContext _, int index) {
+                return _itemListBestBooks(index);
+              },
+              itemCount: _homeController.listBestBook.length,
+              scrollDirection: Axis.horizontal,
+            ),
+          );
+      },
+    );
   }
 
   Widget _itemListBestBooks(int index) {
     return Container(
-      height: 280,
-      width: 150,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: InkWell(
-          onTap: () {
-            _goToDetailsPage(_homeController.listBestBook[index].id);
-          },
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ClipRRect(
-                      child: FadeInImage.assetNetwork(
-                        fadeInCurve: Curves.linearToEaseOut,
-                        image: '${_homeController.listBestBook[index].url}',
-                        placeholder: 'assets/images/noImage.png',
-                        height: 200,
-                        width: 150,
-                      ),
+        height: 280,
+        width: 150,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () {
+              _goToDetailsPage(_homeController.listBestBook[index].id);
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Container(
+                color: Colors.white,
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  ClipRRect(
+                    child: FadeInImage.assetNetwork(
+                      fadeInCurve: Curves.linearToEaseOut,
+                      image: '${_homeController.listBestBook[index].url}',
+                      placeholder: 'assets/images/noImage.png',
+                      height: 200,
+                      width: 150,
                     ),
-                    Expanded(
-                      child: Text(
-                          _homeController.listBestBook[index].bookName,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: false,
-                      ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      _homeController.listBestBook[index].bookName,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: false,
                     ),
-                     Obx((){
-                       return AddFavoriteAndCartShop(
+                  ),
+                  Obx(
+                    () {
+                      return AddFavoriteAndCartShop(
                         changeValueCartShop: (value) {
                           if (value == true) {
                             _homeController.addToCartShop(
@@ -353,36 +340,37 @@ class StateUserHome extends State<UserHome> {
                                 false;
                             _homeController.countCartShop.value--;
                           }
-
-                         },
-                         changeValueFavorite: (value){
-                           if(value==true){
-                             _homeController.addToFavorite(_homeController.listBestBook[index]);
-                             _homeController.listBestBook[index].isFavorite=true;
-                           }
-                           else{
-                             _homeController.removeFromFavorite(_homeController.listBestBook[index]);
-                             _homeController.listBestBook[index].isFavorite=false;
-                           }
-                         },
-                         isCartShop: _homeController.listBestBook[index].isInCartShop,
-                         isFavorite: _homeController.listBestBook[index].isFavorite,
-                       );
-                     }
-                     ,
-                     ),
-                  ]
+                        },
+                        changeValueFavorite: (value) {
+                          if (value == true) {
+                            _homeController.addToFavorite(
+                                _homeController.listBestBook[index]);
+                            _homeController.listBestBook[index].isFavorite =
+                                true;
+                          } else {
+                            _homeController.removeFromFavorite(
+                                _homeController.listBestBook[index]);
+                            _homeController.listBestBook[index].isFavorite =
+                                false;
+                          }
+                        },
+                        isCartShop:
+                            _homeController.listBestBook[index].isInCartShop,
+                        isFavorite:
+                            _homeController.listBestBook[index].isFavorite,
+                      );
+                    },
+                  ),
+                ]),
+              ),
             ),
           ),
-        ),
-      ),
-      )
-    );
+        ));
   }
 
   ObxValue<RxBool> _circleIndicator() {
     return ObxValue(
-          (data) {
+      (data) {
         double data = _homeController.indexIndicator.value;
         return Padding(
           padding: const EdgeInsets.all(10.0),
@@ -401,8 +389,8 @@ class StateUserHome extends State<UserHome> {
     return DotsDecorator(
       size: const Size.square(9.0),
       activeSize: const Size(18.0, 9.0),
-      activeShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0)),
+      activeShape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
     );
   }
 
@@ -425,16 +413,11 @@ class StateUserHome extends State<UserHome> {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(11.0),
           child: Image(
-            image: AssetImage(S
-                .of(context)
-                .assetsimages3jpg),
+            image: AssetImage(S.of(context).assetsimages3jpg),
           ),
         ),
       ),
@@ -445,16 +428,11 @@ class StateUserHome extends State<UserHome> {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Image(
-            image: AssetImage(S
-                .of(context)
-                .assetsimages2jpg),
+            image: AssetImage(S.of(context).assetsimages2jpg),
             fit: BoxFit.fitWidth,
           ),
         ),
@@ -466,16 +444,11 @@ class StateUserHome extends State<UserHome> {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Image(
-            image: AssetImage(S
-                .of(context)
-                .assetsimages1jpg),
+            image: AssetImage(S.of(context).assetsimages1jpg),
             fit: BoxFit.fitWidth,
           ),
         ),
@@ -502,33 +475,19 @@ class StateUserHome extends State<UserHome> {
     );
   }
 
-  AppBar _appBar(BuildContext context) {
-    return AppBar(
-      title: _title(context),
-      backgroundColor: Colors.white,
-      centerTitle: true,
-      actions: [
-        _badgeShop()
-      ],
-    );
-  }
-
-  Padding _badgeShop() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 25.0, top: 12.0),
-      child: InkWell(
-        onTap: (){
-          Get.to(()=>CartShopPage()).then((value) {
-            _homeController.getFavoriteList();
-          });
-        },
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            _iconShop(),
-            _circleBadge(),
-          ],
-        ),
+  Widget _badgeShop() {
+    return InkWell(
+      onTap: () {
+        Get.to(() => CartShopPage()).then((value) {
+          _homeController.getFavoriteList();
+        });
+      },
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          _iconShop(),
+          _circleBadge(),
+        ],
       ),
     );
   }
@@ -536,14 +495,15 @@ class StateUserHome extends State<UserHome> {
   Widget _circleBadge() {
     return Positioned(
         left: 20.0,
-        bottom: 27.0,
+        bottom: 20.0,
         child: Container(
             height: 20.0,
             width: 20.0,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: Colors.red),
+            decoration:
+                BoxDecoration(shape: BoxShape.circle, color: Colors.black),
             child: Center(
-                child: Obx(() => Text('${_homeController.countCartShop.value}')))));
+                child: Obx(
+                    () => Text('${_homeController.countCartShop.value}',style: TextStyle(color: Colors.white),)))));
   }
 
   Icon _iconShop() {
@@ -556,13 +516,11 @@ class StateUserHome extends State<UserHome> {
 
   Text _title(BuildContext context) {
     return Text(
-      S
-          .of(context)
-          .app_name,
-      style:
-      TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0),
+      S.of(context).app_name,
+      style: TextStyle(fontFamily: 'Dana', color: Colors.black, fontSize: 17.0),
     );
   }
+
   AnimatedBottomNavigationBar bottomNavigationBar() {
     return AnimatedBottomNavigationBar(
         activeIndex: null,
@@ -579,36 +537,80 @@ class StateUserHome extends State<UserHome> {
         splashRadius: 10.0,
         activeColor: Colors.blue,
         onTap: (int index) {
-          switch(index){
-            case 0:{
-              Get.to(()=>CartShopPage()).then((value) {
-                _homeController.getFavoriteList();
-              });
-            }break;
+          switch (index) {
+            case 0:
+              {
+                Get.to(() => CartShopPage()).then((value) {
+                  _homeController.getFavoriteList();
+                });
+              }
+              break;
 
-            case 1:{
-              Get.to(()=>Favorite()).then((value) {
-                _homeController.getFavoriteList();
-              });
-            }break;
+            case 1:
+              {
+                Get.to(() => Favorite()).then((value) {
+                  _homeController.getFavoriteList();
+                });
+              }
+              break;
 
-            case 2:{
-              Get.to(()=>Search());
-            }break;
+            case 2:
+              {
+                Get.to(() => Search());
+              }
+              break;
 
-            case 3:{
-              Get.to(()=>Profile());
-            }break;
-
+            case 3:
+              {
+                Get.to(() => Profile());
+              }
+              break;
           }
         });
   }
 
   void _goToDetailsPage(id) {
-    Get.to(()=> DetailsBook(id)).then((value) {
+    Get.to(() => DetailsBook(id)).then((value) {
       _homeController.getNumberOfShoppingCart();
       _homeController.getFavoriteList();
     });
   }
 
+  backGround() {
+    return Container(
+        decoration: BoxDecoration(
+            // borderRadius: BorderRadius.only(bottomLeft: Radius.circular(200),bottomRight: Radius.circular(200)),
+            color: Colors.yellow[800]),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 50,
+                child:  Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('کتاب فروشی انلاین',style: TextStyle(fontWeight: FontWeight.bold),),
+                          _badgeShop()
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+                height: 100,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(150),
+                        topRight: Radius.circular(0)),
+                    color: Colors.white)),
+          ],
+        ));
+  }
 }
