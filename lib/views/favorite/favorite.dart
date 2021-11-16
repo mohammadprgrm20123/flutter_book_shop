@@ -8,7 +8,6 @@ import '../../models/favorite_item_view_model.dart';
 import '../../shareprefrence.dart';
 import '../details_book/details_book.dart';
 
-@immutable
 class Favorite extends StatelessWidget {
   static const int crosAxisCount = 2;
   final favoriteController = Get.put(FavoriteController());
