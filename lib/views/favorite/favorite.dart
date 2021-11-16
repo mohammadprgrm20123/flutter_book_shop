@@ -16,7 +16,7 @@ class Favorite extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    MySharePrefrence().getId().then(favoriteController.getFavoriteBooks);
+    MyStorage().getId().then(favoriteController.getFavoriteBooks);
 
     return Scaffold(
         appBar: _appBar(context),

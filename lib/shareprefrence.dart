@@ -1,75 +1,60 @@
+import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MySharePrefrence {
+class MyStorage {
   void setId(final int id) async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'user_id';
-    await prefs.setInt(key, id);
+    final box = GetStorage();
+    await box.write('user_id', id);
   }
 
   Future<int> getId() async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'user_id';
-    final value = prefs.getInt(key) ?? 0;
-    return value;
+    final box = GetStorage();
+    return box.read('user_id');
   }
 
   void setRole(final String role) async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'role';
-    await prefs.setString(key, role);
+    final box = GetStorage();
+    await box.write('role', role);
   }
 
   Future<String> getRole() async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'role';
-    final value = prefs.getString(key) ?? 'none';
-    return value;
+    final box = GetStorage();
+    return box.read('role');
   }
 
   void setPhone(final String phone) async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'phone';
-    await prefs.setString(key, phone);
+    final box = GetStorage();
+    await box.write('phone', phone);
   }
 
   Future<String> getPhone() async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'phone';
-    final value = prefs.getString(key) ?? 'none';
-    return value;
+    final box = GetStorage();
+    return box.read('phone');
   }
 
   void setUserName(final String userName) async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'userName';
-    await prefs.setString(key, userName);
+    final box = GetStorage();
+    await box.write('userName', userName);
   }
 
   Future<String> getUserName() async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'userName';
-    final value = prefs.getString(key) ?? 'none';
-    return value;
+    final box = GetStorage();
+    return box.read('userName');
   }
 
   void setPassword(final String password) async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'password';
-    await prefs.setString(key, password);
+    final box = GetStorage();
+    await box.write('password', password);
   }
 
   Future<String> getPassword() async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'password';
-    final value = prefs.getString(key) ?? 'none';
-    return value;
+    final box = GetStorage();
+    return box.read('password');
   }
 
   void setCartShopList(final List<String> list) async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'CartShopList';
-    await prefs.setStringList(key, list);
+    final box = GetStorage();
+    await box.write('CartShopList', list);
   }
 
   void addToCartShopList(final String bookId) {
@@ -80,10 +65,8 @@ class MySharePrefrence {
   }
 
   Future<List<String>> getCartShopList() async {
-    final prefs = await SharedPreferences.getInstance();
-    const key = 'CartShopList';
-    final value = prefs.getStringList(key) ?? [];
-    return value;
+    final box = GetStorage();
+    return box.read('CartShopList');
   }
 
   void clearShareprefrence() async {

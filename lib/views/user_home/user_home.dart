@@ -17,12 +17,12 @@ import '../proflie/profile.dart';
 import '../search/search.dart';
 import 'widgets/book_item.dart';
 
-class UserHome extends StatefulWidget {
+class UserHomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => StateUserHome();
 }
 
-class StateUserHome extends State<UserHome> {
+class StateUserHome extends State<UserHomePage> {
   final homeController = Get.put(HomeController());
   @override
   Widget build(final BuildContext context) => Scaffold(

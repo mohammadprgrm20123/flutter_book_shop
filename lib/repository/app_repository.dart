@@ -82,7 +82,7 @@ class AppRepository {
   Future<CartShop> fillCartValues(final BookViewModel book) async {
     final CartShop cartShop = CartShop();
     cartShop.book = book;
-    await MySharePrefrence().getId().then((final value) {
+    await MyStorage().getId().then((final value) {
       cartShop.userId = value;
     });
     cartShop.count = 1;
@@ -91,7 +91,7 @@ class AppRepository {
 
    Future<FavoriteItem> fillFavoriteValues(final BookViewModel book) async {
     final FavoriteItem favoriteItem = FavoriteItem();
-    await MySharePrefrence().getId().then((final value) {
+    await MyStorage().getId().then((final value) {
       favoriteItem.userId = value;
     });
     return favoriteItem;

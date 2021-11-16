@@ -8,12 +8,12 @@ import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
 import 'package:flutter_booki_shop/views/user_home/user_home.dart';
 import 'package:get/get.dart';
 
-class Login extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => StateLogin();
 }
 
-class StateLogin extends State<Login> {
+class StateLogin extends State<LoginPage> {
   final TextEditingController _usernameCtr = TextEditingController();
   final TextEditingController _passwordCtr = TextEditingController();
   final LoginController _loginController = Get.put(LoginController());
@@ -177,18 +177,18 @@ class StateLogin extends State<Login> {
   }
 
   void saveValues(final User user) async {
-    MySharePrefrence().setId(user.id);
-    MySharePrefrence().setRole(user.role);
-    MySharePrefrence().setPassword(user.password);
-    MySharePrefrence().setUserName(user.userName);
-    MySharePrefrence().setPhone(user.phone);
+    MyStorage().setId(user.id);
+    MyStorage().setRole(user.role);
+    MyStorage().setPassword(user.password);
+    MyStorage().setUserName(user.userName);
+    MyStorage().setPhone(user.phone);
   }
 
   void goTo(final String role) {
     if (role == S.of(Get.context).userRole) {
-      Get.offAll(UserHome());
+      Get.offAll(UserHomePage());
     } else {
-      Get.offAll(AdminHome());
+      Get.offAll(AdminHomePage());
     }
   }
 }

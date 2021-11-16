@@ -31,7 +31,9 @@ class S {
     });
   } 
 
-  static S of(final BuildContext context) => Localizations.of<S>(context, S);
+  static S of(final BuildContext context) {
+    return Localizations.of<S>(context, S);
+  }
 
   /// `booki shop`
   String get app_name => Intl.message(
@@ -58,28 +60,34 @@ class S {
     );
 
   /// `assets/images/3.jpg`
-  String get assetsimages3jpg => Intl.message(
+  String get assetsimages3jpg {
+    return Intl.message(
       'assets/images/3.jpg',
       name: 'assetsimages3jpg',
       desc: '',
       args: [],
     );
+  }
 
   /// `The most famous books`
-  String get the_most_famous_books => Intl.message(
+  String get the_most_famous_books {
+    return Intl.message(
       'The most famous books',
       name: 'the_most_famous_books',
       desc: '',
       args: [],
     );
+  }
 
   /// `more`
-  String get more => Intl.message(
+  String get more {
+    return Intl.message(
       'more',
       name: 'more',
       desc: '',
       args: [],
     );
+  }
 
   /// `the best`
   String get the_best {

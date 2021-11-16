@@ -45,7 +45,7 @@ class MorePageController extends GetxController{
   }
 
   void getListFavorite() {
-    MySharePrefrence().getId().then((final value) {
+    MyStorage().getId().then((final value) {
       _appRepository.getFavoritesBooks(value).then((final value){
         loading(true);
         listFavorite=value;

@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_booki_shop/controllers/main_controller.dart';
-import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
-import 'package:flutter_booki_shop/views/login/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-import 'views/user_home/user_home.dart';
+import 'generated/l10n.dart';
+import 'infractructure/app_pages.dart';
+import 'infractructure/middelware/middleware_lgin.dart';
+import 'infractructure/my_routes.dart';
+import 'shareprefrence.dart';
+import 'views/home/home_page.dart';
+
+String role = 'none';
 
 void main() async {
+  await GetStorage.init();
+
+  await MyStorage().getRole().then((final value) {
+    if(value!=null){
+      role = value;
+    }
+  });
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final MainController _mainController = Get.put(MainController());
-  final List<Widget> _listPage = [Login(), UserHome(), AdminHome()];
-
-  MyApp();
-
   @override
   Widget build(final BuildContext context) {
-    _mainController.checkUserLogin();
+    appPages.add(GetPage(
+        name: AppRoutes.homePage,
+        page: () => HomePage(),
+        middlewares: [MiddleWareLogin(role: role)]));
+
     return GetMaterialApp(
+      getPages: appPages,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Dana',
@@ -30,13 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      home: Obx(() {
-        if (_mainController.loading.value == true) {
-          return _loading();
-        } else {
-          return _listPage[_mainController.indexStartPage.value];
-        }
-      }),
+      initialRoute: AppRoutes.homePage,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -47,10 +52,4 @@ class MyApp extends StatelessWidget {
       locale: const Locale('fa'),
     );
   }
-
-  Scaffold _loading() => const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
 }

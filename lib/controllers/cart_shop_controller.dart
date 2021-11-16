@@ -67,7 +67,7 @@ class CartShopController extends GetxController {
       Get.snackbar(
           S.of(Get.context).error, S.of(Get.context).count_of_cart_shops_zero);
     } else {
-      MySharePrefrence().getId().then((final userId) {
+      MyStorage().getId().then((final userId) {
         final Purchase purches = Purchase()
           ..userId = userId
           ..cartShop = listCartShop;

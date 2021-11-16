@@ -88,7 +88,7 @@ class EditBookPage extends StatelessWidget {
               onPressed: () {
                 if (!validateParameters()) {
                   sendRequestAddBook();
-                  Get.offAll(() => AdminHome());
+                  Get.offAll(() => AdminHomePage());
                 }
               },
               child: Text(S.of(context).record))));

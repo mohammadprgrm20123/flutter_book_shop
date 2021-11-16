@@ -31,7 +31,7 @@ class ProfileController extends GetxController {
 
   void getProfileInfo() async {
     loading(true);
-    await MySharePrefrence().getId().then((final value) {
+    await MyStorage().getId().then((final value) {
       _appRepository.getProfileInfo(value).then((final value) {
         loading(false);
         _user = value;

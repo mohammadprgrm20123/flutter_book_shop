@@ -9,22 +9,7 @@ class MainController extends GetxController{
 
 
   void checkUserLogin() async{
-    loading(true);
-    await MySharePrefrence().getRole().then((final value){
-      if(value=='none'){
-        indexStartPage(0);
-      }
-      else{
-        if(value=='admin'){
-          indexStartPage(2);
-        }else{
-          if(value=='user'){
-            indexStartPage(1);
-          }
-        }
-      }
-      loading(false);
-    });
+
 
   }
 }

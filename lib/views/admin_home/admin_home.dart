@@ -12,7 +12,7 @@ import '../details_book/details_book.dart';
 import '../edit_books/edit_book_page.dart';
 import '../proflie/profile.dart';
 
-class AdminHome extends StatelessWidget {
+class AdminHomePage extends StatelessWidget {
   final adminHomeController = Get.put(AdminHomeController());
 
   @override

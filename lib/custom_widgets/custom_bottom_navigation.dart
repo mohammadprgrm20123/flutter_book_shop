@@ -11,7 +11,7 @@ class CustomBtnNavigation {
   FloatingActionButton floatingActionButton() => FloatingActionButton(
         onPressed: () {
           if (Get.currentRoute != '/UserHome') {
-            Get.offAll(UserHome());
+            Get.offAll(UserHomePage());
           }
         },
         child: const Icon(Icons.home_outlined),

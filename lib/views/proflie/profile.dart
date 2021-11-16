@@ -102,8 +102,8 @@ class StateProfile extends State<Profile> {
         padding: const EdgeInsets.all(35.0),
         child: ElevatedButton(
             onPressed: () {
-              MySharePrefrence().clearShareprefrence();
-              Get.offAll(() => Login());
+              MyStorage().clearShareprefrence();
+              Get.offAll(() => LoginPage());
             },
             child: Text(S.of(Get.context).Exit)),
       ));

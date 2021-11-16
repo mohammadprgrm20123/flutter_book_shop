@@ -12,44 +12,39 @@ import '../shareprefrence.dart';
 class HomeController extends GetxController{
 
   final RxBool loading =false.obs;
-  RxList<BookViewModel> listAllBook=[].obs  ;
-  RxList<BookViewModel> listBestBook=[].obs  ;
-  RxList<BookViewModel> listPopularBook=[].obs ;
-  List<BookViewModel> listAudioBook=[];
-  RxList<CartShop> listCartShop=[].obs;
+  RxList<BookViewModel> listAllBook=<BookViewModel>[].obs  ;
+  RxList<BookViewModel> listBestBook=<BookViewModel>[].obs  ;
+  RxList<BookViewModel> listPopularBook=<BookViewModel>[].obs ;
+  List<BookViewModel> listAudioBook=<BookViewModel>[];
+  RxList<CartShop> listCartShop=<CartShop>[].obs;
   final RxInt countCartShop = 0.obs;
-  List<FavoriteItem> listFavorite=[];
+  List<FavoriteItem> listFavorite=<FavoriteItem>[];
   final RxBool loadingOfAddFavoriteAndCartShop=false.obs;
 
 
-  AppRepository appRepository;
-  @override
-  void onInit() async {
-    super.onInit();
-    appRepository = AppRepository();
-    getAllBooks();
-    getFavoriteList();
-    getNumberOfShoppingCart();
-  }
-
-
-
+  AppRepository appRepository=AppRepository();
 
   List<ImageCardItem> itemsAudioBook = [
   ];  RxDouble indexIndicator = 0.0.obs;
 
+  @override
+  void onReady() {
+    super.onReady();
+    getAllBooks();
+   // getFavoriteList();
+   // getNumberOfShoppingCart();
+  }
 
   void getAllBooks(){
     loading(true);
     appRepository.getAllBooks().then((final value) {
       loading(false);
-       listAllBook(value);
+       listAllBook.value = value;
     }).onError((final error, final stackTrace) {
       loading(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
           backgroundColor: Colors.red[200]);
     });
-
 
   }
 
@@ -104,7 +99,7 @@ class HomeController extends GetxController{
   }
 
   void getFavoriteList() {
-    MySharePrefrence().getId().then((final value) {
+    MyStorage().getId().then((final value) {
       appRepository.getFavoritesBooks(value).then((final value){
         listFavorite = value;
         setStatusOfFavorite();

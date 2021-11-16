@@ -62,7 +62,7 @@ class AddBookPage extends StatelessWidget {
   ElevatedButton _elevatedButton() => ElevatedButton(onPressed: () {
         if (!validateParameters()) {
           sendRequestAddBook();
-          Get.offAll(() => AdminHome());
+          Get.offAll(() => AdminHomePage());
         } else {
           Get.snackbar(S.of(Get.context).error, S.of(Get.context).not_filled);
         }
