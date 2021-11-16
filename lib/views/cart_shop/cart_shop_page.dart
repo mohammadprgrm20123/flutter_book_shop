@@ -1,223 +1,203 @@
 import 'package:adder_cart_shop/custom_adder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_booki_shop/controllers/cart_shop_controller.dart';
-import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'package:flutter_booki_shop/models/CartShop.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/cart_shop_controller.dart';
+import '../../generated/l10n.dart';
+import '../../models/cart_shop.dart';
+
 class CartShopPage extends StatelessWidget {
-  CartShopController _cartShopController = Get.put(CartShopController());
+  final cartShopController = Get.put(CartShopController());
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar(context),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Obx(() {
-            if (_cartShopController.loading.value == true) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              if (_cartShopController.listCartShop.length == 0) {
-                return _textNotExist();
-              } else {
-                return _listCartShop();
-              }
-            }
-          }),
-          _calculatePrice()
-        ],
-      )
-      ,
-    );
-  }
-
-  Widget _textNotExist() {
-    return Expanded(
-      child: Center(
-                  child: Text(S.of(Get.context).not_exit_cases),
-                ),
-    );
-  }
-
-  Container  _calculatePrice() {
-    return Container(
-      child: Card(
-        elevation: 5.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+  Widget build(final BuildContext context) => Scaffold(
+        appBar: _appBar(context),
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            _btnContinue(),
-            _totalPrice()
-          ],
-        ),
-        color: Colors.blue[100],
-      ),
-      height: 80.0,
-
-    );
-  }
-
-  Padding _btnContinue() {
-    return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(onPressed: (){
-              _cartShopController.registerUserPurchase(_cartShopController.totalPrice.value);
-            }, child: Text(S.of(Get.context).continue1)),
-          );
-  }
-
-  Expanded _totalPrice() {
-    return Expanded(child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child:Obx((){
-              if(_cartShopController.loading.value==false){
-             return Text("${_cartShopController.totalPrice.round()} ${S.of(Get.context).toman} ",textAlign: TextAlign.end,style: TextStyle(fontSize: 18.0));
-            }
-              else{
-                return CircularProgressIndicator();
+            Obx(() {
+              if (cartShopController.loading.value == true) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                if (cartShopController.listCartShop.isEmpty) {
+                  return _textNotExist();
+                } else {
+                  return _listCartShop();
+                }
               }
-            }
-          )));
-  }
-
-  Expanded _listCartShop() {
-    return Expanded(
-      child: ListView.builder(
-        itemBuilder: (_, int index) {
-          return _listItem(_cartShopController.listCartShop[index],index);
-        },
-        itemCount: _cartShopController.listCartShop.length,
-      ),
-    );
-  }
-
-  Widget _listItem(CartShop cartShop,int index) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: _card(cartShop, index),
-    );
-  }
-
-  Card _card(CartShop cartShop, int index) {
-    return Card(
-      elevation: 8.0,
-      child: Container(
-        height: 180.0,
-        child: Row(
-          children: [_imageAndCustomAdder(cartShop,index), _nameAndPrice(cartShop), _btnDelete(cartShop)],
-        ),
-      ),
-    );
-  }
-
-  Widget _btnDelete(CartShop cartShop) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ElevatedButton.icon(onPressed: (){
-          _removeItemLIst(cartShop);
-        }, icon: Icon(Icons.delete), label: Text(S.of(Get.context).delete))
-      ],
-    );
-  }
-
-  void _removeItemLIst(CartShop cartShop) {
-     _cartShopController.loading(true);
-     _cartShopController.listCartShop.remove(cartShop);
-     if(cartShop.count!=0){
-       _cartShopController.reduceListPrice(cartShop,cartShop.count);
-     }
-    _cartShopController.loading(false);
-     requestForDelete(cartShop);
-  }
-
-  Widget _nameAndPrice(CartShop cartShop) {
-    return Expanded(
-      child: Container(
-        height: 180.0,
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("${cartShop.book.bookName}"),
-                Text("${S.of(Get.context).price} : ${cartShop.book.price}"),
-                Text("${S.of(Get.context).author_name}  : ${cartShop.book.autherName.substring(0,8)}..."),
-              ],
-            ),
+            }),
+            _calculatePrice()
           ],
         ),
-      ),
-    );
+      );
+
+  Widget _textNotExist() => Expanded(
+        child: Center(
+          child: Text(S.of(Get.context).not_exit_cases),
+        ),
+      );
+
+  Container _calculatePrice() => Container(
+        height: 80.0,
+        child: Card(
+          elevation: 5.0,
+          color: Colors.blue[100],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [_btnContinue(), _totalPrice()],
+          ),
+        ),
+      );
+
+  Padding _btnContinue() => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ElevatedButton(
+            onPressed: () {
+              cartShopController
+                  .registerUserPurchase(cartShopController.totalPrice.value);
+            },
+            child: Text(S.of(Get.context).continue1)),
+      );
+
+  Expanded _totalPrice() => Expanded(
+      child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Obx(() {
+            if (cartShopController.loading.value == false) {
+              return Text(
+                  '${cartShopController.totalPrice.round()}'
+                      ' ${S.of(Get.context).toman} ',
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(fontSize: 18.0));
+            } else {
+              return const CircularProgressIndicator();
+            }
+          })));
+
+  Expanded _listCartShop() => Expanded(
+        child: ListView.builder(
+          itemBuilder: (final _, final index) =>
+              _listItem(cartShopController.listCartShop[index], index),
+          itemCount: cartShopController.listCartShop.length,
+        ),
+      );
+
+  Widget _listItem(final CartShop cartShop, final int index) => Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: _card(cartShop, index),
+      );
+
+  Card _card(final CartShop cartShop, final int index) => Card(
+        elevation: 8.0,
+        child: Container(
+          height: 180.0,
+          child: Row(
+            children: [
+              _imageAndCustomAdder(cartShop, index),
+              _nameAndPrice(cartShop),
+              _btnDelete(cartShop)
+            ],
+          ),
+        ),
+      );
+
+  Widget _btnDelete(final CartShop cartShop) => Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ElevatedButton.icon(
+              onPressed: () {
+                _removeItemLIst(cartShop);
+              },
+              icon: const Icon(Icons.delete),
+              label: Text(S.of(Get.context).delete))
+        ],
+      );
+
+  void _removeItemLIst(final CartShop cartShop) {
+    cartShopController.loading(true);
+    cartShopController.listCartShop.remove(cartShop);
+    if (cartShop.count != 0) {
+      cartShopController.reduceListPrice(cartShop, cartShop.count);
+    }
+    cartShopController.loading(false);
+    requestForDelete(cartShop);
   }
 
-  Column _imageAndCustomAdder(CartShop cartShop,int index) {
-    return Column(
-      children: [
-        _imageBook(cartShop),
-        _customAdder(cartShop, index),
-      ],
-    );
-  }
+  Widget _nameAndPrice(final CartShop cartShop) => Expanded(
+        child: Container(
+          height: 180.0,
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(cartShop.book.bookName),
+                  Text('${S.of(Get.context).price} : ${cartShop.book.price}'),
+                  Text('${S.of(Get.context).author_name}  : '
+                      '${cartShop.book.autherName.substring(0, 8)}...'),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
 
-  Padding _customAdder(CartShop cartShop, int index) {
-    return Padding(
+  Column _imageAndCustomAdder(final CartShop cartShop, final int index) =>
+      Column(
+        children: [
+          _imageBook(cartShop),
+          _customAdder(cartShop, index),
+        ],
+      );
+
+  Padding _customAdder(final CartShop cartShop, final int index) => Padding(
         padding: const EdgeInsets.all(4.0),
         child: CustomAdder(
           value: cartShop.count,
           backgroundColor: Colors.red,
           textColor: Colors.black,
-          onChangedAdd: (count) {
-            _cartShopController.listCartShop[index].count=count;
-            _cartShopController.increasePrice(cartShop);
+          onChangedAdd: (final count) {
+            cartShopController.listCartShop[index].count = count;
+            cartShopController.increasePrice(cartShop);
           },
-            onChangedRemove: (count){
-              _cartShopController.reducePrice(cartShop, count);
-              _cartShopController.listCartShop[index].count=count;
-              if(count==0){
-                _cartShopController.listCartShop.remove(cartShop);
-                _removeItemLIst(cartShop);
-              }
+          onChangedRemove: (final count) {
+            cartShopController.reducePrice(cartShop, count);
+            cartShopController.listCartShop[index].count = count;
+            if (count == 0) {
+              cartShopController.listCartShop.remove(cartShop);
+              _removeItemLIst(cartShop);
             }
-
-          ,
+          },
         ),
       );
-  }
 
-  FadeInImage _imageBook(CartShop cartShop) {
-    return FadeInImage.assetNetwork(
+  FadeInImage _imageBook(final CartShop cartShop) => FadeInImage.assetNetwork(
         fadeInCurve: Curves.linearToEaseOut,
         image: cartShop.book.url,
-        placeholder: "",
+        placeholder: '',
         height: 120.0,
         width: 80.0,
       );
-  }
 
-  AppBar _appBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      title: _title(context),
-      centerTitle: true,
-      iconTheme: IconThemeData(color: Colors.black),
-    );
-  }
+  AppBar _appBar(final BuildContext context) => AppBar(
+        backgroundColor: Colors.white,
+        title: _title(context),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+      );
 
-  Text _title(BuildContext context) {
-    return Text(S.of(Get.context).cart_shop,
-        style: TextStyle(
-            fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
-  }
+  Text _title(final BuildContext context) => Text(S.of(Get.context).cart_shop,
+      style: TextStyle(
+          fontFamily: S.of(Get.context).name_font_dana,
+          color: Colors.black,
+          fontSize: 17.0));
 
-  void requestForDelete(CartShop cartShop) {
-    _cartShopController.removeItemOfShoppingCart(cartShop);
+  void requestForDelete(final CartShop cartShop) {
+    cartShopController.removeItemOfShoppingCart(cartShop);
   }
 }

@@ -1,125 +1,103 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_booki_shop/controllers/admin_report_controller.dart';
-import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'package:flutter_booki_shop/models/CartShop.dart';
-import 'package:flutter_booki_shop/models/purches.dart';
 import 'package:get/get.dart';
+
+import '../../controllers/admin_report_controller.dart';
+import '../../generated/l10n.dart';
+import '../../models/cart_shop.dart';
+import '../../models/purches_view_model.dart';
+
 class AdminReport extends StatelessWidget {
-  AdminReportController _adminReportController = Get.put(AdminReportController());
+  final adminReportController = Get.put(AdminReportController());
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
+  Widget build(final BuildContext context) => Scaffold(
       appBar: _appBar(context),
       body: Obx(() {
-        if (_adminReportController.loading.value == true) {
-          return Center(child: CircularProgressIndicator());
+        if (adminReportController.loading.value == true) {
+          return const Center(child: CircularProgressIndicator());
         } else {
-          if (_adminReportController.listPurchase.length == 0) {
+          if (adminReportController.listPurchase.isEmpty) {
             return Center(child: Text(S.of(Get.context).not_exit_cases));
           } else {
             return _lisPurchase();
           }
         }
-      })
-    );
-  }
+      }));
 
-  Widget _lisPurchase() {
-    return ListView.builder(
-            itemBuilder: ( _ ,int index) {
-              return _itemList(_adminReportController.listPurchase[index]);
-            },
-            itemCount: _adminReportController.listPurchase.length,
-          );
-  }
+  Widget _lisPurchase() => ListView.builder(
+        itemBuilder: (final _, final int index) =>
+            _itemList(adminReportController.listPurchase[index]),
+        itemCount: adminReportController.listPurchase.length,
+      );
 
-  Padding _itemList(Purchase purchase) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: _decorationItems(),
-        child: _itemPurchase(purchase),
-      ),
-    );
-  }
+  Widget _itemList(final Purchase purchase) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: _decorationItems(),
+          child: _itemPurchase(purchase),
+        ),
+      );
 
-  Padding _itemPurchase(Purchase purchase) {
-    return Padding(
+  Widget _itemPurchase(final Purchase purchase) => Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(S.of(Get.context).success_purchase),
-            Text("${S.of(Get.context).date}     :  ${_getDate(purchase)}"),
+            Text('${S.of(Get.context).date}     :  ${_getDate(purchase)}'),
             expanded(purchase),
-            Text("مجموع هزینه   ${calcutePrice(purchase) }   تومان"),
+            Text('مجموع هزینه   ${calcutePrice(purchase)}   تومان'),
           ],
         ),
       );
-  }
 
-  Widget expanded(Purchase purchase) {
-    return Column(
-      children:listBooks(purchase),
-    );
-  }
+  Widget expanded(final Purchase purchase) => Column(
+        children: listBooks(purchase),
+      );
 
-  BoxDecoration _decorationItems() {
-    return BoxDecoration(
+  BoxDecoration _decorationItems() => BoxDecoration(
         color: Colors.green[200],
         borderRadius: BorderRadius.circular(10.0),
       );
-  }
 
-  String _getDate(Purchase purchase) {
-    return purchase.date;
-  }
+  String _getDate(final Purchase purchase) => purchase.date;
 
-  AppBar _appBar(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      title: _title(context),
-      centerTitle: true,
-      iconTheme: IconThemeData(color: Colors.black),
-    );
-  }
+  AppBar _appBar(final BuildContext context) => AppBar(
+        backgroundColor: Colors.white,
+        title: _title(context),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.black),
+      );
 
-  Text _title(BuildContext context) {
-    return Text(S.of(Get.context).report_purchase,
-        style:
-            TextStyle(fontFamily: S.of(Get.context).name_font_dana, color: Colors.black, fontSize: 17.0));
-  }
+  Text _title(final BuildContext context) => Text(
+      S.of(Get.context).report_purchase,
+      style: TextStyle(
+          fontFamily: S.of(Get.context).name_font_dana,
+          color: Colors.black,
+          fontSize: 17.0));
 
- List<Widget> listBooks(Purchase purchase) {
-    if(purchase.cartShop==null){
+  List<Widget> listBooks(final Purchase purchase) {
+    if (purchase.cartShop == null) {
       return [];
-    }
-    else{
-      return purchase.cartShop.map((CartShop e) {
-        return Row(
+    } else {
+      return purchase.cartShop.map((final CartShop e) => Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(" تعداد : ${e.count.toString()}"),
-
-            Text("نام کتاب : ${e.book.bookName}"),
+            Text(' تعداد : ${e.count.toString()}'),
+            Text('نام کتاب : ${e.book.bookName}'),
           ],
-        );
-      }).toList();
+        )).toList();
     }
-
   }
 
-  String calcutePrice(Purchase purchase) {
-
-    double price =0;
-    purchase.cartShop.forEach((element) {
-    price+=element.count*double.parse(element.book.price);
-    });
+  String calcutePrice(final Purchase purchase) {
+    double price = 0;
+    for (final element in purchase.cartShop) {
+      price += element.count * double.parse(element.book.price);
+    }
     return price.toString();
   }
 }

@@ -1,14 +1,14 @@
 
 import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'package:flutter_booki_shop/models/Book.dart';
+import 'package:flutter_booki_shop/models/book_view_model.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
 class AdminHomeController extends GetxController{
 
-  RxBool _loading=false.obs;
+  final RxBool _loading=false.obs;
   AppRepository _appRepository;
-  List<Book> listAllBooks=[];
+  List<BookViewModel> listAllBooks=[];
 
   RxBool get loading => _loading;
 
@@ -19,12 +19,12 @@ class AdminHomeController extends GetxController{
     getAllBooks();
   }
 
-  getAllBooks(){
+  void getAllBooks(){
     _loading(true);
-    _appRepository.getAllBooks().then((value) {
+    _appRepository.getAllBooks().then((final value) {
       _loading(false);
       listAllBooks = value;
-    }).onError((error, stackTrace) {
+    }).onError((final error, final stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error,S.of(Get.context).check_network);
     });

@@ -10,14 +10,13 @@ class HorizontalCardPager extends StatefulWidget {
   final List<CardItem> items;
   final PageChangedCallback onPageChanged;
   final PageSelectedCallback onSelectedItem;
-  // Set initial index
   final int initialPage;
 
-  HorizontalCardPager(
-      {this.items,
-        this.onPageChanged,
-        this.initialPage = 2,
-        this.onSelectedItem});
+  const HorizontalCardPager(
+      {final this.items,
+      final this.onPageChanged,
+      final this.initialPage = 2,
+      final this.onSelectedItem});
 
   @override
   _HorizontalCardPagerState createState() => _HorizontalCardPagerState();
@@ -47,63 +46,65 @@ class _HorizontalCardPagerState extends State<HorizontalCardPager> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      double viewWidth = constraints.maxWidth;
-      double viewHeight = viewWidth / 5.0;
+  Widget build(final BuildContext context) =>
+      LayoutBuilder(builder: (final context, final constraints) {
+        final double viewWidth = constraints.maxWidth;
+        final double viewHeight = viewWidth / 5.0;
 
-      double cardMaxWidth = viewHeight;
-      double cardMaxHeight = cardMaxWidth;
+        final double cardMaxWidth = viewHeight;
+        final double cardMaxHeight = cardMaxWidth;
 
-      return GestureDetector(
-          onHorizontalDragEnd: (details) {
-            _isScrolling = false;
-          },
-          onHorizontalDragStart: (details) {
-            _isScrolling = true;
-          },
-          onTapUp: (details) {
-            if (_isScrolling == true) {
-              return;
-            }
-
-            if ((_currentPosition - _currentPosition.floor()).abs() <= 0.15) {
-              int selectedIndex = _onTapUp(
-                  context, viewHeight, viewWidth, _currentPosition, details);
-
-              if (selectedIndex == 2) {
-                if (widget.onSelectedItem != null) {
-                  Future(() => widget.onSelectedItem(_currentPosition.round()));
-                }
-              } else if (selectedIndex >= 0) {
-                int goToPage = _currentPosition.toInt() + selectedIndex - 2;
-                _controller.animateToPage(goToPage,
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOutExpo);
+        return GestureDetector(
+            onHorizontalDragEnd: (final details) {
+              _isScrolling = false;
+            },
+            onHorizontalDragStart: (final details) {
+              _isScrolling = true;
+            },
+            onTapUp: (final details) {
+              if (_isScrolling == true) {
+                return;
               }
-            }
-          },
-          child: CardListWidget(
-            items: widget.items,
-            controller: _controller,
-            viewWidth: viewWidth,
-            selectedIndex: _currentPosition,
-            cardMaxHeight: cardMaxHeight+90,
-            cardMaxWidth: cardMaxWidth+60,
-          ));
-    });
-  }
 
-  int _onTapUp(context, cardMaxWidth, viewWidth, currentPosition, details) {
+              if ((_currentPosition - _currentPosition.floor()).abs() <= 0.15) {
+                final int selectedIndex = _onTapUp(
+                    context, viewHeight, viewWidth, _currentPosition, details);
+
+                if (selectedIndex == 2) {
+                  if (widget.onSelectedItem != null) {
+                    Future(
+                        () => widget.onSelectedItem(_currentPosition.round()));
+                  }
+                } else if (selectedIndex >= 0) {
+                  final int goToPage =
+                      _currentPosition.toInt() + selectedIndex - 2;
+                  _controller.animateToPage(goToPage,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOutExpo);
+                }
+              }
+            },
+            child: CardListWidget(
+              items: widget.items,
+              controller: _controller,
+              viewWidth: viewWidth,
+              selectedIndex: _currentPosition,
+              cardMaxHeight: cardMaxHeight + 90,
+              cardMaxWidth: cardMaxWidth + 60,
+            ));
+      });
+
+  int _onTapUp(final context, final cardMaxWidth, final viewWidth,
+      final currentPosition, final details) {
     final RenderBox box = context.findRenderObject();
     final Offset localOffset = box.globalToLocal(details.globalPosition);
 
-    double dx = localOffset.dx;
+    final double dx = localOffset.dx;
 
     for (int i = 0; i < 5; i++) {
-      double cardWidth = _getCardSize(cardMaxWidth, i, 2.0);
-      double left =
-      _getStartPosition(cardWidth, cardMaxWidth, viewWidth, i, 2.0);
+      final double cardWidth = _getCardSize(cardMaxWidth, i, 2.0);
+      final double left =
+          _getStartPosition(cardWidth, cardMaxWidth, viewWidth, i, 2.0);
 
       if (left <= dx && dx <= left + cardWidth) {
         return i;
@@ -121,13 +122,13 @@ class CardListWidget extends StatefulWidget {
   final List<CardItem> items;
   final double selectedIndex;
 
-  CardListWidget(
-      {this.controller,
-        this.cardMaxHeight,
-        this.cardMaxWidth,
-        this.viewWidth,
-        this.selectedIndex = 2.0,
-        this.items});
+  const CardListWidget(
+      {final this.controller,
+      final this.cardMaxHeight,
+      final this.cardMaxWidth,
+      final this.viewWidth,
+      final this.selectedIndex = 2.0,
+      final this.items});
 
   @override
   _CardListWidgetState createState() => _CardListWidgetState();
@@ -150,14 +151,15 @@ class _CardListWidgetState extends State<CardListWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    List<Widget> cardList = [];
+  Widget build(final BuildContext context) {
+    final List<Widget> cardList = [];
 
     for (int i = 0; i < widget.items.length; i++) {
-      double cardWidth = _getCardSize(widget.cardMaxWidth, i, selectedIndex);
-      double cardHeight = cardWidth;
+      final double cardWidth =
+          _getCardSize(widget.cardMaxWidth, i, selectedIndex);
+      final double cardHeight = cardWidth;
 
-      Widget card = Positioned.directional(
+      final Widget card = Positioned.directional(
           textDirection: TextDirection.ltr,
           top: _getTopPositon(cardHeight, widget.cardMaxHeight),
           start: _getStartPosition(cardWidth, widget.cardMaxWidth,
@@ -167,12 +169,12 @@ class _CardListWidgetState extends State<CardListWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
+                width: cardWidth,
+                height: cardHeight,
                 child: Center(
                   child: widget.items[i]
                       .buildWidget((i.toDouble() - selectedIndex).abs()),
                 ),
-                width: cardWidth,
-                height: cardHeight,
               ),
             ),
           ));
@@ -192,16 +194,14 @@ class _CardListWidgetState extends State<CardListWidget> {
           scrollDirection: Axis.horizontal,
           itemCount: widget.items.length,
           controller: widget.controller,
-          itemBuilder: (context, index) {
-            return Container();
-          },
+          itemBuilder: (final context, final index) => Container(),
         ),
       )
     ]);
   }
 
-  double _getOpacity(int cardIndex) {
-    double diff = (selectedIndex - cardIndex);
+  double _getOpacity(final int cardIndex) {
+    final double diff = selectedIndex - cardIndex;
 
     if (diff >= -2 && diff <= 2) {
       return 1.0;
@@ -215,16 +215,15 @@ class _CardListWidgetState extends State<CardListWidget> {
   }
 }
 
-double _getTopPositon(double cardHeigth, double viewHeight) {
-  return (viewHeight - cardHeigth) / 2;
-}
+double _getTopPositon(final double cardHeigth, final double viewHeight) =>
+    (viewHeight - cardHeigth) / 2;
 
-double _getStartPosition(double cardWidth, double cardMaxWidth,
-    double viewWidth, int cardIndex, double selectedIndex) {
-  double diff = (selectedIndex - cardIndex);
-  double diffAbs = diff.abs();
+double _getStartPosition(final double cardWidth, final double cardMaxWidth,
+    final double viewWidth, final int cardIndex, final double selectedIndex) {
+  final double diff = selectedIndex - cardIndex;
+  final double diffAbs = diff.abs();
 
-  double basePosition = (viewWidth / 2) - (cardWidth / 2);
+  final double basePosition = (viewWidth / 2) - (cardWidth / 2);
 
   if (diffAbs == 0) {
     return basePosition;
@@ -254,15 +253,19 @@ double _getStartPosition(double cardWidth, double cardMaxWidth,
   }
 }
 
-double _getCardSize(double cardMaxWidth, int cardIndex, double selectedIndex) {
-  double diff = (selectedIndex - cardIndex).abs();
+double _getCardSize(final double cardMaxWidth, final int cardIndex,
+    final double selectedIndex) {
+  final double diff = (selectedIndex - cardIndex).abs();
 
   if (diff >= 0.0 && diff < 1.0) {
     return cardMaxWidth - cardMaxWidth * (1 / 5) * ((diff - diff.floor()));
   } else if (diff >= 1.0 && diff < 2.0) {
     return cardMaxWidth - cardMaxWidth * (1 / 5) - 10 * ((diff - diff.floor()));
   } else if (diff >= 2.0 && diff < 3.0) {
-    final size = cardMaxWidth - cardMaxWidth * (1 / 8) - 10 - 5 * ((diff - diff.floor()));
+    final size = cardMaxWidth -
+        cardMaxWidth * (1 / 8) -
+        10 -
+        5 * ((diff - diff.floor()));
 
     return size > 0 ? size : 0;
   } else {

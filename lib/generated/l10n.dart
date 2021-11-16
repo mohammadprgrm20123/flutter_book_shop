@@ -20,10 +20,10 @@ class S {
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
 
-  static Future<S> load(Locale locale) {
+  static Future<S> load(final Locale locale) {
     final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final localeName = Intl.canonicalizedLocale(name); 
-    return initializeMessages(localeName).then((_) {
+    return initializeMessages(localeName).then((final _) {
       Intl.defaultLocale = localeName;
       S.current = S();
       
@@ -31,69 +31,55 @@ class S {
     });
   } 
 
-  static S of(BuildContext context) {
-    return Localizations.of<S>(context, S);
-  }
+  static S of(final BuildContext context) => Localizations.of<S>(context, S);
 
   /// `booki shop`
-  String get app_name {
-    return Intl.message(
+  String get app_name => Intl.message(
       'booki shop',
       name: 'app_name',
       desc: '',
       args: [],
     );
-  }
 
   /// `assets/images/1.jpg`
-  String get assetsimages1jpg {
-    return Intl.message(
+  String get assetsimages1jpg => Intl.message(
       'assets/images/1.jpg',
       name: 'assetsimages1jpg',
       desc: '',
       args: [],
     );
-  }
 
   /// `assets/images/2.jpg`
-  String get assetsimages2jpg {
-    return Intl.message(
+  String get assetsimages2jpg => Intl.message(
       'assets/images/2.jpg',
       name: 'assetsimages2jpg',
       desc: '',
       args: [],
     );
-  }
 
   /// `assets/images/3.jpg`
-  String get assetsimages3jpg {
-    return Intl.message(
+  String get assetsimages3jpg => Intl.message(
       'assets/images/3.jpg',
       name: 'assetsimages3jpg',
       desc: '',
       args: [],
     );
-  }
 
   /// `The most famous books`
-  String get the_most_famous_books {
-    return Intl.message(
+  String get the_most_famous_books => Intl.message(
       'The most famous books',
       name: 'the_most_famous_books',
       desc: '',
       args: [],
     );
-  }
 
   /// `more`
-  String get more {
-    return Intl.message(
+  String get more => Intl.message(
       'more',
       name: 'more',
       desc: '',
       args: [],
     );
-  }
 
   /// `the best`
   String get the_best {
@@ -847,13 +833,13 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   }
 
   @override
-  bool isSupported(Locale locale) => _isSupported(locale);
+  bool isSupported(final Locale locale) => _isSupported(locale);
   @override
-  Future<S> load(Locale locale) => S.load(locale);
+  Future<S> load(final Locale locale) => S.load(locale);
   @override
-  bool shouldReload(AppLocalizationDelegate old) => false;
+  bool shouldReload(final AppLocalizationDelegate old) => false;
 
-  bool _isSupported(Locale locale) {
+  bool _isSupported(final Locale locale) {
     if (locale != null) {
       for (var supportedLocale in supportedLocales) {
         if (supportedLocale.languageCode == locale.languageCode) {

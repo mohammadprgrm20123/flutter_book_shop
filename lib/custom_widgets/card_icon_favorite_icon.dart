@@ -3,34 +3,34 @@ import 'package:flutter/material.dart';
 
 @immutable
 class AddFavoriteAndCartShop extends StatefulWidget {
-  Widget _iconFavorite = Icon(
+   Widget _iconFavorite = const Icon(
     Icons.favorite_border,
   );
-  Widget _iconCartShop = Icon(Icons.add_shopping_cart_sharp);
+   Widget _iconCartShop = const Icon(Icons.add_shopping_cart_sharp);
   bool isFavorite;
   bool isCartShop;
 
   AddFavoriteAndCartShop(
-      {this.changeValueCartShop,
-      this.changeValueFavorite,
-      this.isFavorite,
-      this.isCartShop}) {
-    if (this.isCartShop == true) {
+      {final this.changeValueCartShop,
+      final this.changeValueFavorite,
+      final this.isFavorite,
+      final this.isCartShop}) {
+    if ( isCartShop == true) {
       _iconCartShop = Icon(
         Icons.add_shopping_cart_sharp,
         color: Colors.green[500],
       );
     } else {
-      _iconCartShop = Icon(Icons.add_shopping_cart_sharp);
+      _iconCartShop = const Icon(Icons.add_shopping_cart_sharp);
     }
 
-    if (this.isFavorite == true) {
+    if (isFavorite == true) {
       _iconFavorite = Icon(
         Icons.favorite,
         color: Colors.red[900],
       );
     } else {
-      _iconFavorite = Icon(
+      _iconFavorite = const Icon(
         Icons.favorite_border,
       );
     }
@@ -46,25 +46,21 @@ class AddFavoriteAndCartShop extends StatefulWidget {
 
 class StateFavoriteAndCartShop extends State<AddFavoriteAndCartShop> {
   @override
-  Widget build(BuildContext context) {
-    return Padding(
+  Widget build(final BuildContext context) => Padding(
         padding: const EdgeInsets.all(8.0),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                iconFavorite(),
                iconCartShop(),
         ]));
-  }
 
-  InkWell iconCartShop() {
-    return InkWell(
+  Widget iconCartShop() => InkWell(
             onTap: () {
               {
                 clickOnCartShopIcon();
               }
             },
             child: widget._iconCartShop);
-  }
 
   void clickOnCartShopIcon() {
      if (widget.isCartShop == false) {
@@ -80,20 +76,18 @@ class StateFavoriteAndCartShop extends State<AddFavoriteAndCartShop> {
       widget.isCartShop = false;
       setState(() {
         widget._iconCartShop =
-            Icon(Icons.add_shopping_cart_sharp);
+            const Icon(Icons.add_shopping_cart_sharp);
         widget.changeValueCartShop.call(false);
       });
     }
   }
 
-  InkWell iconFavorite() {
-    return InkWell(
+  Widget iconFavorite() => InkWell(
           child: widget._iconFavorite,
           onTap: () {
             clickOnFavoriteIcon();
           },
         );
-  }
 
   void clickOnFavoriteIcon() {
      if (widget.isFavorite == false) {
@@ -108,7 +102,7 @@ class StateFavoriteAndCartShop extends State<AddFavoriteAndCartShop> {
     } else {
       widget.isFavorite = false;
       setState(() {
-        widget._iconFavorite = Icon(Icons.favorite_border);
+        widget._iconFavorite = const Icon(Icons.favorite_border);
         widget.changeValueFavorite.call(false);
       });
     }

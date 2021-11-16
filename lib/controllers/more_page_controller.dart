@@ -1,61 +1,54 @@
 
-import 'package:flutter_booki_shop/models/Book.dart';
-import 'package:flutter_booki_shop/models/CartShop.dart';
-import 'package:flutter_booki_shop/models/FavoriteItem.dart';
-import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
+import '../models/book_view_model.dart';
+import '../models/favorite_item_view_model.dart';
+import '../models/cart_shop.dart';
+import '../repository/app_repository.dart';
 import '../shareprefrence.dart';
 
 class MorePageController extends GetxController{
 
 
-  RxBool _loading=false.obs;
+  RxBool loading=false.obs;
   AppRepository _appRepository;
-  List<Book> allBooks =[];
+  List<BookViewModel> allBooks =[];
   List<FavoriteItem> listFavorite=[];
   List<CartShop> listCartShop=[];
-
-
-  RxBool get loading => _loading;
-
-  set loading(RxBool value) {
-    _loading = value;
-  }
 
   @override
   void onInit() {
     super.onInit();
-    _appRepository=new AppRepository();
+    _appRepository= AppRepository();
     getAllBooks();
   }
 
-  getAllBooks(){
-    _loading(true);
-    _appRepository.getAllBooks().then((value){
-      allBooks=(value);
-      _loading(false);
-    }).onError((error, stackTrace) {
-      _loading(false);
+ void  getAllBooks(){
+    loading(true);
+    _appRepository.getAllBooks().then((final value){
+      allBooks=value;
+      loading(false);
+    }).onError((final error, final stackTrace) {
+      loading(false);
     });
   }
-  addToFavorite(Book book){
+  void addToFavorite(final BookViewModel book){
     _appRepository.addBookToFavoriteList(book);
   }
 
-  removeFromFavorite(Book book){
-    listFavorite.forEach((element) {
+ void  removeFromFavorite(final BookViewModel book){
+    for (final element in listFavorite) {
       if(element.book.id==book.id){
         _appRepository.removeItemOfFavoriteList(element.id);
       }
-    });
+    }
   }
 
   void getListFavorite() {
-    MySharePrefrence().getId().then((value) {
-      _appRepository.getFavoritesBooks(value).then((value){
+    MySharePrefrence().getId().then((final value) {
+      _appRepository.getFavoritesBooks(value).then((final value){
         loading(true);
-        listFavorite=(value);
+        listFavorite=value;
         setStatusOfFavorite();
       });
     });
@@ -71,11 +64,11 @@ class MorePageController extends GetxController{
       }
     }
     await getAllCartShop();
-    _loading(false);
+    loading(false);
   }
 
   void checkLengthListFavorite() {
-    if (listFavorite.length == 0) {
+    if (listFavorite.isEmpty) {
       for (int j = 0; j < allBooks.length; j++) {
         allBooks[j].isFavorite = false;
       }
@@ -86,8 +79,8 @@ class MorePageController extends GetxController{
     }
   }
 
-  getAllCartShop() async {
-    await _appRepository.getShoppingListCart().then((value) {
+  void getAllCartShop() async {
+    await _appRepository.getShoppingListCart().then((final value) {
       listCartShop = value;
       checkLengthOfListCartShop();
       for (int i = 0; i < listCartShop.length; i++) {
@@ -101,7 +94,7 @@ class MorePageController extends GetxController{
   }
 
   void checkLengthOfListCartShop() {
-    if (listCartShop.length == 0) {
+    if (listCartShop.isEmpty) {
       for (int j = 0; j < allBooks.length; j++) {
         allBooks[j].isInCartShop = false;
       }
@@ -112,17 +105,17 @@ class MorePageController extends GetxController{
     }
   }
 
-  addToCartShop(Book book) {
+  void addToCartShop(final BookViewModel book) {
     _appRepository.addBookToCart(book);
   }
 
-  removeFromCartShop(Book book) {
+  void removeFromCartShop(final BookViewModel book) {
     CartShop _cartShop;
-    listCartShop.forEach((element) {
+    for (final element in listCartShop) {
       if (book.id == element.book.id) {
         _cartShop = element;
       }
-    });
+    }
     _appRepository.removeItemOfShoppingCart(_cartShop);
   }
 }

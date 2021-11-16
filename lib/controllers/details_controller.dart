@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'package:flutter_booki_shop/models/Book.dart';
-import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
+import '../generated/l10n.dart';
+import '../models/book_view_model.dart';
+import '../repository/app_repository.dart';
+
 class DetailController extends GetxController with StateMixin<Null> {
-  RxBool _loading = false.obs;
-  RxBool _loadingBtnClick = false.obs;
-  Book _book;
+  final RxBool _loading = false.obs;
+  final RxBool _loadingBtnClick = false.obs;
+  BookViewModel _book;
 
   AppRepository _appRepository;
 
   RxBool get loading => _loading;
 
-  Book get book => _book;
+  BookViewModel get book => _book;
 
   @override
   void onInit() {
@@ -21,35 +22,35 @@ class DetailController extends GetxController with StateMixin<Null> {
     _appRepository = AppRepository();
   }
 
-  getDetailsBook(int id) {
+  void getDetailsBook(final int id) {
     _loading(true);
-    _appRepository.getDetailsBook(id).then((value) {
+    _appRepository.getDetailsBook(id).then((final value) {
       _loading(false);
       print(value.toString());
       _book = value;
-    }).onError((error, stackTrace) {
+    }).onError((final error, final stackTrace) {
       _loading(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
           backgroundColor: Colors.red[200]);
     });
   }
 
-  void addBookToCartShop(Book book) {
+  void addBookToCartShop(final BookViewModel book) {
     _loadingBtnClick(true);
-    _appRepository.addBookToCart(book).then((value) {
+    _appRepository.addBookToCart(book).then((final value) {
       _loadingBtnClick(false);
-    }).onError((error, stackTrace) {
+    }).onError((final error, final stackTrace) {
       _loadingBtnClick(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
           backgroundColor: Colors.red[200]);
     });
   }
 
-  addBookToFavoriteList(Book book) {
+  void addBookToFavoriteList(final BookViewModel book) {
     _loadingBtnClick(true);
-    _appRepository.addBookToFavoriteList(book).then((value) {
+    _appRepository.addBookToFavoriteList(book).then((final value) {
       _loadingBtnClick(false);
-    }).onError((error, stackTrace) {
+    }).onError((final error, final stackTrace) {
       _loadingBtnClick(false);
       Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
           backgroundColor: Colors.red[200]);

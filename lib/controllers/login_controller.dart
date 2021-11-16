@@ -1,40 +1,34 @@
-import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'package:flutter_booki_shop/models/User.dart';
-import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
+import '../generated/l10n.dart';
+import '../models/user_view_model.dart';
+import '../repository/app_repository.dart';
+
 class LoginController extends GetxController {
-  AppRepository _appRepository;
-  RxBool _validateUsername = false.obs;
-  RxBool _validatePassword = false.obs;
-  RxBool _obscureTextPassword = true.obs;
-  RxBool _loading = false.obs;
-
-  RxBool get loading => _loading;
-
-  RxBool get obscureText => _obscureTextPassword;
+  AppRepository appRepository;
+  RxBool validateUsername = false.obs;
+  RxBool validatePassword = false.obs;
+  RxBool obscureTextPassword = true.obs;
+  RxBool loading = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-    _appRepository = AppRepository();
+    appRepository = AppRepository();
   }
 
-  RxBool get validateUsername => _validateUsername;
-
-  Future<User> checkUserInfo(String userName, String password) async {
-    _loading(true);
+  Future<User> checkUserInfo(
+      final String userName, final String password) async {
+    loading(true);
     User user;
-    await _appRepository.checkUserInfo(userName, password).then((value) {
-      _loading(false);
+    await appRepository.checkUserInfo(userName, password).then((final value) {
+      loading(false);
       user = value;
-    }).onError((error, stackTrace) {
-      _loading(false);
+    }).onError((final error, final stackTrace) {
+      loading(false);
       Get.snackbar(S.of(Get.context).Error, S.of(Get.context).details_error);
     });
-    _loading(false);
+    loading(false);
     return user;
   }
-
-  RxBool get validatePassword => _validatePassword;
 }

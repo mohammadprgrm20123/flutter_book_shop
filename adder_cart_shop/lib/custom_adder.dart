@@ -10,11 +10,14 @@ class CustomAdder extends StatefulWidget {
   int value = 0;
 
   @override
-  State<StatefulWidget> createState() {
-    return StateAdder();
-  }
+  State<StatefulWidget> createState() => StateAdder();
 
-  CustomAdder({this.value, this.textColor, this.backgroundColor,this.onChangedAdd,this.onChangedRemove});
+  CustomAdder(
+      {final this.value,
+      final this.textColor,
+      final this.backgroundColor,
+      final this.onChangedAdd,
+      final this.onChangedRemove});
 
   final ValueChanged<int> onChangedAdd;
   final ValueChanged<int> onChangedRemove;
@@ -24,59 +27,56 @@ void onChanged() => {};
 
 class StateAdder extends State<CustomAdder> {
   @override
-  Widget build(BuildContext context) {
-
-      return Container(
-        height: 50.0,
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical:8.0),
-              child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      increment();
-                    });
-                  },
-                  child: SizedBox(
-                    height: 30.0,
-                    width: 30.0,
-                    child: CircleAvatar(
-                      child: Icon(Icons.add),
-                    ),
-                  )),
-            ),
-            SizedBox(
-              width: 50.0,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text('${widget.value}',textAlign:TextAlign.center,style: TextStyle(fontSize: 22.0),maxLines: 1,),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
+  Widget build(final BuildContext context) => Container(
+      height: 50.0,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: GestureDetector(
                 onTap: () {
-                  setState(() {
-                    decrement();
-                  });
+                  setState(increment);
                 },
-                child: SizedBox(
+                child: const SizedBox(
                   height: 30.0,
                   width: 30.0,
                   child: CircleAvatar(
-                    child: Icon(
-                      Icons.remove,
-                    ),
-
+                    child: Icon(Icons.add),
+                  ),
+                )),
+          ),
+          SizedBox(
+            width: 50.0,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '${widget.value}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 22.0),
+                maxLines: 1,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () {
+                setState(decrement);
+              },
+              child: const SizedBox(
+                height: 30.0,
+                width: 30.0,
+                child: CircleAvatar(
+                  child: Icon(
+                    Icons.remove,
                   ),
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
+      ),
     );
-  }
 
   void increment() {
     widget.value++;
@@ -84,12 +84,9 @@ class StateAdder extends State<CustomAdder> {
   }
 
   void decrement() {
-    if(widget.value!=0)
-     {
-       widget.value--;
-       widget.onChangedRemove?.call(widget.value);
-     }
-
-
+    if (widget.value != 0) {
+      widget.value--;
+      widget.onChangedRemove?.call(widget.value);
+    }
   }
 }
