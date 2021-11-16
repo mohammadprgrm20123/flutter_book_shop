@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/favorite_controller.dart';
-import '../../custom_widgets/custom_bottom_navigation.dart';
 import '../../generated/l10n.dart';
 import '../../models/favorite_item_view_model.dart';
 import '../../shareprefrence.dart';
@@ -20,9 +19,6 @@ class Favorite extends StatelessWidget {
 
     return Scaffold(
         appBar: _appBar(context),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: CustomBtnNavigation().floatingActionButton(),
-        bottomNavigationBar: CustomBtnNavigation().bottomNavigationBar(),
         body: _listBooks());
   }
 

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/search_controller.dart';
-import '../../custom_widgets/custom_bottom_navigation.dart';
 import '../../generated/l10n.dart';
 import '../../models/book_view_model.dart';
 import '../details_book/details_book.dart';
@@ -25,9 +24,6 @@ class Search extends StatelessWidget {
 
     return Scaffold(
       appBar: _appBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: CustomBtnNavigation().floatingActionButton(),
-      bottomNavigationBar: CustomBtnNavigation().bottomNavigationBar(),
       body: Column(
         children: [
           _searchView(context),

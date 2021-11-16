@@ -31,8 +31,8 @@ class HomeController extends GetxController{
   void onReady() {
     super.onReady();
     getAllBooks();
-   // getFavoriteList();
-   // getNumberOfShoppingCart();
+    getFavoriteList();
+    getNumberOfShoppingCart();
   }
 
   void getAllBooks(){
@@ -116,13 +116,10 @@ class HomeController extends GetxController{
           }
         }
       }
-    await getAllCartShop();
+    getAllCartShop();
     separateBestBooks();
     separatePopularBook();
     separateAudioBook();
-    for (final element in listAudioBook) {
-      print(element.bookName);
-    }
   }
 
   void checkListFavoriteLength() {

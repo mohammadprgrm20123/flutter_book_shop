@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../custom_widgets/card_icon_favorite_icon.dart';
 import '../../../models/book_view_model.dart';
@@ -22,7 +22,7 @@ class BookItem extends StatelessWidget {
   Widget build(final BuildContext context) => item();
 
   Widget item() => Container(
-        width: 150,
+        width: 140,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
@@ -30,69 +30,67 @@ class BookItem extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
-                color: Colors.white,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xff2F4858),width: 2)
+                ),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   InkWell(
                     onTap: () {
                       onTap?.call();
-                      //_goToDetailsPage(_homeController.listPopularBook[index].id);
                     },
-                    child: ClipRRect(
-                      child: FadeInImage.assetNetwork(
-                        fadeInCurve: Curves.linearToEaseOut,
-                        image: '${bookViewModel.url}',
-                        placeholder: 'assets/images/noImage.png',
-                        height: 200,
-                        width: 150,
-                      ),
-                    ),
+                    child: _image(),
                   ),
-                  Expanded(
-                    child: Text(
-                      bookViewModel.bookName,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      softWrap: false,
-                    ),
-                  ),
-                  Obx(() => AddFavoriteAndCartShop(
-                        changeValueCartShop: (final value) {
-                          changeValueCartShop.call(value);
-                          /*if (value == true) {
-                        _homeController.addToCartShop(
-                            _homeController.listPopularBook[index]);
-                        _homeController.listPopularBook[index].isInCartShop =
-                        true;
-                        _homeController.countCartShop.value++;
-                      } else {
-                        _homeController.removeItemFromCartShop(
-                            _homeController.listPopularBook[index]);
-                        _homeController.listPopularBook[index].isInCartShop =
-                        false;
-                        _homeController.countCartShop.value--;
-                      }*/
-                        },
-                        changeValueFavorite: (final value) {
-                          changeValueFavorite.call(value);
-                          /*if (value == true) {
-                        _homeController.addToFavorite(
-                            _homeController.listPopularBook[index]);
-                        _homeController.listPopularBook[index].isFavorite =
-                        true;
-                      } else {
-                        _homeController.removeFromFavorite(
-                            _homeController.listPopularBook[index]);
-                        _homeController.listPopularBook[index].isFavorite =
-                        false;
-                      }*/
-                        },
-                        isCartShop: bookViewModel.isInCartShop,
-                        isFavorite: bookViewModel.isFavorite,
-                      ))
+                  _text(),
+                  _addFavoriteAndCartShop(),
                 ]),
               ),
             ),
           ),
+        ),
+      );
+
+  Widget _addFavoriteAndCartShop() => AddFavoriteAndCartShop(
+        changeValueCartShop: (final value) {
+          changeValueCartShop.call(value);
+        },
+        changeValueFavorite: (final value) {
+          changeValueFavorite.call(value);
+        },
+        isCartShop: bookViewModel.isInCartShop,
+        isFavorite: bookViewModel.isFavorite,
+      );
+
+  Widget _text() => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.yellow[800],
+              borderRadius: BorderRadius.circular(8)),
+          child: Center(
+            child: Text(
+              bookViewModel.bookName,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: const TextStyle(
+                fontSize: 13,
+              ),
+              softWrap: false,
+            ),
+          ),
+        ),
+      );
+
+  Widget _image() => ClipRRect(
+        child: FadeInImage.assetNetwork(
+          fadeInCurve: Curves.linearToEaseOut,
+          image: bookViewModel.url,
+          placeholder: 'assets/images/noImage.png',
+          fit: BoxFit.cover,
+          height: 140,
+          width: 140,
         ),
       );
 }
