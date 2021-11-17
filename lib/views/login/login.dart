@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_booki_shop/controllers/login_controller.dart';
-import 'package:flutter_booki_shop/generated/l10n.dart';
-import 'package:flutter_booki_shop/models/user_view_model.dart';
-import 'package:flutter_booki_shop/shareprefrence.dart';
-import 'package:flutter_booki_shop/views/admin_home/admin_home.dart';
-import 'package:flutter_booki_shop/views/user_home/user_home.dart';
 import 'package:get/get.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => StateLogin();
-}
+import '../../controllers/login_controller.dart';
+import '../../generated/l10n.dart';
+import '../../models/user_view_model.dart';
+import '../../shareprefrence.dart';
+import '../admin_home/admin_home.dart';
+import '../shared/widgets/my_buton.dart';
+import '../user_home/user_home.dart';
 
-class StateLogin extends State<LoginPage> {
-  final TextEditingController _usernameCtr = TextEditingController();
-  final TextEditingController _passwordCtr = TextEditingController();
-  final LoginController _loginController = Get.put(LoginController());
+class LoginPage extends StatelessWidget {
+  final controller = Get.put(LoginController());
 
   @override
-  Widget build(final BuildContext context) => SafeArea(
+  Widget build(final BuildContext context) => safeArea();
+
+  SafeArea safeArea() => SafeArea(
         top: true,
         child: Scaffold(
           body: SingleChildScrollView(
@@ -31,61 +28,81 @@ class StateLogin extends State<LoginPage> {
         ),
       );
 
-  Widget _loginBody() => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [_iconLogin(), _userName(), _password(), loginBtn()],
+  Widget _loginBody() => form();
+
+  Widget form() => Form(
+        key: controller.formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _iconLogin(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: _userName(),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+              child: _password(),
+            ),
+            _elevatedButtonLogin()
+          ],
+        ),
       );
 
-  Padding loginBtn() => Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Container(
-          height: 50.0,
-          width: MediaQuery.of(Get.context).size.width,
-          child: _elevatedButtonLogin()));
-
-  Widget _elevatedButtonLogin() => ElevatedButton(
-        onPressed: () async {
-          _checkParameters();
-        },
-        child: Obx(() => _loginController.loading.value
-            ? const CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              )
-            : Text(S.of(Get.context).enter)),
-      );
-
-  void _checkParameters() {
-    if (!checkEmpty()) {
-      _loginController
-          .checkUserInfo(_usernameCtr.text, _passwordCtr.text)
-          .then((final value) {
-        saveValues(value);
-        goTo(value.role);
-      });
-    }
-  }
-
-  Padding _password() => Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: ObxValue(
-        (final data) {
-          final bool data = _loginController.validatePassword.value;
-          final bool obscureText = _loginController.obscureTextPassword.value;
-          return _textFieldPassword(obscureText, data);
-        },
-        false.obs,
+  Widget _elevatedButtonLogin() => Obx(() => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: MyButton(
+          onTap: () {
+            if (controller.formKey.currentState.validate()) {
+              login();
+            }
+          },
+          label: 'ورود',
+          loading: controller.loading.value,
+        ),
       ));
 
-  TextField _textFieldPassword(final bool obscureText, final bool data) =>
-      TextField(
-        controller: _passwordCtr,
-        obscureText: obscureText,
-        decoration: _passwordDecoration(data),
-        maxLength: 12,
-        buildCounter: _biuldCounterPassword,
-      );
+  void login() {
+    controller
+        .login(
+            userName: controller.usernameController.text,
+            password: controller.passwordController.text)
+        .then((final value) {
+      saveValues(value);
+      goTo(value.role);
+    });
+  }
 
-  Widget _biuldCounterPassword(final BuildContext context,
+  Widget _password() => _textFieldPassword();
+
+  Widget _textFieldPassword() => ObxValue<RxBool>(
+      (final show) => TextFormField(
+            validator: _validate,
+            obscureText: show.value,
+            obscuringCharacter: '*',
+            controller: controller.passwordController,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.lock),
+              suffixIcon: GestureDetector(
+                  onTap: (){
+                    show.value =!show.value;
+                  },
+                  child: const Icon(Icons.ten_k)),
+              border: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFF9A825))),
+              focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFFF9A825))),
+              labelText: S.of(Get.context).password,
+              hintText: S.of(Get.context).password,
+              // counter: Text("1/8")
+            ),
+            maxLength: 12,
+            buildCounter: _buildCounterPassword,
+          ),
+      false.obs);
+
+  Widget _buildCounterPassword(final BuildContext context,
           {final int currentLength,
           final int maxLength,
           final bool isFocused}) =>
@@ -98,44 +115,22 @@ class StateLogin extends State<LoginPage> {
             )
           : null;
 
-  InputDecoration _passwordDecoration(final bool data) => InputDecoration(
-        errorText: data ? S.of(Get.context).please_fill_parameters : null,
-        prefixIcon: const Icon(Icons.lock),
-        suffixIcon: _onTapSuffixIcon(),
-        border: const OutlineInputBorder(),
-        labelText: S.of(Get.context).password,
-        hintText: S.of(Get.context).password,
-        // counter: Text("1/8")
+  Widget _userName() => _textFieldUserName();
+
+  Widget _textFieldUserName() => TextFormField(
+        controller: controller.usernameController,
+        validator: _validate,
+        decoration: _usernameDecoration(),
       );
 
-  GestureDetector _onTapSuffixIcon() => GestureDetector(
-      onTap: () {
-        if (_loginController.obscureTextPassword.value == true) {
-          _loginController.obscureTextPassword(false);
-        } else {
-          _loginController.obscureTextPassword(true);
-        }
-      },
-      child: const Icon(Icons.remove_red_eye_rounded));
+  String _validate(final String value) {
+    if (value.isEmpty) {
+      return 'این فیلد دنباید خالی باشد';
+    }
+    return null;
+  }
 
-  ObxValue<RxBool> _userName() => ObxValue(
-        (final data) {
-          final bool data = _loginController.validateUsername.value;
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: _textFieldUserName(data),
-          );
-        },
-        false.obs,
-      );
-
-  TextField _textFieldUserName(final bool data) => TextField(
-        controller: _usernameCtr,
-        decoration: _usernameDecoration(data),
-      );
-
-  InputDecoration _usernameDecoration(final bool data) => InputDecoration(
-        errorText: data ? S.of(Get.context).please_fill_parameters : null,
+  InputDecoration _usernameDecoration() => InputDecoration(
         prefixIcon: const Icon(Icons.account_circle),
         border: const OutlineInputBorder(),
         labelText: S.of(Get.context).userName,
@@ -155,26 +150,7 @@ class StateLogin extends State<LoginPage> {
       );
 
   BoxDecoration _boxDecorationIconLogin() =>
-      const BoxDecoration(shape: BoxShape.circle, color: Colors.blue);
-
-  bool checkEmpty() {
-    if (_passwordCtr.text.isEmpty || _usernameCtr.text.isEmpty) {
-      if (_passwordCtr.text.isEmpty) {
-        _loginController.validatePassword(true);
-      } else {
-        _loginController.validatePassword(false);
-      }
-      if (_usernameCtr.text.isEmpty) {
-        _loginController.validateUsername(true);
-      } else {
-        _loginController.validateUsername(false);
-      }
-      return true;
-    }
-    _loginController.validatePassword(false);
-    _loginController.validateUsername(false);
-    return false;
-  }
+      const BoxDecoration(shape: BoxShape.circle, color: Color(0xFFF9A825));
 
   void saveValues(final User user) async {
     MyStorage().setId(user.id);

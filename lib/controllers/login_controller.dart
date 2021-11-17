@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../generated/l10n.dart';
@@ -5,20 +6,17 @@ import '../models/user_view_model.dart';
 import '../repository/app_repository.dart';
 
 class LoginController extends GetxController {
-  AppRepository appRepository;
+  AppRepository appRepository= AppRepository();
   RxBool validateUsername = false.obs;
   RxBool validatePassword = false.obs;
   RxBool obscureTextPassword = true.obs;
   RxBool loading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    appRepository = AppRepository();
-  }
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Future<User> checkUserInfo(
-      final String userName, final String password) async {
+  Future<User> login({final String userName, final String password}) async {
     loading(true);
     User user;
     await appRepository.checkUserInfo(userName, password).then((final value) {

@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 class ManagementHomeController extends GetxController{
   
-  RxInt currentIndex = 0.obs;
+  RxInt currentIndex = 4.obs;
   List<Widget> list =[CartShopPage(),Favorite(),Search(),Profile()];
   
 }

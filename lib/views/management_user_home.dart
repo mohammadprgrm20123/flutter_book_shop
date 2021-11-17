@@ -18,7 +18,7 @@ class ManagementUserHome extends StatelessWidget {
           onPressed: () {
             controller.currentIndex.value = 4;
           },
-          child: const Icon(Icons.home_outlined),
+          child: const Icon(Icons.home_outlined,color: Colors.white,),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: bottomNavigationBar(),

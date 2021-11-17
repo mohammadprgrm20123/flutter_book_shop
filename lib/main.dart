@@ -11,7 +11,21 @@ import 'shareprefrence.dart';
 import 'views/home/home_page.dart';
 
 String role = 'none';
-
+ const MaterialColor yellow = MaterialColor(
+   0xFFF9A825,
+  <int, Color>{
+    50: Color(0xFFFFFDE7),
+    100: Color(0xFFFFF9C4),
+    200: Color(0xFFFFF59D),
+    300: Color(0xFFFFF176),
+    400: Color(0xFFFFEE58),
+    500: Color(0xFFFFEB3B),
+    600: Color(0xFFFDD835),
+    700: Color(0xFFFBC02D),
+    800: Color(0xFFF9A825),
+    900: Color(0xFFF57F17),
+  },
+);
 void main() async {
   await GetStorage.init();
 
@@ -24,32 +38,41 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(final BuildContext context) {
+    addPage();
+    return GetMaterialApp(
+      getPages: appPages,
+      debugShowCheckedModeBanner: false,
+      theme: _theme(),
+      initialRoute: AppRoutes.homePage,
+      localizationsDelegates: _(),
+      supportedLocales: S.delegate.supportedLocales,
+      locale: const Locale('fa'),
+    );
+  }
+
+  List<LocalizationsDelegate<dynamic>> _() => const [
+      S.delegate,
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ];
+
+  ThemeData _theme() => ThemeData(
+      fontFamily: 'Dana',
+      primarySwatch: yellow,
+      iconTheme: const IconThemeData(
+        color: Colors.black,
+      ),
+    primaryColor: const Color(0xFFF9A825),
+    );
+
+  void addPage() {
     appPages.add(GetPage(
         name: AppRoutes.homePage,
         page: () => HomePage(),
         middlewares: [MiddleWareLogin(role: role)]));
-
-    return GetMaterialApp(
-      getPages: appPages,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Dana',
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-        ),
-        primarySwatch: Colors.blue,
-      ),
-      initialRoute: AppRoutes.homePage,
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('fa'),
-    );
   }
 }
