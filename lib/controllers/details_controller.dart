@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_booki_shop/models/favorite_item_view_model.dart';
+import 'package:flutter_booki_shop/shareprefrence.dart';
 import 'package:get/get.dart';
+import 'package:share/share.dart';
 
 import '../generated/l10n.dart';
 import '../models/book_view_model.dart';
 import '../repository/app_repository.dart';
 
-class DetailController extends GetxController with StateMixin<Null> {
+class DetailController extends GetxController {
   final RxBool _loading = false.obs;
   final RxBool _loadingBtnClick = false.obs;
   BookViewModel _book;
@@ -26,7 +29,6 @@ class DetailController extends GetxController with StateMixin<Null> {
     _loading(true);
     _appRepository.getDetailsBook(id).then((final value) {
       _loading(false);
-      print(value.toString());
       _book = value;
     }).onError((final error, final stackTrace) {
       _loading(false);
@@ -46,9 +48,13 @@ class DetailController extends GetxController with StateMixin<Null> {
     });
   }
 
-  void addBookToFavoriteList(final BookViewModel book) {
+  void addBookToFavoriteList(final BookViewModel book) async {
     _loadingBtnClick(true);
-    _appRepository.addBookToFavoriteList(book).then((final value) {
+    final FavoriteItem favoriteItem = await fillFavoriteValues(book);
+
+    await _appRepository
+        .addBookToFavoriteList(favorite: favoriteItem)
+        .then((final value) {
       _loadingBtnClick(false);
     }).onError((final error, final stackTrace) {
       _loadingBtnClick(false);
@@ -57,5 +63,21 @@ class DetailController extends GetxController with StateMixin<Null> {
     });
   }
 
+  Future<FavoriteItem> fillFavoriteValues(final BookViewModel book) async {
+    final FavoriteItem favoriteItem = FavoriteItem();
+    await MyStorage().getId().then((final value) {
+      favoriteItem
+        ..userId = value
+        ..book = book;
+    });
+    return favoriteItem;
+  }
+
   RxBool get loadingBtnClick => _loadingBtnClick;
+
+
+  void shareData() {
+    Share.share(
+        '${book.bookName} \n ${book.desc} ');
+  }
 }

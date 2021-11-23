@@ -7,6 +7,7 @@ import 'package:flutter_booki_shop/models/purches_view_model.dart';
 import 'package:flutter_booki_shop/models/user_view_model.dart';
 import 'package:flutter_booki_shop/server/api_client.dart';
 import 'package:flutter_booki_shop/shareprefrence.dart';
+import 'package:flutter_booki_shop/views/favorite/favorite.dart';
 import 'package:get/get.dart';
 
 class AppRepository {
@@ -52,36 +53,35 @@ class AppRepository {
     return book;
   }
 
-  Future<dynamic> addBookToCart(final BookViewModel book) async {
+  Future<CartShop> addBookToCart(final BookViewModel book) async {
     final CartShop cartShop = await fillCartValues(book);
-    Response<dynamic> response;
 
+    CartShop cart = CartShop();
     await _apiClient.dio
         .post(ApiClient.cartShops, data: cartShop.toJson())
         .then((final value) {
-      Get.snackbar(S.of(Get.context).congratulation,
-          S.of(Get.context).book_add_cart_shop);
-      response = value as Response;
+          cart = CartShop.fromJson(value.data);
     });
-    return response;
+    return cart;
   }
 
-  Future<Response<dynamic>> addBookToFavoriteList(final BookViewModel book) async {
-    final FavoriteItem favoriteItem = await fillFavoriteValues(book);
-    Response<dynamic> response;
+  Future<FavoriteItem> addBookToFavoriteList(
+  {final FavoriteItem favorite}) async {
+
+     FavoriteItem favoriteItem =FavoriteItem();
     await _apiClient.dio
-        .post(ApiClient.favorite, data: favoriteItem.toJson())
+        .post(ApiClient.favorite, data: favorite.toJson())
         .then((final value) {
+      favoriteItem =FavoriteItem.fromJson(value.data);
       Get.snackbar(S.of(Get.context).record_done,
           S.of(Get.context).book_add_to_favortie);
-     // response = value;
+      // response = value;
     });
-    return response;
+    return favoriteItem;
   }
 
   Future<CartShop> fillCartValues(final BookViewModel book) async {
-    final CartShop cartShop = CartShop();
-    cartShop.book = book;
+    final CartShop cartShop = CartShop()..book = book;
     await MyStorage().getId().then((final value) {
       cartShop.userId = value;
     });
@@ -89,13 +89,6 @@ class AppRepository {
     return cartShop;
   }
 
-   Future<FavoriteItem> fillFavoriteValues(final BookViewModel book) async {
-    final FavoriteItem favoriteItem = FavoriteItem();
-    await MyStorage().getId().then((final value) {
-      favoriteItem.userId = value;
-    });
-    return favoriteItem;
-  }
 
   Future<List<FavoriteItem>> getFavoritesBooks(final int userId) async {
     List<FavoriteItem> listFavoritesBooks = [];
@@ -141,7 +134,7 @@ class AppRepository {
     return list;
   }
 
- Future<void>  registerUserPurchase(final Purchase purchase) async {
+  Future<void> registerUserPurchase(final Purchase purchase) async {
     await _apiClient.dio
         .post(ApiClient.purchase, data: purchase.toJson())
         .then((final value) {

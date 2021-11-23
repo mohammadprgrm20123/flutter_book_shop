@@ -50,7 +50,7 @@ class AdminHomePage extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: GestureDetector(
           onTap: () {
-            Get.to(() => DetailsBook(book.id));
+            Get.to(() => DetailsBook(bookId: book.id));
           },
           child: _card(book),
         ),

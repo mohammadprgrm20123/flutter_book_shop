@@ -121,7 +121,7 @@ class MorePage extends StatelessWidget {
       );
 
   void _goToDetailsPage(final int id) {
-    Get.to(() => DetailsBook(id)).then((final value) {
+    Get.to(() => DetailsBook(bookId: id,)).then((final value) {
       morePageController
         ..getListFavorite()
         ..getAllCartShop();

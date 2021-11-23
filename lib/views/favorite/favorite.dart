@@ -43,7 +43,7 @@ class Favorite extends StatelessWidget {
 
   Widget _itemList(final FavoriteItem listFavorite) => GestureDetector(
       onTap: () {
-        Get.to(DetailsBook(listFavorite.book.id));
+        Get.to(DetailsBook(bookId: listFavorite.book.id));
       },
       child: _card(listFavorite),
     );

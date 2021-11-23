@@ -6,7 +6,7 @@ class CartShop {
   int userId;
   BookViewModel book;
 
-  CartShop({final int count, final int userid, final BookViewModel book});
+  CartShop({final this.count, final this.userId, final this.book,final this.id});
 
 
   CartShop.fromJson(final Map<String, dynamic> json) {

@@ -33,7 +33,18 @@ class MorePageController extends GetxController{
     });
   }
   void addToFavorite(final BookViewModel book){
-    _appRepository.addBookToFavoriteList(book);
+
+   // _appRepository.addBookToFavoriteList(book);
+  }
+
+  Future<FavoriteItem> fillFavoriteValues(final BookViewModel book) async {
+    final FavoriteItem favoriteItem = FavoriteItem();
+    await MyStorage().getId().then((final value) {
+      favoriteItem
+        ..userId = value
+        ..book = book;
+    });
+    return favoriteItem;
   }
 
  void  removeFromFavorite(final BookViewModel book){

@@ -55,7 +55,7 @@ class Search extends StatelessWidget {
 
   Widget _itemBook(final BookViewModel book) => GestureDetector(
         onTap: () {
-          Get.to(DetailsBook(book.id));
+          Get.to(DetailsBook(bookId: book.id,));
         },
         child: Card(
           elevation: 7.0,

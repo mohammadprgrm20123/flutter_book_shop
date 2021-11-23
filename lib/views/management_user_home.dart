@@ -2,7 +2,12 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/cart_shop_controller.dart';
+import '../controllers/favorite_controller.dart';
+import '../controllers/home_controller.dart';
 import '../controllers/management_home_controller.dart';
+import '../controllers/profile_controller.dart';
+import '../controllers/search_controller.dart';
 import 'user_home/user_home.dart';
 
 class ManagementUserHome extends StatelessWidget {
@@ -16,6 +21,7 @@ class ManagementUserHome extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.black,
           onPressed: () {
+            resetControllers();
             controller.currentIndex.value = 4;
           },
           child: const Icon(Icons.home_outlined,color: Colors.white,),
@@ -41,31 +47,45 @@ class ManagementUserHome extends StatelessWidget {
       notchSmoothness: NotchSmoothness.smoothEdge,
       splashRadius: 50.0,
       onTap: (final index) {
-        print(index);
         switch (index) {
           case 0:
             {
+              resetControllers();
               controller.currentIndex.value = 0;
             }
             break;
 
           case 1:
             {
+              resetControllers();
               controller.currentIndex.value = 1;
             }
             break;
 
           case 2:
             {
+              resetControllers();
               controller.currentIndex.value = 2;
             }
             break;
 
           case 3:
             {
+              resetControllers();
               controller.currentIndex.value = 3;
             }
             break;
         }
       }));
+
+
+
+  void resetControllers(){
+    Get.delete<HomeController>(force: true);
+    Get.delete<CartShopController>(force: true);
+    Get.delete<FavoriteController>(force: true);
+    Get.delete<SearchController>(force: true);
+    Get.delete<ProfileController>(force: true);
+
+  }
 }

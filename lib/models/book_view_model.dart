@@ -19,20 +19,23 @@ class BookViewModel {
   bool isFavorite;
   bool isInCartShop;
   BookViewModel(
-      {final String price,
-        final String bookName,
-        final String publisherName,
-        final String translator,
-        final double score,
-        final String category,
-        final String pages,
-        final String releaseDate,
-        final String createdAt,
-        final String url,
-        final String autherName,
-        final String desc,
-        final List<TagViewModel> tags,
-        final int id});
+      {final this.price,
+        final this.bookName,
+        final this.publisherName,
+        final this.translator,
+        final this.score,
+        final this.category,
+        final this.pages,
+        final this.releaseDate,
+        final this.createdAt,
+        final this.url,
+        final this.autherName,
+        final this.desc,
+        final this.tags,
+        final this.id,
+        final this.isFavorite=false,
+        final this.isInCartShop=false,
+      });
 
   BookViewModel.fromJson(final Map<String, dynamic> json) {
     price = json['price'];
@@ -50,6 +53,8 @@ class BookViewModel {
     desc = json['desc'];
      tags = TagViewModel().tagListFromJson(json['tags']);
     id = json['id'];
+    isFavorite =false;
+    isInCartShop =false;
   }
 
   Map<String, dynamic> toJson() {
