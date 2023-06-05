@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -210,11 +209,11 @@ class OtherBookDetails extends GetView<DetailController> {
         ),
       );
 
-  Widget _outlineButton(final BuildContext context) => OutlineButton(
+  Widget _outlineButton(final BuildContext context) => OutlinedButton(
       onPressed: () {
         controller.addBookToFavoriteList(bookViewModel);
       },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
       child: Obx(() {
         if (controller.loadingBtnClick.value == true) {
           return const CircularProgressIndicator();

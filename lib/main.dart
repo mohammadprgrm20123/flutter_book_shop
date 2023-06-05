@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -48,7 +49,10 @@ class MyApp extends StatelessWidget {
       theme: _theme(),
       initialRoute: AppRoutes.homePage,
       localizationsDelegates: _(),
-      supportedLocales: S.delegate.supportedLocales,
+      builder: (final context,final child)=>Directionality(textDirection: TextDirection.rtl, child: child),
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch, PointerDeviceKind.stylus, PointerDeviceKind.unknown},
+      ),      supportedLocales: S.delegate.supportedLocales,
       locale: const Locale('fa'),
     );
   }

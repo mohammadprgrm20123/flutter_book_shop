@@ -20,10 +20,10 @@ class S {
   static const AppLocalizationDelegate delegate =
     AppLocalizationDelegate();
 
-  static Future<S> load(final Locale locale) {
+  static Future<S> load(Locale locale) {
     final name = (locale.countryCode?.isEmpty ?? false) ? locale.languageCode : locale.toString();
     final localeName = Intl.canonicalizedLocale(name); 
-    return initializeMessages(localeName).then((final _) {
+    return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
       S.current = S();
       
@@ -31,33 +31,39 @@ class S {
     });
   } 
 
-  static S of(final BuildContext context) {
+  static S of(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
 
   /// `booki shop`
-  String get app_name => Intl.message(
+  String get app_name {
+    return Intl.message(
       'booki shop',
       name: 'app_name',
       desc: '',
       args: [],
     );
+  }
 
   /// `assets/images/1.jpg`
-  String get assetsimages1jpg => Intl.message(
+  String get assetsimages1jpg {
+    return Intl.message(
       'assets/images/1.jpg',
       name: 'assetsimages1jpg',
       desc: '',
       args: [],
     );
+  }
 
   /// `assets/images/2.jpg`
-  String get assetsimages2jpg => Intl.message(
+  String get assetsimages2jpg {
+    return Intl.message(
       'assets/images/2.jpg',
       name: 'assetsimages2jpg',
       desc: '',
       args: [],
     );
+  }
 
   /// `assets/images/3.jpg`
   String get assetsimages3jpg {
@@ -841,13 +847,13 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   }
 
   @override
-  bool isSupported(final Locale locale) => _isSupported(locale);
+  bool isSupported(Locale locale) => _isSupported(locale);
   @override
-  Future<S> load(final Locale locale) => S.load(locale);
+  Future<S> load(Locale locale) => S.load(locale);
   @override
-  bool shouldReload(final AppLocalizationDelegate old) => false;
+  bool shouldReload(AppLocalizationDelegate old) => false;
 
-  bool _isSupported(final Locale locale) {
+  bool _isSupported(Locale locale) {
     if (locale != null) {
       for (var supportedLocale in supportedLocales) {
         if (supportedLocale.languageCode == locale.languageCode) {

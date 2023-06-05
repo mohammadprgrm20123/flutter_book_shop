@@ -33,7 +33,7 @@ class ListBestBook extends StatelessWidget {
             return const CircularProgressIndicator();
           } else {
             return Container(
-              height: 250,
+              height: 260,
               child: ListView.builder(
                 itemBuilder: (final _, final index) => BookItem(
                   bookViewModel: controller.listBestBook[index],

@@ -35,7 +35,10 @@ class BookItem extends GetView<HomeController> {
             borderRadius: BorderRadius.circular(8.0),
             child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [_imageClickAble(), _text(), _icons()]),
+                children: [
+                  Expanded(child: _imageClickAble()),
+                  _text(),
+                  _icons()]),
           ),
         ),
       ),
@@ -104,10 +107,11 @@ class BookItem extends GetView<HomeController> {
       bookViewModel.isFavorite.obs);
 
   Widget _text() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
+        padding: const EdgeInsets.symmetric(vertical: 2),
         child: Container(
+          height: 30,
+          color: Colors.orange,
           width: double.infinity,
-          decoration: _boxDecorationText(),
           child: Center(
             child: _bookName(),
           ),
