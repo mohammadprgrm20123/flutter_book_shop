@@ -32,7 +32,7 @@ void main() async {
 
   await MyStorage().getRole().then((final value) {
     if(value!=null){
-      role = value;
+    role = value;
     }
   });
   runApp(MyApp());
@@ -49,7 +49,6 @@ class MyApp extends StatelessWidget {
       theme: _theme(),
       initialRoute: AppRoutes.homePage,
       localizationsDelegates: _(),
-      builder: (final context,final child)=>Directionality(textDirection: TextDirection.rtl, child: child),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch, PointerDeviceKind.stylus, PointerDeviceKind.unknown},
       ),      supportedLocales: S.delegate.supportedLocales,

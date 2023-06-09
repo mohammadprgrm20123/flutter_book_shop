@@ -1,7 +1,7 @@
 class TagViewModel {
-  String tag;
+  String? tag;
 
-  TagViewModel({final String tag});
+  TagViewModel({this.tag});
 
   TagViewModel.fromJson(final Map<String, dynamic> json) {
     tag = json['tag'];

@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/instance_manager.dart';
 
 import '../../controllers/more_page_controller.dart';
 import '../../custom_widgets/card_icon_favorite_icon.dart';
@@ -21,7 +19,7 @@ class MorePage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else {
             if (morePageController.allBooks.isEmpty) {
-              return Center(child: Text(S.of(Get.context).not_exit_cases));
+              return Center(child: Text(S.of(Get.context!).not_exit_cases));
             }
             return GridView.builder(
               itemCount: morePageController.allBooks.length,
@@ -50,7 +48,7 @@ class MorePage extends StatelessWidget {
         elevation: 10.0,
         child: InkWell(
           onTap: () {
-            _goToDetailsPage(morePageController.allBooks[index].id);
+            _goToDetailsPage(morePageController.allBooks[index].id!);
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -60,7 +58,7 @@ class MorePage extends StatelessWidget {
                   ClipRRect(
                     child: FadeInImage.assetNetwork(
                       fadeInCurve: Curves.linearToEaseOut,
-                      image: morePageController.allBooks[index].url,
+                      image: morePageController.allBooks[index].url!,
                       placeholder: 'assets/images/noImage.png',
                       height: 100,
                       width: 100,
@@ -94,8 +92,8 @@ class MorePage extends StatelessWidget {
                         }
                       },
                       isCartShop:
-                          morePageController.allBooks[index].isInCartShop,
-                      isFavorite: morePageController.allBooks[index].isFavorite,
+                          morePageController.allBooks[index].isInCartShop!,
+                      isFavorite: morePageController.allBooks[index].isFavorite!,
                     ),
                   ),
                 ],
@@ -121,7 +119,7 @@ class MorePage extends StatelessWidget {
       );
 
   void _goToDetailsPage(final int id) {
-    Get.to(() => DetailsBook(bookId: id,)).then((final value) {
+    Get.to(() => DetailsBook(bookId: id,))!.then((final value) {
       morePageController
         ..getListFavorite()
         ..getAllCartShop();

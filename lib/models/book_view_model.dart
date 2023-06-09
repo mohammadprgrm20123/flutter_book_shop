@@ -1,41 +1,41 @@
-
 import 'tag_view_model.dart';
 
 class BookViewModel {
-  String price;
-  String bookName;
-  String publisherName;
-  String translator;
-  double score;
-  String category;
-  String pages;
-  String releaseDate;
-  String createdAt;
-  String url;
-  String autherName;
-  String desc;
-  List<TagViewModel> tags;
-  int id;
-  bool isFavorite;
-  bool isInCartShop;
-  BookViewModel(
-      {final this.price,
-        final this.bookName,
-        final this.publisherName,
-        final this.translator,
-        final this.score,
-        final this.category,
-        final this.pages,
-        final this.releaseDate,
-        final this.createdAt,
-        final this.url,
-        final this.autherName,
-        final this.desc,
-        final this.tags,
-        final this.id,
-        final this.isFavorite=false,
-        final this.isInCartShop=false,
-      });
+  String? price;
+  String? bookName;
+  String? publisherName;
+  String? translator;
+  num? score;
+  String? category;
+  String? pages;
+  String? releaseDate;
+  String? createdAt;
+  String? url;
+  String? autherName;
+  String? desc;
+  List<TagViewModel>? tags;
+  int? id;
+  bool? isFavorite;
+  bool? isInCartShop;
+
+  BookViewModel({
+    this.price,
+    this.bookName,
+    this.publisherName,
+    this.translator,
+    this.score,
+    this.category,
+    this.pages,
+    this.releaseDate,
+    this.createdAt,
+    this.url,
+    this.autherName,
+    this.desc,
+    this.tags,
+    this.id,
+    this.isFavorite = false,
+    this.isInCartShop = false,
+  });
 
   BookViewModel.fromJson(final Map<String, dynamic> json) {
     price = json['price'];
@@ -43,7 +43,6 @@ class BookViewModel {
     publisherName = json['publisherName'];
     translator = json['translator'];
     score = json['score'];
-    score +=0.0;
     category = json['category'];
     pages = json['pages'];
     releaseDate = json['releaseDate'];
@@ -51,10 +50,10 @@ class BookViewModel {
     url = json['url'];
     autherName = json['autherName'];
     desc = json['desc'];
-     tags = TagViewModel().tagListFromJson(json['tags']);
+    tags = TagViewModel().tagListFromJson(json['tags']);
     id = json['id'];
-    isFavorite =false;
-    isInCartShop =false;
+    isFavorite = false;
+    isInCartShop = false;
   }
 
   Map<String, dynamic> toJson() {
@@ -72,12 +71,13 @@ class BookViewModel {
     data['autherName'] = autherName;
     data['desc'] = desc;
     if (tags != null) {
-      data['tags'] = tags.map((final v) => v.toJson()).toList();
+      data['tags'] = tags!.map((final v) => v.toJson()).toList();
     }
     data['id'] = id;
     return data;
   }
-  List<BookViewModel> bookListFromJson(final List<dynamic> dynamicList){
+
+  List<BookViewModel> bookListFromJson(final List<dynamic> dynamicList) {
     final List<BookViewModel> p = [];
     for (final element in dynamicList) {
       p.add(BookViewModel.fromJson(element));

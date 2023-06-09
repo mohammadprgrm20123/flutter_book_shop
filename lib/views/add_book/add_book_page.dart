@@ -11,11 +11,11 @@ import '../admin_home/admin_home.dart';
 
 class AddBookPage extends StatelessWidget {
   List<String> spinnerList = [
-    S.of(Get.context).category_stoy,
-    S.of(Get.context).novel,
-    S.of(Get.context).philosophy,
-    S.of(Get.context).epic,
-    S.of(Get.context).psychology,
+    S.of(Get.context!).category_stoy,
+    S.of(Get.context!).novel,
+    S.of(Get.context!).philosophy,
+    S.of(Get.context!).epic,
+    S.of(Get.context!).psychology,
   ];
 
   final addBookController = Get.put(AddBookController());
@@ -52,6 +52,7 @@ class AddBookPage extends StatelessWidget {
         removeTags: (final tag) {
           addBookController.listTags.remove(tag);
         },
+    firstValueListTag: const [],
       );
 
   SizedBox _btnAddProduct(final BuildContext context) => SizedBox(
@@ -64,13 +65,13 @@ class AddBookPage extends StatelessWidget {
           sendRequestAddBook();
           Get.offAll(() => AdminHomePage());
         } else {
-          Get.snackbar(S.of(Get.context).error, S.of(Get.context).not_filled);
+          Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).not_filled);
         }
       }, child: Obx(() {
         if (addBookController.loading.value == true) {
           return const CircularProgressIndicator();
         } else {
-          return Text(S.of(Get.context).add_product);
+          return Text(S.of(Get.context!).add_product);
         }
       }));
 
@@ -84,8 +85,8 @@ class AddBookPage extends StatelessWidget {
             decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.description),
                 border: const OutlineInputBorder(),
-                labelText: S.of(Get.context).summery_of_book,
-                hintText: S.of(Get.context).summery_of_book)),
+                labelText: S.of(Get.context!).summery_of_book,
+                hintText: S.of(Get.context!).summery_of_book)),
       );
 
   Widget _publisher() => Padding(
@@ -99,9 +100,9 @@ class AddBookPage extends StatelessWidget {
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.account_circle),
               border: const OutlineInputBorder(),
-              labelText: S.of(Get.context).publisher,
+              labelText: S.of(Get.context!).publisher,
               errorText: addBookController.errorTextBookPublisher.value,
-              hintText: S.of(Get.context).publisher))));
+              hintText: S.of(Get.context!).publisher))));
 
   Widget _countPages() => Padding(
       padding: const EdgeInsets.all(20.0),
@@ -114,9 +115,9 @@ class AddBookPage extends StatelessWidget {
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.pages),
               border: const OutlineInputBorder(),
-              labelText: S.of(Get.context).count_pages,
+              labelText: S.of(Get.context!).count_pages,
               errorText: addBookController.errorTextBookPages.value,
-              hintText: S.of(Get.context).count_pages))));
+              hintText: S.of(Get.context!).count_pages))));
 
   Widget _category(final BuildContext context) => Padding(
         padding: const EdgeInsets.all(20.0),
@@ -134,14 +135,17 @@ class AddBookPage extends StatelessWidget {
         style: TextStyle(
             color: Colors.black,
             fontSize: 18,
-            fontFamily: S.of(Get.context).name_font_dana),
+            fontFamily: S.of(Get.context!).name_font_dana),
         underline: Container(
           height: 2,
           color: Colors.blue,
         ),
         onChanged: (final data) {
+          if(data!=null){
           addBookController.category.value = data;
           addBookController.book.category = data;
+          }
+
         },
         items: spinnerList
             .map<DropdownMenuItem<String>>(
@@ -163,9 +167,9 @@ class AddBookPage extends StatelessWidget {
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.score),
               border: const OutlineInputBorder(),
-              labelText: S.of(Get.context).score,
+              labelText: S.of(Get.context!).score,
               errorText: addBookController.errorTextBookScore.value,
-              hintText: S.of(Get.context).score))));
+              hintText: S.of(Get.context!).score))));
 
   Widget _translatorName() => Padding(
         padding: const EdgeInsets.all(20.0),
@@ -177,8 +181,8 @@ class AddBookPage extends StatelessWidget {
             decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.translate),
                 border: const OutlineInputBorder(),
-                labelText: S.of(Get.context).translator_name,
-                hintText: S.of(Get.context).translator_name)),
+                labelText: S.of(Get.context!).translator_name,
+                hintText: S.of(Get.context!).translator_name)),
       );
 
   Widget _authorName() => Padding(
@@ -192,9 +196,9 @@ class AddBookPage extends StatelessWidget {
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.account_circle),
               border: const OutlineInputBorder(),
-              labelText: S.of(Get.context).author_name,
+              labelText: S.of(Get.context!).author_name,
               errorText: addBookController.errorTextBookAuthorName.value,
-              hintText: S.of(Get.context).author_name))));
+              hintText: S.of(Get.context!).author_name))));
 
   Widget _price() => Padding(
       padding: const EdgeInsets.all(20.0),
@@ -207,9 +211,9 @@ class AddBookPage extends StatelessWidget {
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.account_circle),
               border: const OutlineInputBorder(),
-              labelText: S.of(Get.context).price,
+              labelText: S.of(Get.context!).price,
               errorText: addBookController.errorTextBookPrice.value,
-              hintText: S.of(Get.context).price))));
+              hintText: S.of(Get.context!).price))));
 
   Widget _bookName() => Padding(
       padding: const EdgeInsets.all(20.0),
@@ -222,9 +226,9 @@ class AddBookPage extends StatelessWidget {
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.account_circle),
               border: const OutlineInputBorder(),
-              labelText: S.of(Get.context).book_name,
+              labelText: S.of(Get.context!).book_name,
               errorText: addBookController.errorTextBookPrice.value,
-              hintText: S.of(Get.context).book_name))));
+              hintText: S.of(Get.context!).book_name))));
 
   Widget _image() => const Padding(
         padding: EdgeInsets.all(20.0),
@@ -245,9 +249,9 @@ class AddBookPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
       );
 
-  Text _title(final BuildContext context) => Text(S.of(Get.context).add_product,
+  Text _title(final BuildContext context) => Text(S.of(Get.context!).add_product,
       style: TextStyle(
-          fontFamily: S.of(Get.context).name_font_dana,
+          fontFamily: S.of(Get.context!).name_font_dana,
           color: Colors.black,
           fontSize: 17.0));
 
@@ -260,8 +264,8 @@ class AddBookPage extends StatelessWidget {
         addBookController.validatorBookPublisher) {
       return false;
     }
-    Get.snackbar(S.of(Get.context).error,
-        S.of(Get.context).has_problem_wher_enter_the_info);
+    Get.snackbar(S.of(Get.context!).error,
+        S.of(Get.context!).has_problem_wher_enter_the_info);
     return true;
   }
 
@@ -286,7 +290,7 @@ class AddBookPage extends StatelessWidget {
   void validatePrice(final String price) {
     if (price.isEmpty) {
       addBookController.errorTextBookPrice.value =
-          S.of(Get.context).should_not_empty;
+          S.of(Get.context!).should_not_empty;
       addBookController.validatorBookPages = false;
     } else {
       final double priceDouble = double.parse(price).toPrecision(1);
@@ -300,7 +304,7 @@ class AddBookPage extends StatelessWidget {
 
   void validatorAutherName(final String authorName) {
     if (authorName.isEmpty) {
-      S.of(Get.context).authername_not_empty;
+      S.of(Get.context!).authername_not_empty;
       addBookController.validatorBookAuthorName = false;
     } else {
       addBookController.validatorBookAuthorName = true;
@@ -310,13 +314,13 @@ class AddBookPage extends StatelessWidget {
   void validateScore(final String score) {
     if (score.isEmpty) {
       addBookController.errorTextBookScore.value =
-          S.of(Get.context).score_not_empty;
+          S.of(Get.context!).score_not_empty;
       addBookController.validatorBookScore = false;
     } else {
       final double scoreDouble = double.parse(score).toPrecision(1);
       if (scoreDouble > 5 || scoreDouble == 0) {
         addBookController.errorTextBookScore.value =
-            S.of(Get.context).score_betwwen_1_5;
+            S.of(Get.context!).score_betwwen_1_5;
         addBookController.validatorBookScore = false;
       } else {
         addBookController.errorTextBookScore.value = null;
@@ -336,7 +340,7 @@ class AddBookPage extends StatelessWidget {
   void _validateCountPages(final String pages) {
     if (pages.isEmpty) {
       addBookController.errorTextBookPages.value =
-          S.of(Get.context).should_not_empty;
+          S.of(Get.context!).should_not_empty;
       addBookController.validatorBookPages = false;
     } else {
       addBookController.errorTextBookPages.value = null;
@@ -347,7 +351,7 @@ class AddBookPage extends StatelessWidget {
   void _validatePublisher(final String publisher) {
     if (publisher.isEmpty) {
       addBookController.errorTextBookPublisher.value =
-          S.of(Get.context).should_not_empty;
+          S.of(Get.context!).should_not_empty;
       addBookController.validatorBookPublisher = false;
     } else {
       addBookController.errorTextBookPublisher.value = null;

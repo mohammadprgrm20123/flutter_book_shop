@@ -17,7 +17,7 @@ class MyStorage {
     await box.write('role', role);
   }
 
-  Future<String> getRole() async {
+  Future<String?> getRole() async {
     final box = GetStorage();
     return box.read('role');
   }

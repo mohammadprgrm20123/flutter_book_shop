@@ -2,14 +2,11 @@ import 'book_view_model.dart';
 
 
 class FavoriteItem {
-  int userId;
-  BookViewModel book;
-  int id;
+  int? userId;
+  BookViewModel? book;
+  int? id;
 
-  FavoriteItem(
-      {final int userId,
-      final BookViewModel book,
-      final int id});
+  FavoriteItem({this.userId, this.book, this.id});
 
   FavoriteItem.fromJson(final Map<String, dynamic> json) {
     userId = json['userId'];
@@ -23,7 +20,7 @@ class FavoriteItem {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['userId'] = userId;
     if (book != null) {
-      data['book'] = book.toJson();
+      data['book'] = book!.toJson();
     }
     data['id'] = id;
     return data;

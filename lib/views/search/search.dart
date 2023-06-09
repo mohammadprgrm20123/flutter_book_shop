@@ -12,7 +12,7 @@ class Search extends StatelessWidget {
   static const double minValuePrice = 5000;
   static const double maxValuePrice = 1000000;
   static const int divisions = 50;
-  final searchController = Get.put(SearchController());
+  final searchController = Get.put(SearchScreenController());
   final TextEditingController _searchCtr = TextEditingController();
 
   final Rx<RangeValues> _currentRangeValues =
@@ -55,7 +55,7 @@ class Search extends StatelessWidget {
 
   Widget _itemBook(final BookViewModel book) => GestureDetector(
         onTap: () {
-          Get.to(DetailsBook(bookId: book.id,));
+          Get.to(DetailsBook(bookId: book.id!,));
         },
         child: Card(
           elevation: 7.0,
@@ -63,7 +63,7 @@ class Search extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
             child: FadeInImage.assetNetwork(
               fadeInCurve: Curves.bounceIn,
-              image: book.url,
+              image: book.url!,
               placeholder: 'assets/images/1.jpg',
             ),
           ),
@@ -111,16 +111,16 @@ class Search extends StatelessWidget {
     );
 
   Widget _title() => Text(
-      S.of(Get.context).search,
+      S.of(Get.context!).search,
       style: TextStyle(
-          fontFamily: S.of(Get.context).name_font_dana,
+          fontFamily: S.of(Get.context!).name_font_dana,
           color: Colors.black,
           fontSize: 17.0),
     );
 
   void _showBottomSheet() {
     showModalBottomSheet(
-        context: Get.context,
+        context: Get.context!,
         builder: (final builder) => Container(
               decoration: _boxDecorationBottomSheet(),
               child: _scrollableBottomSheet()));
@@ -143,12 +143,12 @@ class Search extends StatelessWidget {
     );
 
   Widget _textFilterByCategory() => Text(
-      S.of(Get.context).filter_by_category,
+      S.of(Get.context!).filter_by_category,
       style: const TextStyle(fontSize: 23.0),
     );
 
   Widget _textFilterPrice() => Text(
-      S.of(Get.context).filter_price,
+      S.of(Get.context!).filter_price,
       style: const TextStyle(fontSize: 23.0),
     );
 
@@ -159,7 +159,7 @@ class Search extends StatelessWidget {
             topRight: Radius.circular(10.0)));
 
   Widget _btnFilter() => SizedBox(
-      width: MediaQuery.of(Get.context).size.width,
+      width: MediaQuery.of(Get.context!).size.width,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ElevatedButton(
@@ -167,7 +167,7 @@ class Search extends StatelessWidget {
               searchController.filterInList(_currentRangeValues.value);
               Get.back();
             },
-            child: Text(S.of(Get.context).set_filter)),
+            child: Text(S.of(Get.context!).set_filter)),
       ),
     );
 
@@ -182,13 +182,13 @@ class Search extends StatelessWidget {
   Widget _textMaxPrice() => Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(_currentRangeValues.value.end.round().toString() +
-          S.of(Get.context).toman),
+          S.of(Get.context!).toman),
     );
 
   Widget _textMinPrice() => Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(_currentRangeValues.value.start.round().toString() +
-          S.of(Get.context).toman),
+          S.of(Get.context!).toman),
     );
 
   Widget _rangeSlider() => Obx(() => RangeSlider(
@@ -198,9 +198,9 @@ class Search extends StatelessWidget {
         divisions: divisions,
         labels: RangeLabels(
           _currentRangeValues.value.start.round().toString() +
-              S.of(Get.context).toman,
+              S.of(Get.context!).toman,
           _currentRangeValues.value.end.round().toString() +
-              S.of(Get.context).toman,
+              S.of(Get.context!).toman,
         ),
         onChanged: _currentRangeValues,
       ));
@@ -225,7 +225,7 @@ class Search extends StatelessWidget {
             changeColorChips(5);
           },
           child: Chip(
-            label: Text(S.of(Get.context).epic),
+            label: Text(S.of(Get.context!).epic),
             backgroundColor: searchController.mapColor[5],
           )),
     );
@@ -237,7 +237,7 @@ class Search extends StatelessWidget {
             changeColorChips(4);
           },
           child: Chip(
-            label: Text(S.of(Get.context).psychology),
+            label: Text(S.of(Get.context!).psychology),
             backgroundColor: searchController.mapColor[4],
           )),
     );
@@ -249,7 +249,7 @@ class Search extends StatelessWidget {
             changeColorChips(3);
           },
           child: Chip(
-            label: Text(S.of(Get.context).philosophy),
+            label: Text(S.of(Get.context!).philosophy),
             backgroundColor: searchController.mapColor[3],
           )),
     );
@@ -261,7 +261,7 @@ class Search extends StatelessWidget {
             changeColorChips(2);
           },
           child: Chip(
-            label: Text(S.of(Get.context).novel),
+            label: Text(S.of(Get.context!).novel),
             backgroundColor: searchController.mapColor[2],
           )),
     );
@@ -273,7 +273,7 @@ class Search extends StatelessWidget {
             changeColorChips(1);
           },
           child: Chip(
-            label: Text(S.of(Get.context).category_stoy),
+            label: Text(S.of(Get.context!).category_stoy),
             backgroundColor: searchController.mapColor[1],
           )),
     );

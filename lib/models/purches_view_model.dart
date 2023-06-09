@@ -1,13 +1,17 @@
 import 'cart_shop.dart';
 
 class Purchase {
-  int id;
-  int userId;
-  String date;
-  List<CartShop> cartShop;
+  int? id;
+  int? userId;
+  String? date;
+  List<CartShop>? cartShop;
 
-  Purchase(
-      {final this.id, final this.userId, final this.date, final this.cartShop});
+  Purchase({
+    this.id,
+    this.userId,
+    this.date,
+    this.cartShop,
+  });
 
   Purchase.fromJson(final Map<String, dynamic> json) {
     id = json['id'];
@@ -25,7 +29,7 @@ class Purchase {
     data['userId'] = userId;
     data['date'] = date;
     if (cartShop != null) {
-      data['cartShop'] = cartShop.map((final v) => v.toJson()).toList();
+      data['cartShop'] = cartShop!.map((final v) => v.toJson()).toList();
     }
     return data;
   }

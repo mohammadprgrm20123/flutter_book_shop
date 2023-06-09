@@ -7,11 +7,11 @@ class MiddleWareLogin extends GetMiddleware {
 
   String role = 'none';
 
-  MiddleWareLogin({final this.role});
+  MiddleWareLogin({required final this.role});
 
 
   @override
-  RouteSettings redirect(final String route) {
+  RouteSettings? redirect(final String? route) {
 
     switch(role){
       case 'none':return RouteSettings(name: AppRoutes.login);

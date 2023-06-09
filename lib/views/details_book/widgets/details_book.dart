@@ -10,8 +10,8 @@ import 'rating_bar.dart';
 class OtherBookDetails extends GetView<DetailController> {
   final BookViewModel bookViewModel;
 
-  const OtherBookDetails({final this.bookViewModel, final Key key})
-      : super(key: key);
+  const OtherBookDetails(
+      {required final this.bookViewModel,});
 
   @override
   Widget build(final BuildContext context) => _detailsOfBooks(context);
@@ -27,15 +27,15 @@ class OtherBookDetails extends GetView<DetailController> {
       });
 
   List<Widget> _children(final BuildContext context) => [
-        _image(bookViewModel.url),
-        _bookName(bookViewModel.bookName),
-        _authorName(bookViewModel.autherName, bookViewModel.translator),
-        _score(bookViewModel.score),
-        _btnAddToShop(context, bookViewModel.price),
+        _image(bookViewModel.url!),
+        _bookName(bookViewModel.bookName!),
+        _authorName(bookViewModel.autherName!, bookViewModel.translator!),
+        _score(bookViewModel.score!),
+        _btnAddToShop(context, bookViewModel.price!),
         _btnAddFavorite(context),
         _divider(),
         _introduction(context),
-        _description(context, bookViewModel.desc),
+        _description(context, bookViewModel.desc!),
         _dividerHeight10(),
         _otherPropertiesOfBook(bookViewModel),
         _dividerHeight10(),
@@ -131,10 +131,10 @@ class OtherBookDetails extends GetView<DetailController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _category(bookViewModel.category),
-            _price(bookViewModel.price),
-            _publisher(bookViewModel.publisherName),
-            _countPages(bookViewModel.pages),
+            _category(bookViewModel.category!),
+            _price(bookViewModel.price!),
+            _publisher(bookViewModel.publisherName!),
+            _countPages(bookViewModel.pages!),
           ],
         ),
       );
@@ -209,13 +209,13 @@ class OtherBookDetails extends GetView<DetailController> {
         ),
       );
 
-  Widget _outlineButton(final BuildContext context) => OutlinedButton(
-      onPressed: () {
+  Widget _outlineButton(final BuildContext context) =>
+      OutlinedButton(onPressed: () {
         controller.addBookToFavoriteList(bookViewModel);
       },
-      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-      child: Obx(() {
-        if (controller.loadingBtnClick.value == true) {
+// shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+          child: Obx(() {
+        if (controller.loadingAddFavorite.value == true) {
           return const CircularProgressIndicator();
         } else {
           return Text(S.of(context).add_to_favorite);
@@ -227,7 +227,7 @@ class OtherBookDetails extends GetView<DetailController> {
           controller.addBookToCartShop(bookViewModel);
         },
         child: Obx(() {
-          if (controller.loadingBtnClick.value == true) {
+          if (controller.loadingAddCard.value == true) {
             return const CircularProgressIndicator();
           } else {
             return Text('اضافه کردن به سبد خرید    $price تومان ');
@@ -235,7 +235,7 @@ class OtherBookDetails extends GetView<DetailController> {
         }),
       );
 
-  Widget _score(final double score) => Row(
+  Widget _score(final num score) => Row(
         children: [
           Padding(
             padding: const EdgeInsets.all(10.0),
@@ -248,8 +248,8 @@ class OtherBookDetails extends GetView<DetailController> {
                   controller.shareData();
                 }),
           ),
-          _textScore(score),
-          RatingBarWidget(score: score),
+          _textScore(score.toDouble()),
+          RatingBarWidget(score: score.toDouble()),
         ],
       );
 
@@ -259,6 +259,4 @@ class OtherBookDetails extends GetView<DetailController> {
         textAlign: TextAlign.end,
         style: const TextStyle(fontSize: 14.0),
       ));
-
-
 }

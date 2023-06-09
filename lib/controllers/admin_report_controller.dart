@@ -5,15 +5,16 @@ import 'package:flutter_booki_shop/models/purches_view_model.dart';
 import 'package:flutter_booki_shop/repository/app_repository.dart';
 import 'package:get/get.dart';
 
+import '../server/api_client.dart';
+
 class AdminReportController extends GetxController{
 
   final RxBool _loading = false.obs;
-  AppRepository _appRepository;
-  List<Purchase> _listPurchase;
+  final AppRepository _appRepository= AppRepository(ApiClient());
+  List<Purchase> _listPurchase = [];
   @override
   void onInit() {
     super.onInit();
-    _appRepository = AppRepository();
     getPurchaseInfo();
   }
 
@@ -25,7 +26,7 @@ class AdminReportController extends GetxController{
       _listPurchase = value;
     }).onError((final error, final stackTrace) {
       _loading(false);
-      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+      Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).has_problem,
           backgroundColor: Colors.red[200]);
     });
   }

@@ -17,8 +17,8 @@ class Profile extends StatefulWidget {
 
 class StateProfile extends State<Profile> {
   final List<String> _spinnerItems = [
-    S.of(Get.context).persion,
-    S.of(Get.context).English
+    S.of(Get.context!).persion,
+    S.of(Get.context!).English
   ];
 
   final ProfileController _profileController = Get.put(ProfileController());
@@ -84,7 +84,7 @@ class StateProfile extends State<Profile> {
             return ClipRRect(
                 borderRadius: BorderRadius.circular(100.0),
                 child: Image.memory(
-                  _profileController.imageUnit8,
+                  _profileController.imageUnit8!,
                 ));
           } else {
             return const CircleAvatar(
@@ -105,7 +105,7 @@ class StateProfile extends State<Profile> {
               MyStorage().clearShareprefrence();
               Get.offAll(() => LoginPage());
             },
-            child: Text(S.of(Get.context).Exit)),
+            child: Text(S.of(Get.context!).Exit)),
       ));
 
   Widget _languageItem() => Padding(
@@ -114,7 +114,7 @@ class StateProfile extends State<Profile> {
           leading: const Icon(Icons.today),
           subtitle: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(S.of(Get.context).persion),
+            child: Text(S.of(Get.context!).persion),
           ),
           title: _dropdownButton(),
         ),
@@ -128,13 +128,13 @@ class StateProfile extends State<Profile> {
         style: TextStyle(
             color: Colors.black,
             fontSize: 18,
-            fontFamily: S.of(Get.context).name_font_dana),
+            fontFamily: S.of(Get.context!).name_font_dana),
         underline: Container(
           height: 2,
           color: Colors.deepPurpleAccent,
         ),
         onChanged: (final data) {
-          if (data == S.of(Get.context).English) {
+          if (data == S.of(Get.context!).English) {
             const Locale locale = Locale('en', 'US');
             Get.updateLocale(locale);
             _profileController.indexLanguageActive(1);
@@ -211,7 +211,7 @@ class StateProfile extends State<Profile> {
   Text _title(final BuildContext context) => Text(
         S.of(context).profile,
         style: TextStyle(
-            fontFamily: S.of(Get.context).name_font_dana,
+            fontFamily: S.of(Get.context!).name_font_dana,
             color: Colors.black,
             fontSize: 17.0),
       );
@@ -240,15 +240,15 @@ class StateProfile extends State<Profile> {
     }
     user
       ..id = _profileController.user.id
-      ..image = base64Encode(_profileController.imageUnit8)
+      ..image = base64Encode(_profileController.imageUnit8!)
       ..email = _profileController.user.email
       ..role = _profileController.user.role;
     return user;
   }
 
   void setFirstValues() {
-    _phoneCtr.text = _profileController.user.phone;
-    _userNameCtr.text = _profileController.user.userName;
-    _passwordCtr.text = _profileController.user.password;
+    _phoneCtr.text = _profileController.user.phone!;
+    _userNameCtr.text = _profileController.user.userName!;
+    _passwordCtr.text = _profileController.user.password!;
   }
 }

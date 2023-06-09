@@ -13,11 +13,11 @@ class CustomAdder extends StatefulWidget {
   State<StatefulWidget> createState() => StateAdder();
 
   CustomAdder(
-      {final this.value,
-      final this.textColor,
-      final this.backgroundColor,
-      final this.onChangedAdd,
-      final this.onChangedRemove});
+      {required final this.value,
+      required final this.textColor,
+      required final this.backgroundColor,
+      required final this.onChangedAdd,
+      required final this.onChangedRemove});
 
   final ValueChanged<int> onChangedAdd;
   final ValueChanged<int> onChangedRemove;

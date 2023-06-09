@@ -7,6 +7,7 @@ import '../../generated/l10n.dart';
 import '../../models/user_view_model.dart';
 import '../../shareprefrence.dart';
 import '../admin_home/admin_home.dart';
+import '../management_user_home.dart';
 import '../shared/widgets/my_buton.dart';
 import '../user_home/user_home.dart';
 
@@ -54,7 +55,7 @@ class LoginPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: MyButton(
           onTap: () {
-            if (controller.formKey.currentState.validate()) {
+            if (controller.formKey.currentState!.validate()) {
               login();
             }
           },
@@ -70,7 +71,7 @@ class LoginPage extends StatelessWidget {
             password: controller.passwordController.text)
         .then((final value) {
       saveValues(value);
-      goTo(value.role);
+      goTo(value.role!);
     });
   }
 
@@ -93,19 +94,18 @@ class LoginPage extends StatelessWidget {
                   borderSide: BorderSide(color: Color(0xFFF9A825))),
               focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0xFFF9A825))),
-              labelText: S.of(Get.context).password,
-              hintText: S.of(Get.context).password,
+              labelText: S.of(Get.context!).password,
+              hintText: S.of(Get.context!).password,
               // counter: Text("1/8")
             ),
             maxLength: 12,
-            buildCounter: _buildCounterPassword,
           ),
       false.obs);
 
-  Widget _buildCounterPassword(final BuildContext context,
-          {final int currentLength,
-          final int maxLength,
-          final bool isFocused}) =>
+  Text? _buildCounterPassword(final BuildContext context,
+          {required final int currentLength,
+          required final int maxLength,
+          required final bool isFocused}) =>
       isFocused
           ? Text(
               '$currentLength/$maxLength',
@@ -123,8 +123,8 @@ class LoginPage extends StatelessWidget {
         decoration: _usernameDecoration(),
       );
 
-  String _validate(final String value) {
-    if (value.isEmpty) {
+  String? _validate(final String? value) {
+    if (value!=null && value.isEmpty) {
       return 'این فیلد دنباید خالی باشد';
     }
     return null;
@@ -133,8 +133,8 @@ class LoginPage extends StatelessWidget {
   InputDecoration _usernameDecoration() => InputDecoration(
         prefixIcon: const Icon(Icons.account_circle),
         border: const OutlineInputBorder(),
-        labelText: S.of(Get.context).userName,
-        hintText: S.of(Get.context).userName,
+        labelText: S.of(Get.context!).userName,
+        hintText: S.of(Get.context!).userName,
       );
 
   Widget _iconLogin() => Container(
@@ -153,16 +153,16 @@ class LoginPage extends StatelessWidget {
       const BoxDecoration(shape: BoxShape.circle, color: Color(0xFFF9A825));
 
   void saveValues(final User user) async {
-    MyStorage().setId(user.id);
-    MyStorage().setRole(user.role);
-    MyStorage().setPassword(user.password);
-    MyStorage().setUserName(user.userName);
-    MyStorage().setPhone(user.phone);
+    MyStorage().setId(user.id!);
+    MyStorage().setRole(user.role!);
+    MyStorage().setPassword(user.password!);
+    MyStorage().setUserName(user.userName!);
+    MyStorage().setPhone(user.phone!);
   }
 
   void goTo(final String role) {
-    if (role == S.of(Get.context).userRole) {
-      Get.offAll(UserHomePage());
+    if (role == S.of(Get.context!).userRole) {
+      Get.offAll(ManagementUserHome());
     } else {
       Get.offAll(AdminHomePage());
     }

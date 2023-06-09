@@ -9,25 +9,25 @@ import 'package:image_picker/image_picker.dart';
 import '../generated/l10n.dart';
 import '../models/user_view_model.dart';
 import '../repository/app_repository.dart';
+import '../server/api_client.dart';
 import '../shareprefrence.dart';
 
 class ProfileController extends GetxController {
   RxBool loading = false.obs;
-  AppRepository _appRepository;
+  final AppRepository _appRepository =AppRepository(ApiClient());
   User _user = User();
-  Uint8List _imageUnit8;
-  File _imageFile;
+  Uint8List? _imageUnit8;
+  File? _imageFile;
 
   RxInt indexLanguageActive = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-    _appRepository = AppRepository();
     getProfileInfo();
   }
 
-  Uint8List get imageUnit8 => _imageUnit8;
+  Uint8List? get imageUnit8 => _imageUnit8;
 
   void getProfileInfo() async {
     loading(true);
@@ -35,10 +35,10 @@ class ProfileController extends GetxController {
       _appRepository.getProfileInfo(value).then((final value) {
         loading(false);
         _user = value;
-        _imageUnit8 = base64Decode(_user.image);
+        _imageUnit8 = base64Decode(_user.image!);
       }).onError((final error, final stackTrace) {
         loading(false);
-        Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+        Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).has_problem,
             backgroundColor: Colors.red[200]);
       });
     });
@@ -57,7 +57,7 @@ class ProfileController extends GetxController {
     loading(false);
   }
 
-  File get imageFile => _imageFile;
+  File? get imageFile => _imageFile;
 
   void sendUserData(final User user) {
     _appRepository.updateUserInfo(user);

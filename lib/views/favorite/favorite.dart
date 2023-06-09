@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +25,7 @@ class Favorite extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else {
           if (favoriteController.listFavorite.isEmpty) {
-            return Center(child: Text(S.of(Get.context).not_exit_cases));
+            return Center(child: Text(S.of(Get.context!).not_exit_cases));
           } else {
             return _gridView();
           }
@@ -43,7 +42,7 @@ class Favorite extends StatelessWidget {
 
   Widget _itemList(final FavoriteItem listFavorite) => GestureDetector(
       onTap: () {
-        Get.to(DetailsBook(bookId: listFavorite.book.id));
+        Get.to(DetailsBook(bookId: listFavorite.book!.id!));
       },
       child: _card(listFavorite),
     );
@@ -62,7 +61,7 @@ class Favorite extends StatelessWidget {
                   child: ElevatedButton(
                       onPressed: () {
                         favoriteController.listFavorite.remove(item);
-                        favoriteController.removeFavoriteItem(item.id);
+                        favoriteController.removeFavoriteItem(item.id!);
                       },
                       child: const Text(
                         'حذف',
@@ -76,7 +75,7 @@ class Favorite extends StatelessWidget {
 
   Widget _textBookName(final FavoriteItem listFavorite) => Center(
       child: Text(
-        listFavorite.book.bookName,
+        listFavorite.book!.bookName!,
       ),
     );
 
@@ -85,7 +84,7 @@ class Favorite extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(4.0),
         child: Image.network(
-          listFavorite.book.url,
+          listFavorite.book!.url!,
           height: 100,
           width: 100,
         ),
@@ -101,7 +100,7 @@ class Favorite extends StatelessWidget {
   Widget _title(final BuildContext context) => Text(
       S.of(context).favorite,
       style: TextStyle(
-          fontFamily: S.of(Get.context).name_font_dana,
+          fontFamily: S.of(Get.context!).name_font_dana,
           color: Colors.black,
           fontSize: 17.0),
     );

@@ -8,7 +8,7 @@ abstract class CardItem {
 class ImageCardItem extends CardItem {
   final Widget image;
 
-  ImageCardItem({final this.image});
+  ImageCardItem({required this.image});
 
   @override
   Widget buildWidget(final double diffPosition) => image;
@@ -22,13 +22,14 @@ class IconTitleCardItem extends CardItem {
   final Color selectedIconTextColor;
   final Color noSelectedIconTextColor;
 
-  IconTitleCardItem(
-      {final this.iconData,
-        final this.text,
-        final this.selectedIconTextColor = Colors.white,
-        final this.noSelectedIconTextColor = Colors.grey,
-        final this.selectedBgColor = Colors.blue,
-        final this.noSelectedBgColor = Colors.white});
+  IconTitleCardItem({
+    required this.iconData,
+    required this.text,
+    this.selectedIconTextColor = Colors.white,
+    this.noSelectedIconTextColor = Colors.grey,
+    this.selectedBgColor = Colors.blue,
+    this.noSelectedBgColor = Colors.white,
+  });
 
   @override
   Widget buildWidget(final double diffPosition) {
@@ -75,7 +76,7 @@ class IconTitleCardItem extends CardItem {
                   child: Text(
                     text,
                     style:
-                    TextStyle(fontSize: 15, color: selectedIconTextColor),
+                        TextStyle(fontSize: 15, color: selectedIconTextColor),
                   ),
                 )
               ],

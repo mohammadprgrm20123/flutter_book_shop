@@ -5,30 +5,34 @@ import 'package:flutter/material.dart';
 
 class TagEditor extends StatefulWidget {
   const TagEditor(
-      {final this.addTags,
-      final this.removeTags,
-      final this.firstValueListTag});
+      {required this.addTags,
+      required this.removeTags,
+      required this.firstValueListTag});
 
   final ValueChanged<String> addTags;
   final ValueChanged<String> removeTags;
   final List<String> firstValueListTag;
 
   @override
-  State<StatefulWidget> createState() => StateTagEditor(firstValueListTag);
+  State<StatefulWidget> createState() => StateTagEditor();
 }
 
 class StateTagEditor extends State<TagEditor> {
-  String tagCtr;
+  String? tagCtr;
   List<String> listTag = [];
 
-  StateTagEditor(final List<String> listFirst) {
-    if (listFirst == null) {
+
+
+  @override
+  void initState() {
+    if (widget.firstValueListTag.isEmpty) {
       listTag = [];
     } else {
       listTag
         ..clear()
-        ..addAll(listFirst);
+        ..addAll(widget.firstValueListTag);
     }
+    super.initState();
   }
 
   @override
@@ -55,8 +59,8 @@ class StateTagEditor extends State<TagEditor> {
                 child: ElevatedButton(
                     onPressed: () {
                       if (tagCtr != null) {
-                        listTag.add(tagCtr);
-                        widget.addTags.call(tagCtr);
+                        listTag.add(tagCtr?? '');
+                        widget.addTags.call(tagCtr?? '');
                         setState(() {});
                       }
                     },

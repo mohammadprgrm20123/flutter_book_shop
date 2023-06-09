@@ -7,7 +7,6 @@ import '../controllers/favorite_controller.dart';
 import '../controllers/home_controller.dart';
 import '../controllers/management_home_controller.dart';
 import '../controllers/profile_controller.dart';
-import '../controllers/search_controller.dart';
 import 'user_home/user_home.dart';
 
 class ManagementUserHome extends StatelessWidget {

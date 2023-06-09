@@ -18,7 +18,7 @@ class AdminReport extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         } else {
           if (adminReportController.listPurchase.isEmpty) {
-            return Center(child: Text(S.of(Get.context).not_exit_cases));
+            return Center(child: Text(S.of(Get.context!).not_exit_cases));
           } else {
             return _lisPurchase();
           }
@@ -45,8 +45,8 @@ class AdminReport extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(S.of(Get.context).success_purchase),
-            Text('${S.of(Get.context).date}     :  ${_getDate(purchase)}'),
+            Text(S.of(Get.context!).success_purchase),
+            Text('${S.of(Get.context!).date}     :  ${_getDate(purchase)}'),
             expanded(purchase),
             Text('مجموع هزینه   ${calcutePrice(purchase)}   تومان'),
           ],
@@ -62,7 +62,7 @@ class AdminReport extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       );
 
-  String _getDate(final Purchase purchase) => purchase.date;
+  String _getDate(final Purchase purchase) => purchase.date!;
 
   AppBar _appBar(final BuildContext context) => AppBar(
         backgroundColor: Colors.white,
@@ -72,9 +72,9 @@ class AdminReport extends StatelessWidget {
       );
 
   Text _title(final BuildContext context) => Text(
-      S.of(Get.context).report_purchase,
+      S.of(Get.context!).report_purchase,
       style: TextStyle(
-          fontFamily: S.of(Get.context).name_font_dana,
+          fontFamily: S.of(Get.context!).name_font_dana,
           color: Colors.black,
           fontSize: 17.0));
 
@@ -82,12 +82,12 @@ class AdminReport extends StatelessWidget {
     if (purchase.cartShop == null) {
       return [];
     } else {
-      return purchase.cartShop.map((final CartShop e) => Row(
+      return purchase.cartShop!.map((final CartShop e) => Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(' تعداد : ${e.count.toString()}'),
-            Text('نام کتاب : ${e.book.bookName}'),
+            Text('نام کتاب : ${e.book!.bookName}'),
           ],
         )).toList();
     }
@@ -95,8 +95,8 @@ class AdminReport extends StatelessWidget {
 
   String calcutePrice(final Purchase purchase) {
     double price = 0;
-    for (final element in purchase.cartShop) {
-      price += element.count * double.parse(element.book.price);
+    for (final element in purchase.cartShop!) {
+      price += element.count! * double.parse(element.book!.price!);
     }
     return price.toString();
   }

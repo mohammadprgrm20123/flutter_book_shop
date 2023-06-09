@@ -8,12 +8,11 @@ class MyButton extends StatelessWidget {
   final Color backgroundColor;
 
   const MyButton(
-      {final Key key,
-      final this.onTap,
-      final this.label,
-      final this.loading,
-      final this.backgroundColor = const Color(0xFFF9A825)})
-      : super(key: key);
+      {
+      required final this.onTap,
+      required final this.label,
+      required final this.loading,
+      final this.backgroundColor = const Color(0xFFF9A825)});
 
   @override
   Widget build(final BuildContext context) => ElevatedButton(

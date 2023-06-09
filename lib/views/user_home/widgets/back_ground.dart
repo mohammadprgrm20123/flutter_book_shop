@@ -49,7 +49,7 @@ class BackGround extends StatelessWidget {
 
   Widget _badgeShop() => InkWell(
     onTap: () {
-      Get.to(() => CartShopPage()).then((final value) {
+      Get.to(() => CartShopPage())!.then((final value) {
         homeController.getFavoriteList();
       });
     },

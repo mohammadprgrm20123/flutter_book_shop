@@ -2,16 +2,17 @@
 import 'package:get/get.dart';
 
 import '../models/book_view_model.dart';
-import '../models/favorite_item_view_model.dart';
 import '../models/cart_shop.dart';
+import '../models/favorite_item_view_model.dart';
 import '../repository/app_repository.dart';
+import '../server/api_client.dart';
 import '../shareprefrence.dart';
 
 class MorePageController extends GetxController{
 
 
   RxBool loading=false.obs;
-  AppRepository _appRepository;
+  final AppRepository _appRepository =AppRepository(ApiClient());
   List<BookViewModel> allBooks =[];
   List<FavoriteItem> listFavorite=[];
   List<CartShop> listCartShop=[];
@@ -19,7 +20,6 @@ class MorePageController extends GetxController{
   @override
   void onInit() {
     super.onInit();
-    _appRepository= AppRepository();
     getAllBooks();
   }
 
@@ -34,7 +34,6 @@ class MorePageController extends GetxController{
   }
   void addToFavorite(final BookViewModel book){
 
-   // _appRepository.addBookToFavoriteList(book);
   }
 
   Future<FavoriteItem> fillFavoriteValues(final BookViewModel book) async {
@@ -49,8 +48,8 @@ class MorePageController extends GetxController{
 
  void  removeFromFavorite(final BookViewModel book){
     for (final element in listFavorite) {
-      if(element.book.id==book.id){
-        _appRepository.removeItemOfFavoriteList(element.id);
+      if(element.book!.id==book.id){
+        _appRepository.removeItemOfFavoriteList(element.id!);
       }
     }
   }
@@ -69,7 +68,7 @@ class MorePageController extends GetxController{
     checkLengthListFavorite();
     for (int i = 0; i < listFavorite.length; i++) {
       for (int j = 0; j < allBooks.length; j++) {
-        if (allBooks[j].id == listFavorite[i].book.id) {
+        if (allBooks[j].id == listFavorite[i].book!.id) {
           allBooks[j].isFavorite = true;
         }
       }
@@ -90,13 +89,13 @@ class MorePageController extends GetxController{
     }
   }
 
-  void getAllCartShop() async {
+  Future<void> getAllCartShop() async {
     await _appRepository.getShoppingListCart().then((final value) {
       listCartShop = value;
       checkLengthOfListCartShop();
       for (int i = 0; i < listCartShop.length; i++) {
         for (int j = 0; j < allBooks.length; j++) {
-          if (allBooks[j].id == listCartShop[i].book.id) {
+          if (allBooks[j].id == listCartShop[i].book!.id) {
             allBooks[j].isInCartShop = true;
           }
         }
@@ -121,9 +120,9 @@ class MorePageController extends GetxController{
   }
 
   void removeFromCartShop(final BookViewModel book) {
-    CartShop _cartShop;
+    CartShop _cartShop = CartShop();
     for (final element in listCartShop) {
-      if (book.id == element.book.id) {
+      if (book.id == element.book!.id) {
         _cartShop = element;
       }
     }

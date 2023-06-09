@@ -30,7 +30,7 @@ class ListPopularBook extends StatelessWidget {
               itemBuilder: (final _, final index) => BookItem(
                 onTap: () {
                   Get.to(() => DetailsBook(
-                        bookId: controller.listPopularBook[index].id,
+                        bookId: controller.listPopularBook[index].id!,
                       ));
                 },
                 bookViewModel: controller.listPopularBook[index],

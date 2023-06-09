@@ -39,7 +39,7 @@ class ListBestBook extends StatelessWidget {
                   bookViewModel: controller.listBestBook[index],
                   onTap: () {
                     Get.to(() => DetailsBook(
-                          bookId: controller.listBestBook[index].id,
+                          bookId: controller.listBestBook[index].id!,
                         ));
                   },
                 ),

@@ -7,58 +7,63 @@ import 'package:share/share.dart';
 import '../generated/l10n.dart';
 import '../models/book_view_model.dart';
 import '../repository/app_repository.dart';
+import '../server/api_client.dart';
 
 class DetailController extends GetxController {
-  final RxBool _loading = false.obs;
-  final RxBool _loadingBtnClick = false.obs;
-  BookViewModel _book;
+  final RxBool loading = false.obs;
+  final RxBool loadingAddCard = false.obs;
+  final RxBool loadingAddFavorite = false.obs;
+  Rxn<BookViewModel> book = Rxn(null);
 
-  AppRepository _appRepository;
+  final AppRepository _appRepository =AppRepository(ApiClient());
 
-  RxBool get loading => _loading;
 
-  BookViewModel get book => _book;
+
+  int bookId;
+
+
+  DetailController(this.bookId);
 
   @override
   void onInit() {
+    getDetailsBook(bookId);
     super.onInit();
-    _appRepository = AppRepository();
   }
 
   void getDetailsBook(final int id) {
-    _loading(true);
+    loading.value =true;
     _appRepository.getDetailsBook(id).then((final value) {
-      _loading(false);
-      _book = value;
+      book.value = value;
     }).onError((final error, final stackTrace) {
-      _loading(false);
-      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+
+      Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).has_problem,
           backgroundColor: Colors.red[200]);
     });
+    loading.value =false;
   }
 
   void addBookToCartShop(final BookViewModel book) {
-    _loadingBtnClick(true);
+    loadingAddCard(true);
     _appRepository.addBookToCart(book).then((final value) {
-      _loadingBtnClick(false);
+      loadingAddCard(false);
     }).onError((final error, final stackTrace) {
-      _loadingBtnClick(false);
-      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+      loadingAddCard(false);
+      Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).has_problem,
           backgroundColor: Colors.red[200]);
     });
   }
 
   void addBookToFavoriteList(final BookViewModel book) async {
-    _loadingBtnClick(true);
+    loadingAddFavorite(true);
     final FavoriteItem favoriteItem = await fillFavoriteValues(book);
 
     await _appRepository
         .addBookToFavoriteList(favorite: favoriteItem)
         .then((final value) {
-      _loadingBtnClick(false);
+      loadingAddFavorite(false);
     }).onError((final error, final stackTrace) {
-      _loadingBtnClick(false);
-      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+      loadingAddFavorite(false);
+      Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).has_problem,
           backgroundColor: Colors.red[200]);
     });
   }
@@ -73,11 +78,10 @@ class DetailController extends GetxController {
     return favoriteItem;
   }
 
-  RxBool get loadingBtnClick => _loadingBtnClick;
 
 
   void shareData() {
     Share.share(
-        '${book.bookName} \n ${book.desc} ');
+        '${book.value!.bookName} \n ${book.value!.desc} ');
   }
 }

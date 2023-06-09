@@ -6,19 +6,15 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import '../generated/l10n.dart';
 import '../models/favorite_item_view_model.dart';
 import '../repository/app_repository.dart';
+import '../server/api_client.dart';
 
 class FavoriteController extends GetxController {
   final RxBool _loading = false.obs;
-  AppRepository _appRepository;
+  final AppRepository _appRepository =AppRepository(ApiClient());
   Set<FavoriteItem> _listFavorite = <FavoriteItem>{};
 
   RxBool get loading => _loading;
 
-  @override
-  void onInit() {
-    super.onInit();
-    _appRepository = AppRepository();
-  }
 
   void getFavoriteBooks(final int userId) {
     _loading(true);
@@ -27,7 +23,7 @@ class FavoriteController extends GetxController {
       _listFavorite = value.toSet();
     }).onError((final error, final stackTrace) {
       _loading(false);
-      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+      Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).has_problem,
           backgroundColor: Colors.red[200]);
     });
   }

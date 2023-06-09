@@ -7,6 +7,7 @@ import '../models/book_view_model.dart';
 import '../models/cart_shop.dart';
 import '../models/favorite_item_view_model.dart';
 import '../repository/app_repository.dart';
+import '../server/api_client.dart';
 import '../shareprefrence.dart';
 
 class HomeController extends GetxController {
@@ -23,7 +24,7 @@ class HomeController extends GetxController {
   List<FavoriteItem> listFavorite = <FavoriteItem>[];
   final RxBool loadingOfAddFavoriteAndCartShop = false.obs;
 
-  AppRepository appRepository = AppRepository();
+  final AppRepository appRepository =AppRepository(ApiClient());
 
   List<ImageCardItem> itemsAudioBook = [];
   RxDouble indexIndicator = 0.0.obs;
@@ -43,7 +44,7 @@ class HomeController extends GetxController {
       listAllBook.value = value;
     }).onError((final error, final stackTrace) {
       loading(false);
-      Get.snackbar(S.of(Get.context).error, S.of(Get.context).has_problem,
+      Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).has_problem,
           backgroundColor: Colors.red[200]);
     });
   }
@@ -51,7 +52,7 @@ class HomeController extends GetxController {
   void separateBestBooks() {
     final List<BookViewModel> listBest = [];
     for (final book in listAllBook) {
-      if (book.score >= 4.2 && book.category != 'صوتی') {
+      if (book.score! >= 4.2 && book.category != 'صوتی') {
         listBest.add(book);
       }
     }
@@ -67,7 +68,7 @@ class HomeController extends GetxController {
     for (final book in allBook) {
       if (book.category == 'صوتی') {
         listAudioBook.add(book);
-        itemsAudioBook.add(ImageCardItem(image: Image.network(book.url)));
+        itemsAudioBook.add(ImageCardItem(image: Image.network(book.url!)));
       }
     }
   }
@@ -103,8 +104,8 @@ class HomeController extends GetxController {
   void removeFromFavorite(final BookViewModel book) {
     loadingOfAddFavoriteAndCartShop(true);
     for (final element in listFavorite) {
-      if (element.book.id == book.id) {
-        appRepository.removeItemOfFavoriteList(element.id);
+      if (element.book!.id == book.id) {
+        appRepository.removeItemOfFavoriteList(element.id!);
         listFavorite.remove(element);
         return;
       }
@@ -125,7 +126,7 @@ class HomeController extends GetxController {
     checkListFavoriteLength();
     for (int i = 0; i < listFavorite.length; i++) {
       for (int j = 0; j < listAllBook.length; j++) {
-        if (listAllBook[j].id == listFavorite[i].book.id) {
+        if (listAllBook[j].id == listFavorite[i].book!.id) {
           listAllBook[j].isFavorite = true;
         }
       }
@@ -151,7 +152,7 @@ class HomeController extends GetxController {
 
   void removeItemFromCartShop(final BookViewModel book) {
     for (final element in listCartShop) {
-      if (book.id == element.book.id) {
+      if (book.id == element.book!.id) {
         appRepository.removeItemOfShoppingCart(element);
         listCartShop.remove(element);
         countCartShop.value--;

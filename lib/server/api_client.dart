@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ApiClient {
-  Dio _dio;
+  Dio _dio = Dio();
   static const String endPointUser = 'users';
 
   static const String books = 'books';

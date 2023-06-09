@@ -10,7 +10,7 @@ class ListTag extends GetView<DetailController> {
 
   Widget _listTags() => Wrap(direction: Axis.horizontal, children: listTag());
 
-  List<Widget> listTag() => controller.book.tags
+  List<Widget> listTag() => controller.book.value!.tags!
       .map((final e) => Container(
             margin: const EdgeInsets.only(right: 8.0, bottom: 15.0),
             decoration: BoxDecoration(
@@ -20,7 +20,7 @@ class ListTag extends GetView<DetailController> {
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Text(
-                e.tag,
+                e.tag ?? '',
                 style: const TextStyle(color: Colors.white),
               ),
             ),

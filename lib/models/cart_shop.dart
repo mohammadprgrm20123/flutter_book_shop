@@ -1,10 +1,10 @@
 import 'book_view_model.dart';
 
 class CartShop {
-  int id;
-  int count;
-  int userId;
-  BookViewModel book;
+  int? id;
+  int? count;
+  int? userId;
+  BookViewModel? book;
 
   CartShop({final this.count, final this.userId, final this.book,final this.id});
 
@@ -22,16 +22,16 @@ class CartShop {
     data['count'] = count;
     data['userid'] = userId;
     if (book != null) {
-      data['book'] = book.toJson();
+      data['book'] = book!.toJson();
     }
     return data;
   }
 
   List<CartShop> cartShopListFromJson(final List<dynamic> dynamicList){
     final List<CartShop> cartshop = [];
-    dynamicList.forEach((final element) {
+    for (final element in dynamicList) {
       cartshop.add(CartShop.fromJson(element));
-    });
+    }
     return cartshop;
   }
 

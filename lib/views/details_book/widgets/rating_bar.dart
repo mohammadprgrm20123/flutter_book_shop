@@ -5,7 +5,7 @@ class RatingBarWidget extends StatelessWidget{
 
   final double score;
 
-  const RatingBarWidget({final this.score});
+  const RatingBarWidget({required final this.score});
 
 
   @override
@@ -14,7 +14,7 @@ class RatingBarWidget extends StatelessWidget{
   Widget _ratingBar(final double score) => Padding(
     padding: const EdgeInsets.all(10.0),
     child: RatingBar.builder(
-        onRatingUpdate: null,
+        onRatingUpdate: (v){},
         initialRating: score,
         minRating: 1,
         wrapAlignment: WrapAlignment.start,

@@ -5,10 +5,9 @@ import '../../../generated/l10n.dart';
 
 class TitleList extends StatelessWidget {
   final String title;
-  final void Function() onTap;
+  final void Function()? onTap;
 
-  const TitleList({final this.title, final Key key, final this.onTap})
-      : super(key: key);
+  const TitleList({required final this.title, final this.onTap});
 
   @override
   Widget build(final BuildContext context) => _titleOfList(context, title);

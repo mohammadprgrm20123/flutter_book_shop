@@ -8,16 +8,14 @@ import '../../../models/book_view_model.dart';
 class BookItem extends GetView<HomeController> {
   final BookViewModel bookViewModel;
   final void Function() onTap;
-  final void Function(bool value) changeValueCartShop;
-  final void Function(bool value) changeValueFavorite;
+  final void Function(bool value)? changeValueCartShop;
+  final void Function(bool value)? changeValueFavorite;
 
   const BookItem(
-      {final Key key,
-      final this.bookViewModel,
-      final this.onTap,
-      final this.changeValueCartShop,
-      final this.changeValueFavorite})
-      : super(key: key);
+      {required this.bookViewModel,
+      required this.onTap,
+       this.changeValueCartShop,
+       this.changeValueFavorite});
 
   @override
   Widget build(final BuildContext context) => item();
@@ -25,24 +23,23 @@ class BookItem extends GetView<HomeController> {
   Widget item() => _body();
 
   Widget _body() => Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: 140,
-        decoration: _boxDecoration(),
-        child: InkWell(
-          onTap: () {},
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(child: _imageClickAble()),
-                  _text(),
-                  _icons()]),
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: 140,
+          decoration: _boxDecoration(),
+          child: InkWell(
+            onTap: () {},
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Expanded(child: _imageClickAble()),
+                _text(),
+                _icons()
+              ]),
+            ),
           ),
         ),
-      ),
-    );
+      );
 
   Widget _icons() => Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -54,7 +51,7 @@ class BookItem extends GetView<HomeController> {
 
   Widget _imageClickAble() => InkWell(
         onTap: () {
-          onTap?.call();
+          onTap.call();
         },
         child: _image(),
       );
@@ -83,7 +80,7 @@ class BookItem extends GetView<HomeController> {
                     Icons.add_shopping_cart,
                   ),
           ),
-      bookViewModel.isInCartShop.obs);
+      bookViewModel.isInCartShop!.obs);
 
   ObxValue<RxBool> _favorite() => ObxValue<RxBool>(
       (final select) => GestureDetector(
@@ -104,7 +101,7 @@ class BookItem extends GetView<HomeController> {
                     Icons.favorite_border_rounded,
                   ),
           ),
-      bookViewModel.isFavorite.obs);
+      bookViewModel.isFavorite!.obs);
 
   Widget _text() => Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
@@ -119,23 +116,22 @@ class BookItem extends GetView<HomeController> {
       );
 
   Widget _bookName() => Text(
-            bookViewModel.bookName,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: const TextStyle(
-              fontSize: 13,
-            ),
-            softWrap: false,
-          );
+        bookViewModel.bookName!,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
+        style: const TextStyle(
+          fontSize: 13,
+        ),
+        softWrap: false,
+      );
 
   BoxDecoration _boxDecorationText() => BoxDecoration(
-            color: Colors.yellow[800],
-            borderRadius: BorderRadius.circular(8));
+      color: Colors.yellow[800], borderRadius: BorderRadius.circular(8));
 
   Widget _image() => ClipRRect(
         child: FadeInImage.assetNetwork(
           fadeInCurve: Curves.linearToEaseOut,
-          image: bookViewModel.url,
+          image: bookViewModel.url!,
           placeholder: 'assets/images/noImage.png',
           fit: BoxFit.cover,
           height: 140,

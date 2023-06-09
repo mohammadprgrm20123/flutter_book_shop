@@ -23,7 +23,7 @@ class AdminHomePage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else {
             if (adminHomeController.listAllBooks.isEmpty) {
-              return Center(child: Text(S.of(Get.context).not_exit_cases));
+              return Center(child: Text(S.of(Get.context!).not_exit_cases));
             } else {
               return _listBooks();
             }
@@ -50,7 +50,7 @@ class AdminHomePage extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: GestureDetector(
           onTap: () {
-            Get.to(() => DetailsBook(bookId: book.id));
+            Get.to(() => DetailsBook(bookId: book.id!));
           },
           child: _card(book),
         ),
@@ -85,15 +85,15 @@ class AdminHomePage extends StatelessWidget {
   Widget _bookDetails(final BookViewModel book) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(book.bookName),
-          Text('${S.of(Get.context).price} : ${book.price}'),
-          Text('${S.of(Get.context).author_name} : ${_getBookName(book)}'),
-          Text('${S.of(Get.context).category} : ${book.category}'),
-          Text('${S.of(Get.context).score} : ${book.score}'),
+          Text(book.bookName!),
+          Text('${S.of(Get.context!).price} : ${book.price}'),
+          Text('${S.of(Get.context!).author_name} : ${_getBookName(book)}'),
+          Text('${S.of(Get.context!).category} : ${book.category}'),
+          Text('${S.of(Get.context!).score} : ${book.score}'),
         ],
       );
 
-  String _getBookName(final BookViewModel book) => book.autherName;
+  String _getBookName(final BookViewModel book) => book.autherName!;
 
   Widget _image(final BookViewModel book) => Padding(
         padding: const EdgeInsets.all(8.0),
@@ -108,7 +108,7 @@ class AdminHomePage extends StatelessWidget {
             children: [
               FadeInImage.assetNetwork(
                 fadeInCurve: Curves.linearToEaseOut,
-                image: book.url,
+                image: book.url!,
                 placeholder: 'assets/images/noImage.jpg',
                 height: 120.0,
                 width: 80.0,
@@ -124,12 +124,12 @@ class AdminHomePage extends StatelessWidget {
         children: [
           ElevatedButton.icon(
               onPressed: () {
-                Get.to(() => EditBookPage(book)).then((final value) {
+                Get.to(() => EditBookPage(book))!.then((final value) {
                   adminHomeController.getAllBooks();
                 });
               },
               icon: const Icon(Icons.edit),
-              label: Text(S.of(Get.context).edit))
+              label: Text(S.of(Get.context!).edit))
         ],
       );
 
@@ -140,15 +140,15 @@ class AdminHomePage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
       );
 
-  Widget _title(final BuildContext context) => Text(S.of(Get.context).managment,
+  Widget _title(final BuildContext context) => Text(S.of(Get.context!).managment,
       style: TextStyle(
-          fontFamily: S.of(Get.context).name_font_dana,
+          fontFamily: S.of(Get.context!).name_font_dana,
           color: Colors.black,
           fontSize: 17.0));
 
   FloatingActionButton _floatingActionButton() => FloatingActionButton(
         onPressed: () {
-          Get.to(() => AddBookPage()).then((final value) {
+          Get.to(() => AddBookPage())!.then((final value) {
             adminHomeController.getAllBooks();
           });
         },
@@ -157,7 +157,7 @@ class AdminHomePage extends StatelessWidget {
 
   AnimatedBottomNavigationBar _bottomNavigationBar() =>
       AnimatedBottomNavigationBar(
-          activeIndex: null,
+          activeIndex: 2,
           icons: const [
             Icons.insert_chart,
             Icons.account_circle,
@@ -172,7 +172,7 @@ class AdminHomePage extends StatelessWidget {
             switch (index) {
               case 0:
                 {
-                  Get.to(() => AdminReport()).then((final value) {
+                  Get.to(() => AdminReport())!.then((final value) {
                     adminHomeController.getAllBooks();
                   });
                 }

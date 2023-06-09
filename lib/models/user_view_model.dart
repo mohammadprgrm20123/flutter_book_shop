@@ -1,19 +1,19 @@
 class User {
-  int id;
-  String userName;
-  String password;
-  String role;
-  String phone;
-  String email;
-  String image;
+  int? id;
+  String? userName;
+  String? password;
+  String? role;
+  String? phone;
+  String? email;
+  String? image;
   User(
-      {final this.id,
-      final this.userName,
-      final this.password,
-      final this.role,
-      final this.phone,
-      final this.email,
-      final this.image});
+      {this.id,
+      this.userName,
+      this.password,
+      this.role,
+      this.phone,
+      this.email,
+      this.image});
   User.fromJson(final Map<String, dynamic> json) {
     userName = json['userName'];
     id = json['id'];

@@ -13,10 +13,10 @@ class HorizontalCardPager extends StatefulWidget {
   final int initialPage;
 
   const HorizontalCardPager(
-      {final this.items,
-      final this.onPageChanged,
-      final this.initialPage = 2,
-      final this.onSelectedItem});
+      {required this.items,
+      required this.onPageChanged,
+      this.initialPage = 2,
+      required this.onSelectedItem});
 
   @override
   _HorizontalCardPagerState createState() => _HorizontalCardPagerState();
@@ -24,8 +24,8 @@ class HorizontalCardPager extends StatefulWidget {
 
 class _HorizontalCardPagerState extends State<HorizontalCardPager> {
   bool _isScrolling = false;
-  double _currentPosition;
-  PageController _controller;
+  double _currentPosition = 2;
+  PageController? _controller;
 
   @override
   void initState() {
@@ -34,13 +34,11 @@ class _HorizontalCardPagerState extends State<HorizontalCardPager> {
     _currentPosition = widget.initialPage.toDouble();
     _controller = PageController(initialPage: widget.initialPage);
 
-    _controller.addListener(() {
+    _controller!.addListener(() {
       setState(() {
-        _currentPosition = _controller.page;
+        _currentPosition = _controller!.page!;
 
-        if (widget.onPageChanged != null) {
-          Future(() => widget.onPageChanged(_currentPosition));
-        }
+        Future(() => widget.onPageChanged(_currentPosition));
       });
     });
   }
@@ -78,7 +76,7 @@ class _HorizontalCardPagerState extends State<HorizontalCardPager> {
                 } else if (selectedIndex >= 0) {
                   final int goToPage =
                       _currentPosition.toInt() + selectedIndex - 2;
-                  _controller.animateToPage(goToPage,
+                  _controller!.animateToPage(goToPage,
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOutExpo);
                 }
@@ -86,7 +84,7 @@ class _HorizontalCardPagerState extends State<HorizontalCardPager> {
             },
             child: CardListWidget(
               items: widget.items,
-              controller: _controller,
+              controller: _controller!,
               viewWidth: viewWidth,
               selectedIndex: _currentPosition,
               cardMaxHeight: cardMaxHeight + 90,
@@ -122,20 +120,21 @@ class CardListWidget extends StatefulWidget {
   final List<CardItem> items;
   final double selectedIndex;
 
-  const CardListWidget(
-      {final this.controller,
-      final this.cardMaxHeight,
-      final this.cardMaxWidth,
-      final this.viewWidth,
-      final this.selectedIndex = 2.0,
-      final this.items});
+  const CardListWidget({
+    required this.controller,
+    required this.cardMaxHeight,
+    required this.cardMaxWidth,
+    required this.items,
+    required this.viewWidth,
+    this.selectedIndex = 2.0,
+  });
 
   @override
   _CardListWidgetState createState() => _CardListWidgetState();
 }
 
 class _CardListWidgetState extends State<CardListWidget> {
-  double selectedIndex;
+  double selectedIndex = 0;
 
   @override
   void initState() {
@@ -145,7 +144,7 @@ class _CardListWidgetState extends State<CardListWidget> {
 
     widget.controller.addListener(() {
       setState(() {
-        selectedIndex = widget.controller.page;
+        selectedIndex = widget.controller.page!;
       });
     });
   }
