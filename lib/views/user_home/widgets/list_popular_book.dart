@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/home_controller.dart';
 import '../../details_book/details_book.dart';
+import '../../more_books/more_page.dart';
 import 'book_item.dart';
 import 'title_list.dart';
 
@@ -13,7 +14,9 @@ class ListPopularBook extends StatelessWidget {
   Widget build(final BuildContext context) => Column(
         children: [
           TitleList(
-            onTap: () {},
+            onTap: () {
+              Get.to(()=>MorePage());
+            },
             title: 'معروف ترین ها',
           ),
           _listPopularBooks(),

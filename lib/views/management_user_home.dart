@@ -85,6 +85,5 @@ class ManagementUserHome extends StatelessWidget {
     Get.delete<FavoriteController>(force: true);
     Get.delete<SearchController>(force: true);
     Get.delete<ProfileController>(force: true);
-
   }
 }

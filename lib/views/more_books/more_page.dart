@@ -6,23 +6,22 @@ import '../../custom_widgets/card_icon_favorite_icon.dart';
 import '../../generated/l10n.dart';
 import '../details_book/details_book.dart';
 
-class MorePage extends StatelessWidget {
-  final morePageController = Get.put(MorePageController());
+class MorePage extends GetView<MorePageController> {
 
   @override
   Widget build(final BuildContext context) {
-    morePageController.getListFavorite();
+    Get.lazyPut(() => MorePageController());
     return Scaffold(
         appBar: _appBar(context),
         body: Obx(() {
-          if (morePageController.loading.value == true) {
+          if (controller.loading.value == true) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            if (morePageController.allBooks.isEmpty) {
+            if (controller.allBooks.isEmpty) {
               return Center(child: Text(S.of(Get.context!).not_exit_cases));
             }
             return GridView.builder(
-              itemCount: morePageController.allBooks.length,
+              itemCount: controller.allBooks.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1, childAspectRatio: 2.5),
               itemBuilder: (final context, final index) =>
@@ -48,7 +47,7 @@ class MorePage extends StatelessWidget {
         elevation: 10.0,
         child: InkWell(
           onTap: () {
-            _goToDetailsPage(morePageController.allBooks[index].id!);
+            _goToDetailsPage(controller.allBooks[index].id!);
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -58,7 +57,7 @@ class MorePage extends StatelessWidget {
                   ClipRRect(
                     child: FadeInImage.assetNetwork(
                       fadeInCurve: Curves.linearToEaseOut,
-                      image: morePageController.allBooks[index].url!,
+                      image: controller.allBooks[index].url!,
                       placeholder: 'assets/images/noImage.png',
                       height: 100,
                       width: 100,
@@ -69,31 +68,31 @@ class MorePage extends StatelessWidget {
                     child: AddFavoriteAndCartShop(
                       changeValueCartShop: (final value) {
                         if (value == true) {
-                          morePageController.addToCartShop(
-                              morePageController.allBooks[index]);
-                          morePageController.allBooks[index].isInCartShop =
+                          controller.addToCartShop(
+                              controller.allBooks[index]);
+                          controller.allBooks[index].isInCartShop =
                               true;
                         } else {
-                          morePageController.removeFromCartShop(
-                              morePageController.allBooks[index]);
-                          morePageController.allBooks[index].isInCartShop =
+                          controller.removeFromCartShop(
+                              controller.allBooks[index]);
+                          controller.allBooks[index].isInCartShop =
                               false;
                         }
                       },
                       changeValueFavorite: (final value) {
                         if (value == true) {
-                          morePageController.addToFavorite(
-                              morePageController.allBooks[index]);
-                          morePageController.allBooks[index].isFavorite = true;
+                          controller.addToFavorite(
+                              controller.allBooks[index]);
+                          controller.allBooks[index].isFavorite = true;
                         } else {
-                          morePageController.removeFromFavorite(
-                              morePageController.allBooks[index]);
-                          morePageController.allBooks[index].isFavorite = false;
+                          controller.removeFromFavorite(
+                              controller.allBooks[index]);
+                          controller.allBooks[index].isFavorite = false;
                         }
                       },
                       isCartShop:
-                          morePageController.allBooks[index].isInCartShop!,
-                      isFavorite: morePageController.allBooks[index].isFavorite!,
+                          controller.allBooks[index].isInCartShop!,
+                      isFavorite: controller.allBooks[index].isFavorite!,
                     ),
                   ),
                 ],
@@ -105,11 +104,11 @@ class MorePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(' نام کتاب : '
-                        '${morePageController.allBooks[index].bookName}'),
+                        '${controller.allBooks[index].bookName}'),
                     Text('نام نویسنده :'
-                        '${morePageController.allBooks[index].autherName} '
+                        '${controller.allBooks[index].autherName} '
                         ' '),
-                    Text('${morePageController.allBooks[index].price} تومان '),
+                    Text('${controller.allBooks[index].price} تومان '),
                   ],
                 ),
               ),
@@ -120,7 +119,7 @@ class MorePage extends StatelessWidget {
 
   void _goToDetailsPage(final int id) {
     Get.to(() => DetailsBook(bookId: id,))!.then((final value) {
-      morePageController
+      controller
         ..getListFavorite()
         ..getAllCartShop();
     });

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/home_controller.dart';
 import '../../../generated/l10n.dart';
+import '../../more_books/more_page.dart';
 import 'book_item.dart';
 import 'title_list.dart';
 
@@ -20,7 +21,9 @@ class ListBestBook extends StatelessWidget {
           children: [
             TitleList(
               title: S.of(context).the_best,
-              onTap: () {},
+              onTap: () {
+                Get.to(()=>MorePage());
+              },
             ),
             _listBestBooks()
           ],

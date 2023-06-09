@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/home_controller.dart';
 import '../../../custom_widgets/horisental_card_pager.dart';
+import '../../more_books/more_page.dart';
 import 'title_list.dart';
 
 class ListAudioBook extends StatelessWidget {
@@ -11,7 +12,11 @@ class ListAudioBook extends StatelessWidget {
   @override
   Widget build(final BuildContext context) => Column(
         children: [
-          TitleList(title: 'کتاب های صوتی', onTap: () {}),
+          TitleList(
+              title: 'کتاب های صوتی',
+              onTap: () {
+                Get.to(() => MorePage());
+              }),
           _listAudioBooks(),
         ],
       );

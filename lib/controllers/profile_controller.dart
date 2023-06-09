@@ -15,10 +15,16 @@ import '../shareprefrence.dart';
 class ProfileController extends GetxController {
   RxBool loading = false.obs;
   final AppRepository _appRepository =AppRepository(ApiClient());
-  User _user = User();
+  Rxn<User> user = Rxn(null);
   Uint8List? _imageUnit8;
   File? _imageFile;
-
+  final TextEditingController phoneCtr = TextEditingController();
+  final TextEditingController userNameCtr = TextEditingController();
+  final TextEditingController passwordCtr = TextEditingController();
+  final List<String> spinnerItems = [
+    S.of(Get.context!).persion,
+    S.of(Get.context!).English
+  ];
   RxInt indexLanguageActive = 0.obs;
 
   @override
@@ -34,8 +40,8 @@ class ProfileController extends GetxController {
     await MyStorage().getId().then((final value) {
       _appRepository.getProfileInfo(value).then((final value) {
         loading(false);
-        _user = value;
-        _imageUnit8 = base64Decode(_user.image!);
+        user.value = value;
+        _imageUnit8 = base64Decode(user.value!.image!);
       }).onError((final error, final stackTrace) {
         loading(false);
         Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).has_problem,
@@ -44,7 +50,6 @@ class ProfileController extends GetxController {
     });
   }
 
-  User get user => _user;
 
   void openCamera() async {
     loading(true);
