@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../models/tag_view_model.dart';
 import 'package:get/get.dart';
 import 'package:tag_editor/tag_editor.dart';
 
 import '../../controllers/add_book_controller.dart';
 import '../../generated/l10n.dart';
 import '../../models/book_view_model.dart';
+import '../../models/tag_view_model.dart';
 import '../admin_home/admin_home.dart';
 
 class AddBookPage extends StatelessWidget {
@@ -18,20 +17,23 @@ class AddBookPage extends StatelessWidget {
     S.of(Get.context!).psychology,
   ];
 
-  final addBookController = Get.put(AddBookController());
+  final controller = Get.put(AddBookController());
 
   @override
   Widget build(final BuildContext context) => Scaffold(
         appBar: appBar(context),
         body: SingleChildScrollView(
-          child: Column(
-            children: _listWidget(context),
+          child: Form(
+            key: controller.form,
+            child: Column(
+              children: _listWidget(context),
+            ),
           ),
         ),
       );
 
   List<Widget> _listWidget(final BuildContext context) => [
-        _image(),
+        // _image(),
         _bookName(),
         _price(),
         _authorName(),
@@ -47,12 +49,12 @@ class AddBookPage extends StatelessWidget {
 
   TagEditor _tags() => TagEditor(
         addTags: (final tag) {
-          addBookController.listTags.add(tag);
+          controller.listTags.add(tag);
         },
         removeTags: (final tag) {
-          addBookController.listTags.remove(tag);
+          controller.listTags.remove(tag);
         },
-    firstValueListTag: const [],
+        firstValueListTag: const [],
       );
 
   SizedBox _btnAddProduct(final BuildContext context) => SizedBox(
@@ -60,15 +62,56 @@ class AddBookPage extends StatelessWidget {
       child: Padding(
           padding: const EdgeInsets.all(15.0), child: _elevatedButton()));
 
-  ElevatedButton _elevatedButton() => ElevatedButton(onPressed: () {
-        if (!validateParameters()) {
-          sendRequestAddBook();
-          Get.offAll(() => AdminHomePage());
-        } else {
-          Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).not_filled);
-        }
+  ElevatedButton _elevatedButton() => ElevatedButton(onPressed: () async {
+
+    if(controller.form.currentState!.validate()){
+      final List<TagViewModel> listTag = [];
+      controller.listTags.forEach((final tagItem) {
+        listTag.add(TagViewModel(tag: tagItem));
+      });
+      controller.book.tags = listTag;
+      controller.book.category = controller.category.value;
+      controller.book.releaseDate = "";
+      controller.book.createdAt = "";
+      controller.book.url = "";
+      controller.book =BookViewModel(
+        autherName:controller.authorNameCtr.text,
+        bookName: controller.bookNameCtr.text,
+        category: controller.category.value,
+        desc: controller.descBookCtr.text,
+        url: '',
+          createdAt: '',
+        tags: listTag,
+        releaseDate: '',
+        isFavorite: false,
+        isInCartShop: false,
+        translator: controller.translatorNameCtr.text,
+        score: 1.3,
+        publisherName: controller.publisherCtr.text,
+        pages: controller.pagesCtr.text,
+        price: controller.priceCtr.text,
+
+
+
+      );
+
+      await controller.requestForAddBook(controller.book);
+      //   sendRequestAddBook();
+      //   Get.offAll(() => AdminHomePage());
+      // } else {
+      //   Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).not_filled);
+
+
+    }
+
+        // if (!validateParameters()) {
+        //   sendRequestAddBook();
+        //   Get.offAll(() => AdminHomePage());
+        // } else {
+        //   Get.snackbar(S.of(Get.context!).error, S.of(Get.context!).not_filled);
+        // }
       }, child: Obx(() {
-        if (addBookController.loading.value == true) {
+        if (controller.loading.value == true) {
           return const CircularProgressIndicator();
         } else {
           return Text(S.of(Get.context!).add_product);
@@ -77,11 +120,12 @@ class AddBookPage extends StatelessWidget {
 
   Widget _summeryOfBook() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
             keyboardType: TextInputType.text,
             onChanged: (final summery) {
-              addBookController.book.desc = summery;
+              controller.book.desc = summery;
             },
+            validator: validator,
             decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.description),
                 border: const OutlineInputBorder(),
@@ -91,32 +135,34 @@ class AddBookPage extends StatelessWidget {
 
   Widget _publisher() => Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Obx(() => TextField(
+      child: Obx(() => TextFormField(
           keyboardType: TextInputType.text,
           onChanged: (final publisher) {
-            addBookController.book.publisherName = publisher;
+            controller.book.publisherName = publisher;
             _validatePublisher(publisher);
           },
+          validator: validator,
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.account_circle),
               border: const OutlineInputBorder(),
               labelText: S.of(Get.context!).publisher,
-              errorText: addBookController.errorTextBookPublisher.value,
+              errorText: controller.errorTextBookPublisher.value,
               hintText: S.of(Get.context!).publisher))));
 
   Widget _countPages() => Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Obx(() => TextField(
+      child: Obx(() => TextFormField(
           keyboardType: TextInputType.number,
-          onChanged: (final pages) {
-            addBookController.book.pages = pages;
-            _validateCountPages(pages);
-          },
+          // onChanged: (final pages) {
+          //   addBookController.book.pages = pages;
+          //   _validateCountPages(pages);
+          // },
+          validator: validator,
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.pages),
               border: const OutlineInputBorder(),
               labelText: S.of(Get.context!).count_pages,
-              errorText: addBookController.errorTextBookPages.value,
+              errorText: controller.errorTextBookPages.value,
               hintText: S.of(Get.context!).count_pages))));
 
   Widget _category(final BuildContext context) => Padding(
@@ -128,7 +174,7 @@ class AddBookPage extends StatelessWidget {
       );
 
   DropdownButton<String> _dropdownButton() => DropdownButton<String>(
-        value: addBookController.category.value,
+        value: controller.category.value,
         icon: const Icon(Icons.arrow_drop_down),
         iconSize: 24,
         elevation: 16,
@@ -141,11 +187,10 @@ class AddBookPage extends StatelessWidget {
           color: Colors.blue,
         ),
         onChanged: (final data) {
-          if(data!=null){
-          addBookController.category.value = data;
-          addBookController.book.category = data;
+          if (data != null) {
+            controller.category.value = data;
+            controller.book.category = data;
           }
-
         },
         items: spinnerList
             .map<DropdownMenuItem<String>>(
@@ -158,26 +203,28 @@ class AddBookPage extends StatelessWidget {
 
   Widget _score() => Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Obx(() => TextField(
+      child: Obx(() => TextFormField(
           keyboardType: TextInputType.number,
-          onChanged: (final score) {
-            addBookController.book.score = double.parse(score).toPrecision(1);
-            validateScore(score);
-          },
+          // onChanged: (final score) {
+          //   addBookController.book.score = double.parse(score).toPrecision(1);
+          //   validateScore(score);
+          // },
+          validator: validator,
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.score),
               border: const OutlineInputBorder(),
               labelText: S.of(Get.context!).score,
-              errorText: addBookController.errorTextBookScore.value,
+              errorText: controller.errorTextBookScore.value,
               hintText: S.of(Get.context!).score))));
 
   Widget _translatorName() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
             keyboardType: TextInputType.text,
-            onChanged: (final translator) {
-              addBookController.book.translator = translator;
-            },
+            // onChanged: (final translator) {
+            //   addBookController.book.translator = translator;
+            // },
+            validator: validator,
             decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.translate),
                 border: const OutlineInputBorder(),
@@ -187,48 +234,47 @@ class AddBookPage extends StatelessWidget {
 
   Widget _authorName() => Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Obx(() => TextField(
+      child: Obx(() => TextFormField(
           keyboardType: TextInputType.text,
-          onChanged: (final authorName) {
-            addBookController.book.autherName = authorName;
-            validatorAutherName(authorName);
-          },
+          validator: validator,
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.account_circle),
               border: const OutlineInputBorder(),
               labelText: S.of(Get.context!).author_name,
-              errorText: addBookController.errorTextBookAuthorName.value,
+              errorText: controller.errorTextBookAuthorName.value,
               hintText: S.of(Get.context!).author_name))));
 
   Widget _price() => Padding(
       padding: const EdgeInsets.all(20.0),
       child: Obx(() => TextFormField(
           keyboardType: TextInputType.number,
-          onChanged: (final price) {
-            addBookController.book.price = price;
-            validatePrice(price);
-          },
+          validator: validator,
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.account_circle),
               border: const OutlineInputBorder(),
               labelText: S.of(Get.context!).price,
-              errorText: addBookController.errorTextBookPrice.value,
+              errorText: controller.errorTextBookPrice.value,
               hintText: S.of(Get.context!).price))));
 
   Widget _bookName() => Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Obx(() => TextField(
+      child: Obx(() => TextFormField(
           keyboardType: TextInputType.text,
-          onChanged: (final bookName) {
-            addBookController.book.bookName = bookName;
-            _validateBookName(bookName);
-          },
+          validator: validator,
           decoration: InputDecoration(
               prefixIcon: const Icon(Icons.account_circle),
               border: const OutlineInputBorder(),
               labelText: S.of(Get.context!).book_name,
-              errorText: addBookController.errorTextBookPrice.value,
+              errorText: controller.errorTextBookPrice.value,
               hintText: S.of(Get.context!).book_name))));
+
+  String? validator(final String? value) {
+    if (value != null && value.isEmpty) {
+      return 'لطفا این مورد را پر کنید';
+    }
+
+    return null;
+  }
 
   Widget _image() => const Padding(
         padding: EdgeInsets.all(20.0),
@@ -249,19 +295,20 @@ class AddBookPage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black),
       );
 
-  Text _title(final BuildContext context) => Text(S.of(Get.context!).add_product,
-      style: TextStyle(
-          fontFamily: S.of(Get.context!).name_font_dana,
-          color: Colors.black,
-          fontSize: 17.0));
+  Text _title(final BuildContext context) =>
+      Text(S.of(Get.context!).add_product,
+          style: TextStyle(
+              fontFamily: S.of(Get.context!).name_font_dana,
+              color: Colors.black,
+              fontSize: 17.0));
 
   bool validateParameters() {
-    if (addBookController.validatorBookScore &&
-        addBookController.validatorBookPages &&
-        addBookController.validatorBookAuthorName &&
-        addBookController.validatorBookPrice &&
-        addBookController.validatorBookName &&
-        addBookController.validatorBookPublisher) {
+    if (controller.validatorBookScore &&
+        controller.validatorBookPages &&
+        controller.validatorBookAuthorName &&
+        controller.validatorBookPrice &&
+        controller.validatorBookName &&
+        controller.validatorBookPublisher) {
       return false;
     }
     Get.snackbar(S.of(Get.context!).error,
@@ -270,34 +317,34 @@ class AddBookPage extends StatelessWidget {
   }
 
   void sendRequestAddBook() {
-    addBookController.requestForAddBook(_initBookParameters());
-    addBookController.requestForAddBook(_initBookParameters());
+    controller.requestForAddBook(_initBookParameters());
+    controller.requestForAddBook(_initBookParameters());
   }
 
   BookViewModel _initBookParameters() {
     final List<TagViewModel> listTag = [];
-    addBookController.listTags.forEach((final tagItem) {
+    controller.listTags.forEach((final tagItem) {
       listTag.add(TagViewModel(tag: tagItem));
     });
-    addBookController.book.tags = listTag;
-    addBookController.book.category = addBookController.category.value;
-    addBookController.book.releaseDate = "";
-    addBookController.book.createdAt = "";
-    addBookController.book.url = "";
-    return addBookController.book;
+    controller.book.tags = listTag;
+    controller.book.category = controller.category.value;
+    controller.book.releaseDate = "";
+    controller.book.createdAt = "";
+    controller.book.url = "";
+    return controller.book;
   }
 
   void validatePrice(final String price) {
     if (price.isEmpty) {
-      addBookController.errorTextBookPrice.value =
+      controller.errorTextBookPrice.value =
           S.of(Get.context!).should_not_empty;
-      addBookController.validatorBookPages = false;
+      controller.validatorBookPages = false;
     } else {
       final double priceDouble = double.parse(price).toPrecision(1);
       if (priceDouble < 5000 || priceDouble > 100000) {
-        addBookController.validatorBookPrice = false;
+        controller.validatorBookPrice = false;
       } else {
-        addBookController.validatorBookPrice = true;
+        controller.validatorBookPrice = true;
       }
     }
   }
@@ -305,57 +352,57 @@ class AddBookPage extends StatelessWidget {
   void validatorAutherName(final String authorName) {
     if (authorName.isEmpty) {
       S.of(Get.context!).authername_not_empty;
-      addBookController.validatorBookAuthorName = false;
+      controller.validatorBookAuthorName = false;
     } else {
-      addBookController.validatorBookAuthorName = true;
+      controller.validatorBookAuthorName = true;
     }
   }
 
   void validateScore(final String score) {
     if (score.isEmpty) {
-      addBookController.errorTextBookScore.value =
+      controller.errorTextBookScore.value =
           S.of(Get.context!).score_not_empty;
-      addBookController.validatorBookScore = false;
+      controller.validatorBookScore = false;
     } else {
       final double scoreDouble = double.parse(score).toPrecision(1);
       if (scoreDouble > 5 || scoreDouble == 0) {
-        addBookController.errorTextBookScore.value =
+        controller.errorTextBookScore.value =
             S.of(Get.context!).score_betwwen_1_5;
-        addBookController.validatorBookScore = false;
+        controller.validatorBookScore = false;
       } else {
-        addBookController.errorTextBookScore.value = null;
-        addBookController.validatorBookScore = true;
+        controller.errorTextBookScore.value = null;
+        controller.validatorBookScore = true;
       }
     }
   }
 
   void _validateBookName(final String bookName) {
     if (bookName.isEmpty) {
-      addBookController.validatorBookName = false;
+      controller.validatorBookName = false;
     } else {
-      addBookController.validatorBookName = true;
+      controller.validatorBookName = true;
     }
   }
 
   void _validateCountPages(final String pages) {
     if (pages.isEmpty) {
-      addBookController.errorTextBookPages.value =
+      controller.errorTextBookPages.value =
           S.of(Get.context!).should_not_empty;
-      addBookController.validatorBookPages = false;
+      controller.validatorBookPages = false;
     } else {
-      addBookController.errorTextBookPages.value = null;
-      addBookController.validatorBookPages = true;
+      controller.errorTextBookPages.value = null;
+      controller.validatorBookPages = true;
     }
   }
 
   void _validatePublisher(final String publisher) {
     if (publisher.isEmpty) {
-      addBookController.errorTextBookPublisher.value =
+      controller.errorTextBookPublisher.value =
           S.of(Get.context!).should_not_empty;
-      addBookController.validatorBookPublisher = false;
+      controller.validatorBookPublisher = false;
     } else {
-      addBookController.errorTextBookPublisher.value = null;
-      addBookController.validatorBookPublisher = true;
+      controller.errorTextBookPublisher.value = null;
+      controller.validatorBookPublisher = true;
     }
   }
 }

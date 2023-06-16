@@ -28,8 +28,11 @@ class EditBookPage extends StatelessWidget {
     return Scaffold(
       appBar: _appBar(context),
       body: SingleChildScrollView(
-        child: Column(
-          children: _listWidget(context),
+        child: Form(
+          key: controller.form,
+          child: Column(
+            children: _listWidget(context),
+          ),
         ),
       ),
     );
@@ -66,7 +69,7 @@ class EditBookPage extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: ElevatedButton(
               onPressed: () {
-                if (!validateParameters()) {
+                if (controller.form.currentState!.validate()) {
                   sendRequestAddBook();
                   Get.offAll(() => AdminHomePage());
                 }
@@ -75,7 +78,8 @@ class EditBookPage extends StatelessWidget {
 
   Widget _descOfBook() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
+          validator: validator,
             maxLines: 3,
             controller: controller.descBookCtr,
             onChanged: (final summery) {
@@ -90,7 +94,8 @@ class EditBookPage extends StatelessWidget {
 
   Widget _publisher() => Obx(() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
+          validator: validator,
             controller: controller.publisherCtr,
             onChanged: (final publisher) {
               controller.book.publisherName = publisher;
@@ -106,7 +111,8 @@ class EditBookPage extends StatelessWidget {
 
   Widget _countPages() => Obx(() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
+          validator: validator,
             keyboardType: TextInputType.number,
             controller: controller.pagesCtr,
             onChanged: (final countPages) {
@@ -114,10 +120,10 @@ class EditBookPage extends StatelessWidget {
               _validateCountPages(countPages);
             },
             decoration:
-                _decorationCountPages(controller.errorTextBookPages.value!)),
+                _decorationCountPages(controller.errorTextBookPages.value)),
       ));
 
-  InputDecoration _decorationCountPages(final String errorText) =>
+  InputDecoration _decorationCountPages(final String? errorText) =>
       InputDecoration(
           prefixIcon: const Icon(Icons.pages),
           border: const OutlineInputBorder(),
@@ -127,17 +133,18 @@ class EditBookPage extends StatelessWidget {
 
   Widget _score() => Obx(() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
+          validator: validator,
             keyboardType: TextInputType.number,
             controller: controller.scoreCtr,
             onChanged: (final score) {
               controller.book.score = double.parse(score).toPrecision(1);
               _validateScore(score);
             },
-            decoration: _decorationScore(controller.errorTextBookScore.value!)),
+            decoration: _decorationScore(controller.errorTextBookScore.value)),
       ));
 
-  InputDecoration _decorationScore(final String errorText) => InputDecoration(
+  InputDecoration _decorationScore(final String? errorText) => InputDecoration(
       prefixIcon: const Icon(Icons.score),
       border: const OutlineInputBorder(),
       errorText: errorText,
@@ -146,7 +153,8 @@ class EditBookPage extends StatelessWidget {
 
   Widget _translatorName() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
+          validator: validator,
             controller: controller.translatorNameCtr,
             onChanged: (final translator) {
               controller.book.translator = translator;
@@ -162,7 +170,8 @@ class EditBookPage extends StatelessWidget {
 
   Widget _authorName() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
+          validator: validator,
             controller: controller.authorNameCtr,
             onChanged: (final authorName) {
               controller.book.autherName = authorName;
@@ -181,7 +190,8 @@ class EditBookPage extends StatelessWidget {
 
   Widget _price() => Obx(() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
+          validator: validator,
             keyboardType: TextInputType.number,
             controller: controller.priceCtr,
             onChanged: (final price) {
@@ -200,7 +210,8 @@ class EditBookPage extends StatelessWidget {
 
   Widget _bookName() => Obx(() => Padding(
         padding: const EdgeInsets.all(20.0),
-        child: TextField(
+        child: TextFormField(
+          validator: validator,
             controller: controller.bookNameCtr,
             onChanged: (final bookName) {
               controller.book.bookName = bookName;
@@ -209,7 +220,13 @@ class EditBookPage extends StatelessWidget {
             decoration:
                 _decorationBookName(controller.errorTextOfBookName.value!)),
       ));
+  String? validator(final String? value) {
+    if (value != null && value.isEmpty) {
+      return 'لطفا این مورد را پر کنید';
+    }
 
+    return null;
+  }
   InputDecoration _decorationBookName(final String errorText) =>
       InputDecoration(
           prefixIcon: const Icon(Icons.account_circle),
@@ -266,9 +283,9 @@ class EditBookPage extends StatelessWidget {
     controller.priceCtr.text = book.price ?? '';
     controller.authorNameCtr.text = book.autherName ?? '';
     controller.translatorNameCtr.text = book.translator ?? '';
-    controller.scoreCtr.text = book.score.toString();
+    controller.scoreCtr.text =book.score==null ? '0' : book.score.toString() ;
     controller.categoryCtr.text = book.category ?? '';
-    controller.pagesCtr.text = book.pages ?? '';
+    controller.pagesCtr.text = book.pages ?? '0';
     controller.publisherCtr.text = book.publisherName ?? '';
     controller.descBookCtr.text = book.desc ?? '';
     for (final element in book.tags!) {

@@ -6,10 +6,13 @@ import '../generated/l10n.dart';
 import '../models/book_view_model.dart';
 import '../repository/app_repository.dart';
 import '../server/api_client.dart';
+import '../views/admin_home/admin_home.dart';
 
 class AddBookController extends GetxController {
   final AppRepository _appRepository = AppRepository(ApiClient());
   final RxBool _loading = false.obs;
+
+  GlobalKey<FormState> form = GlobalKey();
 
   TextEditingController bookNameCtr =TextEditingController();
   TextEditingController priceCtr=TextEditingController();
@@ -40,10 +43,12 @@ class AddBookController extends GetxController {
 
   RxBool get loading => _loading;
 
-  void requestForAddBook(final BookViewModel book) {
+  Future<void> requestForAddBook(final BookViewModel book) async {
     _loading(true);
-    _appRepository.addBook(book);
+    await _appRepository.addBook(book);
     _loading(false);
+
+      await Get.offAll(() => AdminHomePage());
   }
 
   void editBook(final BookViewModel book) {
