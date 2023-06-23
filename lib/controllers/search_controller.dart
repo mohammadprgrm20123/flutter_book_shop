@@ -11,7 +11,7 @@ class SearchScreenController extends GetxController {
   RxBool loadingSearch = false.obs;
   AppRepository appRepository = AppRepository(ApiClient());
   List<BookViewModel> listAll = [];
-  List<BookViewModel> searchList = [];
+  RxList<BookViewModel> searchList = <BookViewModel>[].obs;
 
   RxMap<int, dynamic> mapColor = {
     1: Colors.grey,
@@ -35,7 +35,7 @@ class SearchScreenController extends GetxController {
 
   void searchInList(final String text) {
     loadingSearch(true);
-    searchList = listAll
+    searchList.value = listAll
         .where((final book) =>
             book.bookName!.contains(text) )
         .toList();
@@ -45,11 +45,21 @@ class SearchScreenController extends GetxController {
   void filterInList(final RangeValues rangeValues) {
     final String category = findCategorySelected();
     loading(true);
-    searchList = listAll
+
+    listAll.forEach((element) {
+
+      print(element.price);
+
+    });
+    searchList.value = listAll
         .where((final book) =>
-            double.parse(book.price!) >= rangeValues.start.roundToDouble() &&
-            double.parse(book.price!) <= rangeValues.end.roundToDouble())
+            double.parse(book.price??'0') >= rangeValues.start.roundToDouble() &&
+            double.parse(book.price?? '0') <= rangeValues.end.roundToDouble())
         .toList();
+
+    searchList.forEach((element) {
+      print(element.id);
+    });
     filterCategoryInList(category);
     loading(false);
   }
@@ -82,7 +92,7 @@ class SearchScreenController extends GetxController {
   }
 
   void filterCategoryInList(final String catagory) {
-    searchList =
+    searchList.value =
         listAll.where((final book) => book.category == catagory).toList();
   }
 }
