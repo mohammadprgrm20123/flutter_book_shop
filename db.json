@@ -3,7 +3,7 @@
     {
       "id": 1,
       "userName": "userA",
-      "password": "09309102525",
+      "password": "123456789",
       "role": "user",
       "phone": "09309103564",
       "email": "kazeminejad95.itsu@yahoo.com",
@@ -524,6 +524,53 @@
       "id": 28
     }
   ],
-  "cartShop": [],
-  "favorite": []
+  "cartShop": [
+    {
+      "id": 2,
+      "count": 1,
+      "userid": 1,
+      "book": {
+        "price": "45000",
+        "bookName": "عقاید یک دلقک",
+        "publisherName": " نشر ماهی ",
+        "translator": "سپاس ریوندی",
+        "score": 3.9,
+        "category": "رمان",
+        "pages": "122",
+        "releaseDate": "1332",
+        "createdAt": "",
+        "url": "https://imgcdn.taaghche.com/frontCover/54969.jpg?w=400",
+        "autherName": "هاینریش بل",
+        "desc": "کتاب عقاید یک دلقک، یکی از ماندگارترین آثار داستانی در تاریخ ادبیات آلمان نوشتهی هاینریش بل، دربارهی زندگی مردی به نام هانس شنیر است. عقاید یک دلقک در عین پرداختن به مسائل عاشقانه، نقد اجتماعی و اعتقادی نیز به آلمان پس از هیتلر است. ",
+        "tags": [],
+        "id": 18
+      }
+    }
+  ],
+  "favorite": [
+    {
+      "userId": 1,
+      "book": {
+        "price": "25000",
+        "bookName": "1w2شوهر آهو خانl",
+        "publisherName": "  نشر امیر کبیر ",
+        "translator": "جلال آل احمد ",
+        "score": 4.1,
+        "category": "داستانی",
+        "pages": " 250",
+        "releaseDate": "1388",
+        "createdAt": "",
+        "url": "https://imgcdn.taaghche.com/frontCover/4096.jpg?w=400",
+        "autherName": "[ghg",
+        "desc": "تاب شتن مرغ مینا رمانی نوشته هارپرلی و ترجمه فخرالدین میررمضانی است. شتن مرغ مینا دربارهی ویلی است ه ار والت جوان سیاهپوستی را در ی جامعهی نژادپرست قبول رده است.",
+        "tags": [
+          {
+            "tag": "2332332"
+          }
+        ],
+        "id": 1
+      },
+      "id": 1
+    }
+  ]
 }

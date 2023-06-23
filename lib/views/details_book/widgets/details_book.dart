@@ -27,15 +27,15 @@ class OtherBookDetails extends GetView<DetailController> {
       });
 
   List<Widget> _children(final BuildContext context) => [
-        _image(bookViewModel.url!),
-        _bookName(bookViewModel.bookName!),
-        _authorName(bookViewModel.autherName!, bookViewModel.translator!),
-        _score(bookViewModel.score!),
-        _btnAddToShop(context, bookViewModel.price!),
+        _image(bookViewModel.url ?? ''),
+        _bookName(bookViewModel.bookName?? ''),
+        _authorName(bookViewModel.autherName?? '', bookViewModel.translator?? ''),
+        _score(bookViewModel.score?? 1.1),
+        _btnAddToShop(context, bookViewModel.price ?? '10000'),
         _btnAddFavorite(context),
         _divider(),
         _introduction(context),
-        _description(context, bookViewModel.desc!),
+        _description(context, bookViewModel.desc ?? ''),
         _dividerHeight10(),
         _otherPropertiesOfBook(bookViewModel),
         _dividerHeight10(),
@@ -131,10 +131,10 @@ class OtherBookDetails extends GetView<DetailController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _category(bookViewModel.category!),
-            _price(bookViewModel.price!),
-            _publisher(bookViewModel.publisherName!),
-            _countPages(bookViewModel.pages!),
+            _category(bookViewModel.category ?? ''),
+            _price(bookViewModel.price ?? ''),
+            _publisher(bookViewModel.publisherName ?? ''),
+            _countPages(bookViewModel.pages ?? ''),
           ],
         ),
       );

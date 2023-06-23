@@ -7,8 +7,9 @@ abstract class CardItem {
 
 class ImageCardItem extends CardItem {
   final Widget image;
+  final int id;
 
-  ImageCardItem({required this.image});
+  ImageCardItem({required this.image,required this.id, });
 
   @override
   Widget buildWidget(final double diffPosition) => image;

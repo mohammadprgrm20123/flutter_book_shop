@@ -25,7 +25,7 @@ Map<String, LibraryLoader> _deferredLibraries = {
   'fa': () => new SynchronousFuture(null),
 };
 
-MessageLookupByLibrary? _findExact(final String localeName) {
+MessageLookupByLibrary? _findExact(String localeName) {
   switch (localeName) {
     case 'en':
       return messages_en.messages;
@@ -37,21 +37,21 @@ MessageLookupByLibrary? _findExact(final String localeName) {
 }
 
 /// User programs should call this before using [localeName] for messages.
-Future<bool> initializeMessages(final String localeName) {
-  final availableLocale = Intl.verifiedLocale(
-      localeName, (final locale) => _deferredLibraries[locale] != null,
-      onFailure: (final _) => null);
+Future<bool> initializeMessages(String localeName) {
+  var availableLocale = Intl.verifiedLocale(
+      localeName, (locale) => _deferredLibraries[locale] != null,
+      onFailure: (_) => null);
   if (availableLocale == null) {
     return new SynchronousFuture(false);
   }
-  final lib = _deferredLibraries[availableLocale];
+  var lib = _deferredLibraries[availableLocale];
   lib == null ? new SynchronousFuture(false) : lib();
   initializeInternalMessageLookup(() => new CompositeMessageLookup());
   messageLookup.addLocale(availableLocale, _findGeneratedMessagesFor);
   return new SynchronousFuture(true);
 }
 
-bool _messagesExistFor(final String locale) {
+bool _messagesExistFor(String locale) {
   try {
     return _findExact(locale) != null;
   } catch (e) {
@@ -59,9 +59,9 @@ bool _messagesExistFor(final String locale) {
   }
 }
 
-MessageLookupByLibrary? _findGeneratedMessagesFor(final String locale) {
-  final actualLocale =
-      Intl.verifiedLocale(locale, _messagesExistFor, onFailure: (final _) => null);
+MessageLookupByLibrary? _findGeneratedMessagesFor(String locale) {
+  var actualLocale =
+      Intl.verifiedLocale(locale, _messagesExistFor, onFailure: (_) => null);
   if (actualLocale == null) return null;
   return _findExact(actualLocale);
 }

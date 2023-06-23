@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
     addPage();
     return GetMaterialApp(
       getPages: appPages,
+      enableLog: true,
       debugShowCheckedModeBanner: false,
       theme: _theme(),
       initialRoute: AppRoutes.homePage,

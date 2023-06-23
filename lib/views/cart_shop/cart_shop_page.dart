@@ -141,7 +141,7 @@ class CartShopPage extends GetView<CartShopController> {
                 Text(cartShop.book!.bookName!),
                 Text('${S.of(Get.context!).price} : ${cartShop.book!.price!}'),
                 Text('${S.of(Get.context!).author_name}  : '
-                    '${cartShop.book!.autherName!.substring(0, 8)}...'),
+                    '${cartShop.book!.autherName}'),
               ],
             ),
           ],

@@ -26,7 +26,7 @@ class HomeController extends GetxController {
 
   final AppRepository appRepository =AppRepository(ApiClient());
 
-  List<ImageCardItem> itemsAudioBook = [];
+  RxList<ImageCardItem> itemsAudioBook = <ImageCardItem>[].obs;
   RxDouble indexIndicator = 0.0.obs;
 
   @override
@@ -52,11 +52,11 @@ class HomeController extends GetxController {
   void separateBestBooks() {
     final List<BookViewModel> listBest = [];
     for (final book in listAllBook) {
-      if (book.score! >= 4.2 && book.category != 'صوتی') {
+      if (book.category != 'صوتی') {
         listBest.add(book);
       }
     }
-    listBestBook.value = (listBest);
+    listBestBook.value = listBest;
   }
 
   void separatePopularBook() {
@@ -68,7 +68,7 @@ class HomeController extends GetxController {
     for (final book in allBook) {
       if (book.category == 'صوتی') {
         listAudioBook.add(book);
-        itemsAudioBook.add(ImageCardItem(image: Image.network(book.url!)));
+        itemsAudioBook.add(ImageCardItem(image: Image.network(book.url!),id: book.id!));
       }
     }
   }

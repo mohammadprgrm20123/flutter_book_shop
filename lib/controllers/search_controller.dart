@@ -37,10 +37,7 @@ class SearchScreenController extends GetxController {
     loadingSearch(true);
     searchList = listAll
         .where((final book) =>
-            book.bookName!.contains(text) ||
-            book.publisherName!.contains(text) ||
-            book.category!.contains(text) ||
-            book.desc!.contains(text))
+            book.bookName!.contains(text) )
         .toList();
     loadingSearch(false);
   }
